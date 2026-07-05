@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-      - run: pip install httpx duckdb pandas
+      - run: pip install -e .
       - name: Fast scan (30 siti)
         run: python src/scanner.py --solo-controllo --max=30
       - name: Catalogo (sui trovati)
