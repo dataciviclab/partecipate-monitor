@@ -371,9 +371,6 @@ def main():
     entries = estrai_partecipate(only_controllo=only_controllo, max_siti=max_siti)
     start = time.time()
     results = asyncio.run(scanner(entries))
-    print(f"[scanner] Tempo: {time.time()-start:.1f}s")
-    salva_report(results)
-    print(f"[scanner] Tempo: {time.time()-start:.1f}s")
     salva_report(results)
 
 
