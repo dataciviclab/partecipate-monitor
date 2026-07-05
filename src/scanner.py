@@ -281,7 +281,7 @@ async def scanner(entries, progress_cb=None):
         for i, coro in enumerate(asyncio.as_completed(tasks)):
             r = await coro
             results.append(r)
-            if progress_cb and (i + 1) % 100 == 0:
+            if (i + 1) % 100 == 0:
                 trovati = sum(1 for x in results if x["trovata"])
                 print(f"  [passaggio 1: {i+1}/{len(entries)}] trovati {trovati}", flush=True)
 
