@@ -27,6 +27,7 @@ def fetch_mef(force=False):
         return str(LOCAL_MEF)
 
     print("[fetch] Scarica mef_partecipazioni da GCS...")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
     con = _conn()
     con.execute(f"""
         COPY (SELECT * FROM read_parquet('{GCS_MEF}'))
@@ -61,7 +62,7 @@ def estrai_partecipate(only_controllo=False, max_siti=None):
 
     filtro = ""
     if only_controllo:
-        filtro = "AND m.tipo_controllo IS NOT NULL AND m.tipo_controllo != '' AND m.tipo_controllo != 'nessuno'"
+        filtro = "AND tipo_controllo IS NOT NULL AND tipo_controllo != '' AND tipo_controllo != 'nessuno'"
 
     con = duckdb.connect()
     q = f"""
