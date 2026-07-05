@@ -227,19 +227,19 @@ async def scanner(entries, progress_cb=None):
                     async def check_path(path):
                         try:
                             r = await client.get(base + path)
-                            return (r.status_code, base + path)
+                            ok = r.status_code in (200, 202) and r.text and "trasparen" in r.text.lower()[:5000]
+                            return (r.status_code, base + path, ok)
                         except:
-                            return (None, path)
-                    
+                            return (None, path, False)
+
                     fallback_403 = 0
-                    # Prova i path in batch da 5
                     for i in range(0, len(combinatori), 5):
                         batch = combinatori[i:i+5]
                         results_batch = await asyncio.gather(*[check_path(p) for p in batch])
-                        for status, url in results_batch:
+                        for status, url, content_ok in results_batch:
                             if status == 403:
                                 fallback_403 += 1
-                            if status in (200, 202):
+                            if status in (200, 202) and content_ok:
                                 out["trovata"] = True
                                 out["metodo"] = "path_combinatorio"
                                 out["url"] = url
@@ -263,7 +263,7 @@ async def scanner(entries, progress_cb=None):
                     for saas_url in estratti_da_saas(slug, base):
                         try:
                             r4 = await client.get(saas_url)
-                            if r4.status_code in (200, 202):
+                            if r4.status_code in (200, 202) and r4.text and "trasparen" in r4.text.lower()[:5000]:
                                 out["trovata"] = True
                                 out["metodo"] = "saas"
                                 out["url"] = saas_url
