@@ -74,7 +74,8 @@ async def analizza(entries, progress_cb=None):
                 try:
                     # PASSO 1: pagina principale
                     resp = await client.get(url)
-                    html = resp.text.lower() if resp.status_code in (200, 202) else ""
+                    html_orig = resp.text if resp.status_code in (200, 202) else ""
+                    html = html_orig.lower() if html_orig else ""
                     
                     if html and len(html) > 500:
                         for m in re.finditer(r'<a[^>]*href=["\']([^"\']+)["\'][^>]*>', html):
@@ -82,8 +83,8 @@ async def analizza(entries, progress_cb=None):
                             if ext:
                                 formati_shallow[ext.group(1)] += 1
                         
-                        # PASSO 2: sotto-sezioni
-                        sezioni = estrai_link_sezioni(html, url)
+                        # PASSO 2: sotto-sezioni (usa HTML ORIGINALE per preservare case URL)
+                        sezioni = estrai_link_sezioni(html_orig, url)
                         for sub_url in sezioni[:MAX_SUB_PAGES]:
                             try:
                                 resp_sub = await client.get(sub_url)
@@ -147,10 +148,14 @@ def report(results):
                         and list(r["formati"].keys()) == ["pdf"])
     siti_aperti = sum(1 for r in results
                       if any(f in ("csv", "xml", "json", "ods") for f in r["formati"]))
-    siti_aperti_shallow = sum(1 for r in results
-                              if any(f in ("csv", "xml", "json", "ods") for f in r.get("formati_shallow", {})))
-    siti_aperti_deep = sum(1 for r in results
-                           if any(f in ("csv", "xml", "json", "ods") for f in r.get("formati_deep", {})))
+    
+    # Per-site set tracking per metriche accurate
+    cf_aperti_shallow = {r["cf"] for r in results
+                         if any(f in ("csv", "xml", "json", "ods") for f in r.get("formati_shallow", {}))}
+    cf_aperti_deep_only = {r["cf"] for r in results
+                           if (any(f in ("csv", "xml", "json", "ods") for f in r.get("formati_deep", {}))
+                               and r["cf"] not in cf_aperti_shallow)}
+    siti_aperti_grazie_deep = len(cf_aperti_deep_only)
     
     sub_tot = sum(r["n_sub_pages"] for r in results)
     sub_med = round(sub_tot / len(results), 1) if results else 0
@@ -162,8 +167,8 @@ def report(results):
         "siti_con_file": siti_con_file,
         "siti_solo_pdf": siti_solo_pdf,
         "siti_con_formato_aperto": siti_aperti,
-        "siti_aperti_solo_shallow": siti_aperti_shallow,
-        "siti_aperti_grazie_deep": siti_aperti_deep - siti_aperti_shallow if siti_aperti_deep > siti_aperti_shallow else 0,
+        "siti_aperti_solo_shallow": len(cf_aperti_shallow),
+        "siti_aperti_grazie_deep": siti_aperti_grazie_deep,
         "sotto_pagine_analizzate": sub_tot,
         "media_sotto_pagine_per_sito": sub_med,
         "file_shallow": dict(formati_shallow_tot.most_common()),
