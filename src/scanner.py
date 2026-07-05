@@ -25,12 +25,24 @@ TIMEOUT = 8
 FALLBACK_PATHS = [
     "/amministrazione-trasparente",
     "/amministrazione-trasparente/",
+    "/amministrazione-trasparente.html",
     "/societa-trasparente",
     "/societa-trasparente/",
+    "/societa-trasparente-2",
+    "/societa-trasparente-2/",
+    "/societa-trasparente-3",
+    "/societa-trasparente-3/",
     "/trasparenza",
     "/trasparenza/",
     "/societa-trasparenza",
     "/societa-trasparenza/",
+    "/it/amministrazione-trasparente",
+    "/it/amministrazione-trasparente/",
+    "/it/societa-trasparente",
+    "/it/societa-trasparente/",
+    "/it/page/amministrazione-trasparente.html",
+    "/it/content/trasparenza",
+    "/it/content/trasparenza-actv-0",
 ]
 
 
@@ -117,7 +129,7 @@ async def scanner(entries, progress_cb=None):
                 }
                 try:
                     resp = await client.get(base)
-                    if resp.status_code == 200 and resp.text:
+                    if resp.status_code in (200, 202) and resp.text:
                         frammenti = cerca_trasparenza_in_html(resp.text, base)
                         if frammenti:
                             out["trovata"] = True
@@ -128,10 +140,32 @@ async def scanner(entries, progress_cb=None):
                             else:
                                 out["url"] = frammenti[0]["valore"]
                             return out
+
+                    # PASSO 2: sitemap.xml — cerca URL con "trasparen"
+                    for sm_path in ("/sitemap.xml", "/sitemap_index.xml", "/wp-sitemap.xml"):
+                        try:
+                            sm_resp = await client.get(base + sm_path)
+                            if sm_resp.status_code in (200, 202) and len(sm_resp.text) > 100:
+                                sm_text = sm_resp.text.lower()
+                                if "trasparen" in sm_text:
+                                    urls = re.findall(
+                                        r'<loc>([^<]*trasparen[^<]*)</loc>',
+                                        sm_resp.text, re.IGNORECASE
+                                    )
+                                    if urls:
+                                        out["trovata"] = True
+                                        out["metodo"] = "sitemap"
+                                        out["url"] = urls[0]
+                                        return out
+                                break  # sitemap trovata ma senza trasparenza
+                        except:
+                            continue
+
+                    # PASSO 3: fallback esteso
                     for path in FALLBACK_PATHS:
                         try:
                             r2 = await client.get(base + path)
-                            if r2.status_code == 200:
+                            if r2.status_code in (200, 202):
                                 out["trovata"] = True
                                 out["metodo"] = "path_diretto"
                                 out["url"] = base + path
