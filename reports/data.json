@@ -1,20 +1,23 @@
 {
   "scanner": {
-    "data_scan": "2026-07-05T09:38:30.259346",
+    "data_scan": "2026-07-05T13:54:06.050247",
     "totale_siti": 975,
-    "sezione_trovata": 695,
-    "sezione_non_trovata": 280,
-    "percentuale": 71.3,
-    "controllo_pubblico": {
-      "totale": 975,
-      "trovata": 695
+    "sezione_trovata": 871,
+    "sezione_non_trovata": 104,
+    "percentuale": 89.3,
+    "metodi": {
+      "link_in_homepage": 719,
+      "saas": 107,
+      "": 104,
+      "path_combinatorio": 40,
+      "sitemap": 5
     },
-    "solo_partecipata": {
-      "totale": 0,
-      "trovata": 0
+    "diagnostica_non_trovati": {
+      "slow": 59,
+      "fast": 45
     },
     "errori": {
-      "timeout": 66,
+      "timeout": 58,
       "connessione_rifiutata": 43,
       "unknown url type: '/www.ausino.it'": 1,
       "Server disconnected without sending a response.": 1,
@@ -22,52 +25,61 @@
     }
   },
   "formati": {
-    "data_scan": "2026-07-05T09:41:29.003371",
-    "totale_siti_analizzati": 462,
-    "totale_file_trovati": 6203,
-    "siti_con_file": 149,
-    "siti_solo_pdf": 95,
-    "siti_con_formato_aperto": 25,
+    "data_scan": "2026-07-05T13:56:47.990749",
+    "totale_siti_analizzati": 678,
+    "totale_file_trovati": 7308,
+    "siti_con_file": 180,
+    "siti_solo_pdf": 120,
+    "siti_con_formato_aperto": 32,
     "formati": {
-      "pdf": 5282,
-      "xlsx": 486,
-      "zip": 146,
-      "xls": 115,
-      "xml": 89,
-      "docx": 48,
-      "doc": 30,
-      "csv": 5,
-      "ods": 2
+      "pdf": 6258,
+      "xlsx": 560,
+      "xls": 137,
+      "xml": 115,
+      "zip": 100,
+      "docx": 61,
+      "ods": 35,
+      "odt": 19,
+      "doc": 18,
+      "csv": 5
     }
   },
-  "catalogo_count": 695,
-  "score_medio": 70.8,
+  "catalogo_count": 871,
+  "score_medio": 59.2,
   "score_max": 100.0,
   "score_min": 0.0,
   "distribuzione": {
-    "0-9": 75,
-    "10-19": 2,
-    "20-29": 16,
-    "30-39": 23,
-    "40-49": 14,
-    "50-59": 9,
-    "60-69": 9,
-    "70-79": 12,
-    "80-89": 57,
+    "0-9": 196,
+    "10-19": 7,
+    "20-29": 15,
+    "30-39": 41,
+    "40-49": 21,
+    "50-59": 6,
+    "60-69": 12,
+    "70-79": 17,
+    "80-89": 63,
     "90-100": 0,
-    "90-99": 245
+    "90-99": 300
   },
   "categorie": {
-    "disposizioni_generali": 69.3,
-    "organizzazione": 79.4,
-    "consulenti": 69.0,
-    "personale": 74.0,
-    "bandi_contratti": 81.8,
-    "sovvenzioni": 69.5,
-    "bilanci": 75.8,
-    "beni_immobili": 80.3,
-    "controlli": 69.3,
-    "pagamenti": 67.7,
-    "accesso_civico": 57.4
-  }
+    "disposizioni_generali": 57.4,
+    "organizzazione": 66.7,
+    "consulenti": 57.5,
+    "personale": 62.5,
+    "bandi_contratti": 67.8,
+    "sovvenzioni": 57.7,
+    "bilanci": 63.6,
+    "beni_immobili": 65.9,
+    "controlli": 58.0,
+    "pagamenti": 56.8,
+    "accesso_civico": 46.3
+  },
+  "trend": [
+    {
+      "data": "2026-07-05",
+      "totale_siti": 975,
+      "sezione_trovata": 695,
+      "percentuale": 71.3
+    }
+  ]
 }

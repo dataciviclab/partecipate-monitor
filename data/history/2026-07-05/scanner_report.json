@@ -1,19 +1,22 @@
 {
-  "data_scan": "2026-07-05T09:38:30.259346",
+  "data_scan": "2026-07-05T13:54:06.050247",
   "totale_siti": 975,
-  "sezione_trovata": 695,
-  "sezione_non_trovata": 280,
-  "percentuale": 71.3,
-  "controllo_pubblico": {
-    "totale": 975,
-    "trovata": 695
+  "sezione_trovata": 871,
+  "sezione_non_trovata": 104,
+  "percentuale": 89.3,
+  "metodi": {
+    "link_in_homepage": 719,
+    "saas": 107,
+    "": 104,
+    "path_combinatorio": 40,
+    "sitemap": 5
   },
-  "solo_partecipata": {
-    "totale": 0,
-    "trovata": 0
+  "diagnostica_non_trovati": {
+    "slow": 59,
+    "fast": 45
   },
   "errori": {
-    "timeout": 66,
+    "timeout": 58,
     "connessione_rifiutata": 43,
     "unknown url type: '/www.ausino.it'": 1,
     "Server disconnected without sending a response.": 1,
