@@ -4,6 +4,17 @@ __pycache__/
 .pytest_cache/
 .env
 
-# Cache temporanei (non gli snapshot storici)
+# Cache temporanei
 data/mef_partecipazioni.parquet
 data/ipa_enti.parquet
+
+# Dati generati dalla pipeline (produzione CI)
+data/scanner_report.csv
+data/scanner_report.json
+data/catalogo.csv
+data/formati_report.json
+
+# Report generati
+reports/index.html
+reports/data.json
+reports/foia_targets.json
