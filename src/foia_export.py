@@ -1,8 +1,9 @@
 """
-foia_export.py — Genera foia_targets.json nello schema condiviso.
+foia_export.py — Genera foia_targets.json per data-advocacy.
 
-Lo schema e' vendored in schemas/foia_target_schema.json
-(originale: data-advocacy/schemas/foia_target_schema.json).
+Output: reports/foia_targets.json
+Nota: la validazione contro lo schema avviene in data-advocacy
+      con: python foia.py --import reports/foia_targets.json
 """
 
 import csv, json, sys, re
@@ -10,12 +11,9 @@ from datetime import date
 from pathlib import Path
 
 import duckdb
-import jsonschema
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REPORTS_DIR = Path(__file__).resolve().parent.parent / "reports"
-SCHEMA_VENDORED = Path(__file__).resolve().parent / ".." / "schemas" / "foia_target_schema.json"
-SCHEMA_SIBLING = Path(__file__).resolve().parent.parent.parent / "data-advocacy" / "schemas" / "foia_target_schema.json"
 GCS_IPA = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 LOCAL_IPA = DATA_DIR / "ipa_enti.parquet"
 
@@ -107,22 +105,6 @@ def genera():
         "data_generazione": date.today().isoformat(),
         "targets": targets,
     }
-
-    # Valida contro schema: prima sibling (data-advocacy), poi vendored
-    schema_path = SCHEMA_SIBLING if SCHEMA_SIBLING.exists() else SCHEMA_VENDORED
-    if not schema_path.exists():
-        print(f"[foia] ERRORE: schema non trovato", file=sys.stderr)
-        sys.exit(1)
-    if schema_path == SCHEMA_VENDORED:
-        print("[foia] Attenzione: usa schema vendored (non data-advocacy originale)")
-    with open(schema_path) as f:
-        schema = json.load(f)
-    try:
-        jsonschema.validate(instance=output, schema=schema)
-    except jsonschema.ValidationError as e:
-        print(f"[foia] ERRORE validazione schema: {e}", file=sys.stderr)
-        sys.exit(1)
-    print("[foia] Validazione schema: OK")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     out_path = REPORTS_DIR / "foia_targets.json"

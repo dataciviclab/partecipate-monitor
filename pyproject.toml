@@ -7,7 +7,6 @@ dependencies = [
     "httpx>=0.28",
     "duckdb>=1.0",
     "pandas>=2.0",
-    "jsonschema>=4.0",
 ]
 
 [project.scripts]
