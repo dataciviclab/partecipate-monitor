@@ -1,0 +1,64 @@
+name: Scan settimanale
+on:
+  schedule:
+    - cron: '0 5 * * 1'   # Ogni lunedì alle 6:00 italiane (UTC+1)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - run: pip install httpx duckdb pandas
+
+      - name: Fetch dati
+        run: python src/fetch_data.py
+
+      - name: Scanner trasparenza
+        run: python src/scanner.py --solo-controllo
+
+      - name: Catalogo categorie
+        run: python src/catalogo.py
+
+      - name: Analisi formati
+        run: python src/formati.py
+
+      - name: Genera report
+        run: python src/report.py
+
+      - name: Salva snapshot storico
+        run: bash scripts/update_history.sh
+
+      - name: Commit risultati
+        run: |
+          git config user.name "partecipate-monitor[bot]"
+          git config user.email "bot@dataciviclab.it"
+          git add data/ reports/
+          git diff --staged --quiet || git commit -m "scan: aggiornamento $(date +%Y-%m-%d)"
+          git push
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports/
+
+  deploy:
+    needs: scan
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.env
+
+# Cache temporanei (non gli snapshot storici)
+data/mef_partecipazioni.parquet
+data/ipa_enti.parquet

@@ -1,0 +1,17 @@
+[project]
+name = "partecipate-monitor"
+version = "0.1.0"
+description = "Monitoraggio automatico della trasparenza delle societa' partecipate pubbliche italiane"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28",
+    "duckdb>=1.0",
+    "pandas>=2.0",
+]
+
+[project.scripts]
+partecipate-scan = "src.scanner:main"
+partecipate-catalogo = "src.catalogo:main"
+partecipate-formati = "src.formati:main"
+partecipate-report = "src.report:main"
+partecipate-all = "scripts.run_all:main"
