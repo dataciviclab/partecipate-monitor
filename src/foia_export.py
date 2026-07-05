@@ -1,20 +1,20 @@
 """
-foia_export.py — Genera foia_targets.json nello schema condiviso
-(data-advocacy/schemas/foia_target_schema.json).
+foia_export.py — Genera foia_targets.json nello schema condiviso.
 
-Output: reports/foia_targets.json
+Lo schema e' vendored in schemas/foia_target_schema.json
+(originale: data-advocacy/schemas/foia_target_schema.json).
 """
 
-import csv, json, sys, re, urllib.request
+import csv, json, sys, re
 from datetime import date
 from pathlib import Path
 
 import duckdb
+import jsonschema
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REPORTS_DIR = Path(__file__).resolve().parent.parent / "reports"
-SCHEMA_LOCAL = Path(__file__).resolve().parent.parent.parent / "data-advocacy" / "schemas" / "foia_target_schema.json"
-SCHEMA_URL = "https://raw.githubusercontent.com/dataciviclab/data-advocacy/main/schemas/foia_target_schema.json"
+SCHEMA_PATH = Path(__file__).resolve().parent / ".." / "schemas" / "foia_target_schema.json"
 GCS_IPA = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 LOCAL_IPA = DATA_DIR / "ipa_enti.parquet"
 
