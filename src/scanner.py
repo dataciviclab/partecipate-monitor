@@ -270,47 +270,41 @@ async def scanner(entries, progress_cb=None):
 
     # ── Passaggio 1: veloce (3s timeout) ──
     print(f"[scanner] Passaggio 1: veloce ({TIMEOUT_FAST}s timeout)...")
-    results = []
+    results_by_cf = {}
     sem = asyncio.Semaphore(CONCURRENCY)
     async with httpx.AsyncClient(limits=limits, timeout=TIMEOUT_FAST,
                                   headers=headers, follow_redirects=True, verify=False) as client:
         async def run_fast(e):
             async with sem:
                 return await scansiona(e, client, "fast")
-        tasks = [asyncio.create_task(run_fast(e)) for e in entries]
-        for i, coro in enumerate(asyncio.as_completed(tasks)):
+        tasks = {e["cf_norm"]: asyncio.create_task(run_fast(e)) for e in entries}
+        done = 0
+        for coro in asyncio.as_completed(tasks.values()):
             r = await coro
-            results.append(r)
-            if (i + 1) % 100 == 0:
-                trovati = sum(1 for x in results if x["trovata"])
-                print(f"  [passaggio 1: {i+1}/{len(entries)}] trovati {trovati}", flush=True)
+            results_by_cf[r["cf"]] = r
+            done += 1
+            if done % 100 == 0:
+                trovati = sum(1 for x in results_by_cf.values() if x["trovata"])
+                print(f"  [passaggio 1: {done}/{len(entries)}] trovati {trovati}", flush=True)
 
     # ── Passaggio 2: lento (8s) solo timeout ──
-    timeout_sites = [e for e, r in zip(entries, results) if r["errore"] == "timeout"]
-    if timeout_sites:
-        print(f"[scanner] Passaggio 2: lento ({TIMEOUT}s) su {len(timeout_sites)} siti in timeout...")
+    timeout_entries = [e for e in entries if results_by_cf.get(e["cf_norm"], {}).get("errore") == "timeout"]
+    if timeout_entries:
+        print(f"[scanner] Passaggio 2: lento ({TIMEOUT}s) su {len(timeout_entries)} siti in timeout...")
         sem2 = asyncio.Semaphore(CONCURRENCY)
         async with httpx.AsyncClient(limits=limits, timeout=TIMEOUT,
                                       headers=headers, follow_redirects=True, verify=False) as client:
             async def run_slow(e):
                 async with sem2:
                     return await scansiona(e, client, "slow")
-            tasks2 = [asyncio.create_task(run_slow(e)) for e in timeout_sites]
-            # Sostituisci i risultati dei timeout con quelli nuovi
-            timeout_idx = {e.get("cf_norm", i): i for i, e in enumerate(entries)}
-            for coro in asyncio.as_completed(tasks2):
+            tasks2 = {e["cf_norm"]: asyncio.create_task(run_slow(e)) for e in timeout_entries}
+            for coro in asyncio.as_completed(tasks2.values()):
                 r = await coro
-                # Trova l'indice originale
-                for idx, entry in enumerate(entries):
-                    if entry["cf_norm"] == r["cf"]:
-                        results[idx] = r
-                        break
+                if r["cf"] in results_by_cf:
+                    results_by_cf[r["cf"]] = r
 
-    trovati = sum(1 for r in results if r["trovata"])
-    errori = sum(1 for r in results if r["errore"])
-    print(f"[scanner] Trovati: {trovati}/{len(entries)} ({round(100*trovati/len(entries),1)}%)")
+    results = list(results_by_cf.values())
     return results
-
 
 def salva_report(results):
     DATA_DIR.mkdir(parents=True, exist_ok=True)
