@@ -1,19 +1,19 @@
 {
-  "data_scan": "2026-07-05T10:28:37.894702",
-  "totale_siti_analizzati": 558,
-  "totale_file_trovati": 7327,
-  "siti_con_file": 182,
-  "siti_solo_pdf": 118,
-  "siti_con_formato_aperto": 27,
+  "data_scan": "2026-07-05T09:41:29.003371",
+  "totale_siti_analizzati": 462,
+  "totale_file_trovati": 6203,
+  "siti_con_file": 149,
+  "siti_solo_pdf": 95,
+  "siti_con_formato_aperto": 25,
   "formati": {
-    "pdf": 6299,
-    "xlsx": 542,
-    "zip": 147,
-    "xls": 136,
-    "xml": 105,
-    "docx": 52,
+    "pdf": 5282,
+    "xlsx": 486,
+    "zip": 146,
+    "xls": 115,
+    "xml": 89,
+    "docx": 48,
     "doc": 30,
-    "ods": 11,
-    "csv": 5
+    "csv": 5,
+    "ods": 2
   }
 }

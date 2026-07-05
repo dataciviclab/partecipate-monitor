@@ -1,20 +1,20 @@
 {
-  "data_scan": "2026-07-05T09:12:42.537881",
+  "data_scan": "2026-07-05T09:38:30.259346",
   "totale_siti": 975,
-  "sezione_trovata": 743,
-  "sezione_non_trovata": 232,
-  "percentuale": 76.2,
+  "sezione_trovata": 695,
+  "sezione_non_trovata": 280,
+  "percentuale": 71.3,
   "controllo_pubblico": {
     "totale": 975,
-    "trovata": 743
+    "trovata": 695
   },
   "solo_partecipata": {
     "totale": 0,
     "trovata": 0
   },
   "errori": {
-    "timeout": 52,
-    "connessione_rifiutata": 41,
+    "timeout": 66,
+    "connessione_rifiutata": 43,
     "unknown url type: '/www.ausino.it'": 1,
     "Server disconnected without sending a response.": 1,
     "Invalid port: 'SISTEMAAMBIENTELUCCA.IT'": 1

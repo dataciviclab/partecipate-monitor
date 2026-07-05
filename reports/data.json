@@ -1,73 +1,73 @@
 {
   "scanner": {
-    "data_scan": "2026-07-05T10:25:16.704084",
+    "data_scan": "2026-07-05T09:38:30.259346",
     "totale_siti": 975,
-    "sezione_trovata": 742,
-    "sezione_non_trovata": 233,
-    "percentuale": 76.1,
+    "sezione_trovata": 695,
+    "sezione_non_trovata": 280,
+    "percentuale": 71.3,
     "controllo_pubblico": {
       "totale": 975,
-      "trovata": 742
+      "trovata": 695
     },
     "solo_partecipata": {
       "totale": 0,
       "trovata": 0
     },
     "errori": {
-      "timeout": 39,
-      "connessione_rifiutata": 32,
-      "Server disconnected without sending a response.": 2,
+      "timeout": 66,
+      "connessione_rifiutata": 43,
       "unknown url type: '/www.ausino.it'": 1,
+      "Server disconnected without sending a response.": 1,
       "Invalid port: 'SISTEMAAMBIENTELUCCA.IT'": 1
     }
   },
   "formati": {
-    "data_scan": "2026-07-05T10:28:37.894702",
-    "totale_siti_analizzati": 558,
-    "totale_file_trovati": 7327,
-    "siti_con_file": 182,
-    "siti_solo_pdf": 118,
-    "siti_con_formato_aperto": 27,
+    "data_scan": "2026-07-05T09:41:29.003371",
+    "totale_siti_analizzati": 462,
+    "totale_file_trovati": 6203,
+    "siti_con_file": 149,
+    "siti_solo_pdf": 95,
+    "siti_con_formato_aperto": 25,
     "formati": {
-      "pdf": 6299,
-      "xlsx": 542,
-      "zip": 147,
-      "xls": 136,
-      "xml": 105,
-      "docx": 52,
+      "pdf": 5282,
+      "xlsx": 486,
+      "zip": 146,
+      "xls": 115,
+      "xml": 89,
+      "docx": 48,
       "doc": 30,
-      "ods": 11,
-      "csv": 5
+      "csv": 5,
+      "ods": 2
     }
   },
-  "catalogo_count": 742,
-  "score_medio": 70.3,
+  "catalogo_count": 695,
+  "score_medio": 70.8,
   "score_max": 100.0,
   "score_min": 0.0,
   "distribuzione": {
-    "0-9": 93,
-    "10-19": 3,
-    "20-29": 19,
-    "30-39": 28,
-    "40-49": 17,
+    "0-9": 75,
+    "10-19": 2,
+    "20-29": 16,
+    "30-39": 23,
+    "40-49": 14,
     "50-59": 9,
-    "60-69": 14,
+    "60-69": 9,
     "70-79": 12,
-    "80-89": 69,
+    "80-89": 57,
     "90-100": 0,
-    "90-99": 294
+    "90-99": 245
   },
   "categorie": {
-    "disposizioni_generali": 68.8,
-    "organizzazione": 79.2,
-    "consulenti": 68.5,
-    "personale": 73.5,
-    "bandi_contratti": 81.4,
-    "sovvenzioni": 68.6,
-    "bilanci": 75.3,
-    "beni_immobili": 79.4,
-    "controlli": 69.9,
-    "pagamenti": 67.2,
-    "accesso_civico": 56.1
+    "disposizioni_generali": 69.3,
+    "organizzazione": 79.4,
+    "consulenti": 69.0,
+    "personale": 74.0,
+    "bandi_contratti": 81.8,
+    "sovvenzioni": 69.5,
+    "bilanci": 75.8,
+    "beni_immobili": 80.3,
+    "controlli": 69.3,
+    "pagamenti": 67.7,
+    "accesso_civico": 57.4
   }
 }
