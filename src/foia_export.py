@@ -5,7 +5,7 @@ foia_export.py — Genera foia_targets.json nello schema condiviso
 Output: reports/foia_targets.json
 """
 
-import csv, json, sys, re
+import csv, json, sys, re, urllib.request
 from datetime import date
 from pathlib import Path
 
@@ -13,7 +13,8 @@ import duckdb
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REPORTS_DIR = Path(__file__).resolve().parent.parent / "reports"
-SCHEMA_PATH = Path(__file__).resolve().parent.parent.parent / "data-advocacy" / "schemas" / "foia_target_schema.json"
+SCHEMA_LOCAL = Path(__file__).resolve().parent.parent.parent / "data-advocacy" / "schemas" / "foia_target_schema.json"
+SCHEMA_URL = "https://raw.githubusercontent.com/dataciviclab/data-advocacy/main/schemas/foia_target_schema.json"
 GCS_IPA = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 LOCAL_IPA = DATA_DIR / "ipa_enti.parquet"
 
@@ -106,18 +107,25 @@ def genera():
         "targets": targets,
     }
 
-    # Valida contro schema se presente
-    if SCHEMA_PATH.exists():
+    # Valida contro schema (locale o GitHub)
+    import jsonschema
+    schema = None
+    if SCHEMA_LOCAL.exists():
+        with open(SCHEMA_LOCAL) as f:
+            schema = json.load(f)
+    else:
         try:
-            import jsonschema
-            with open(SCHEMA_PATH) as f:
-                schema = json.load(f)
-            jsonschema.validate(instance=output, schema=schema)
-            print("[foia] Validazione schema: OK")
-        except ImportError:
-            print("[foia] jsonschema non installato, skip")
+            resp = urllib.request.urlopen(SCHEMA_URL, timeout=5)
+            schema = json.loads(resp.read())
         except Exception as e:
-            print(f"[foia] ERRORE validazione: {e}")
+            print(f"[foia] ERRORE: impossibile caricare schema ({e})", file=sys.stderr)
+            sys.exit(1)
+    try:
+        jsonschema.validate(instance=output, schema=schema)
+    except jsonschema.ValidationError as e:
+        print(f"[foia] ERRORE validazione schema: {e}", file=sys.stderr)
+        sys.exit(1)
+    print("[foia] Validazione schema: OK")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     out_path = REPORTS_DIR / "foia_targets.json"
