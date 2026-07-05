@@ -13,6 +13,7 @@ Output: reports/foia_targets.json
 import csv, json, sys, os
 from datetime import date
 from pathlib import Path
+csv.field_size_limit(10 * 1024 * 1024)
 
 import duckdb
 

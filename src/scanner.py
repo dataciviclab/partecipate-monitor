@@ -2,13 +2,19 @@
 scanner.py — Verifica la presenza della sezione "Società Trasparente"
 sui siti web delle partecipate pubbliche.
 
-Strategia: homepage → cerca link "trasparen" → fallback su path diretti.
+Strategia a stadi con diagnostica:
+  1. Homepage → link "trasparen" (href + testo)
+  2. Sitemap → URL "trasparen"
+  3. Path combinatori (non fissi)
+  4. SaaS probe (piattaforme note)
+  Diagnostica: per ogni fallimento registra il motivo
 """
 
 import asyncio, csv, json, sys, os, time, re
 from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
+from itertools import product
 
 import httpx
 
@@ -18,41 +24,44 @@ from src.fetch_data import estrai_partecipate
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REPORT_FILE = DATA_DIR / "scanner_report.csv"
 SINTESI_FILE = DATA_DIR / "scanner_report.json"
+PATTERNS_FILE = Path(__file__).resolve().parent.parent / "data" / "known_patterns.json"
 
 CONCURRENCY = 15
 TIMEOUT = 8
 
-FALLBACK_PATHS = [
-    "/amministrazione-trasparente",
-    "/amministrazione-trasparente/",
-    "/amministrazione-trasparente.html",
-    "/amministrazionetrasparente",
-    "/societa-trasparente",
-    "/societa-trasparente/",
-    "/societa-trasparente-2",
-    "/societa-trasparente-2/",
-    "/societa-trasparente-3",
-    "/societa-trasparente-3/",
-    "/societa_trasparente.php",
-    "/societa-trasparente.php",
-    "/amministrazione-trasparente.php",
-    "/trasparenza",
-    "/trasparenza/",
-    "/societa-trasparenza",
-    "/societa-trasparenza/",
-    "/it/amministrazione-trasparente",
-    "/it/amministrazione-trasparente/",
-    "/it/societa-trasparente",
-    "/it/societa-trasparente/",
-    "/it/page/amministrazione-trasparente.html",
-    "/it/trasparenza",
-    "/it/trasparenza/",
-    "/it/content/trasparenza",
-    "/it/ilgruppo/comelavoriamo/pagine/amministrazionetrasparente",
-    "/newsite/trasparenza",
-    "/newsite/trasparenza/",
+# ── Pattern base per generazione combinatoria ──────────────────────────
+
+BASEWORDS = [
+    "amministrazione-trasparente",
+    "societa-trasparente",
+    "trasparenza",
 ]
 
+PREFIXES = [
+    "", "/it", "/la-societa", "/newsite",
+    "/it/page", "/it/content",
+]
+
+SUFFIXES = [
+    "", "/", ".html", ".php",
+    "-2", "-2/", "-3", "-3/",
+]
+
+# Piattaforme SaaS note
+SAAS_PLATFORMS = [
+    "portaletrasparenza.net",
+    "portaleamministrazionetrasparente.it",
+    "trasparenza-valutazione-merito.it",
+    "contrasparenza.it",
+]
+
+SKIP_EXT = (".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg",
+            ".ico", ".woff", ".woff2", ".ttf", ".eot", ".webp", ".mp4",
+            ".pdf", ".xls", ".xlsx", ".csv", ".xml", ".doc", ".docx",
+            ".zip", ".json", ".ods", ".odt")
+
+
+# ── Helpers ─────────────────────────────────────────────────────────────
 
 def normalizza_url(sito):
     sito = sito.strip().strip("'\"")
@@ -61,39 +70,53 @@ def normalizza_url(sito):
     return sito.rstrip("/")
 
 
+def genera_path():
+    """Path ordinati per probabilità. Solo i primi 15 più frequenti."""
+    return [
+        "/amministrazione-trasparente", "/amministrazione-trasparente/",
+        "/societa-trasparente", "/societa-trasparente/",
+        "/trasparenza", "/trasparenza/",
+        "/it/amministrazione-trasparente", "/it/amministrazione-trasparente/",
+        "/it/societa-trasparente", "/it/societa-trasparente/",
+        "/societa-trasparente-2", "/societa-trasparente-2/",
+        "/amministrazione-trasparente.html",
+        "/societa_trasparente.php",
+        "/it/page/amministrazione-trasparente.html",
+        "/it/content/trasparenza",
+        "/newsite/trasparenza", "/newsite/trasparenza/",
+    ]
+
+
+def carica_pattern():
+    """Carica pattern conosciuti da check manuali precedenti."""
+    if PATTERNS_FILE.exists():
+        with open(PATTERNS_FILE) as f:
+            return json.load(f)
+    return {"url_patterns": [], "saas_subdominio": []}
+
+
+def salva_pattern(pattern):
+    PATTERNS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(PATTERNS_FILE, "w") as f:
+        json.dump(pattern, f, indent=2, ensure_ascii=False)
+
+
 def cerca_trasparenza_in_html(html, base_url):
-    """Cerca link a sezioni trasparenza nell'HTML.
-    Cerca tag <a> completi: se l'href o il testo contengono 'trasparen',
-    restituisce l'href assoluto.
-    Esclude link a risorse non-HTML (CSS, JS, immagini, etc.)."""
+    """Cerca tag <a> completi con 'trasparen' in href o testo."""
     if not html:
         return []
-    
-    SKIP_EXT = (".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg",
-                ".ico", ".woff", ".woff2", ".ttf", ".eot", ".webp", ".mp4",
-                ".pdf", ".xls", ".xlsx", ".csv", ".xml", ".doc", ".docx",
-                ".zip", ".json", ".ods", ".odt")
-    
     risultati = []
-    # Cerca tag <a> completi: href="..." e testo
     for m in re.finditer(
         r'<a[^>]*href=["\']([^"\']+?)["\'][^>]*>([^<]*?)</a>',
         html, re.IGNORECASE | re.DOTALL
     ):
         href = m.group(1).strip()
         testo = m.group(2).strip()
-        combined = href.lower() + testo.lower()
-        
-        # Deve contenere "trasparen" da qualche parte
-        if "trasparen" not in combined:
+        if "trasparen" not in (href.lower() + testo.lower()):
             continue
-        
-        # Salta asset non-HTML
         href_path = urlparse(href).path.lower()
         if any(href_path.endswith(ext) for ext in SKIP_EXT):
             continue
-        
-        # Ricostruisci URL assoluto
         if href.startswith("http"):
             url = href
         elif href.startswith("/"):
@@ -102,43 +125,64 @@ def cerca_trasparenza_in_html(html, base_url):
             url = base_url + href
         else:
             url = base_url + "/" + href
-        
         risultati.append({"tipo": "href", "valore": url, "testo": testo[:80]})
-    
-    # Fallback: cerca solo testo (per link non in <a> o malformati)
     if not risultati:
         for m in re.finditer(r">([^<]*trasparen[tz][^<]*)<", html.lower()):
             risultati.append({"tipo": "testo", "valore": m.group(1).strip()})
-    
-    # Dedup
     visti = set()
     unici = []
     for r in risultati:
-        key = r.get("valore", r.get("tipo", "")) + r.get("tipo", "")
+        key = str(r.get("valore", "")) + str(r.get("tipo", ""))
         if key not in visti:
             visti.add(key)
             unici.append(r)
     return unici
 
 
+def slug_da_nome(nome):
+    """Genera slug dal nome della partecipata per probe SaaS."""
+    s = nome.lower().strip().replace("'", "").replace('"', "")
+    s = re.sub(r'[^a-z0-9]+', '', s)
+    return s[:30]
+
+
+def estratti_da_saas(slug, dominio):
+    """Genera URL SaaS da provare."""
+    urls = []
+    for platform in SAAS_PLATFORMS:
+        urls.append(f"https://{slug}.{platform}")
+        urls.append(f"https://{slug}.{platform}/")
+    # Subdomain trasparenza.sito.it
+    parsed = urlparse(dominio)
+    hostname = parsed.hostname or dominio.replace("https://", "").replace("http://", "").split("/")[0]
+    urls.append(f"https://trasparenza.{hostname}")
+    urls.append(f"https://amministrazionetrasparente.{hostname}")
+    return urls
+
+
+# ── Scanner ─────────────────────────────────────────────────────────────
+
 async def scanner(entries, progress_cb=None):
     sem = asyncio.Semaphore(CONCURRENCY)
     results = []
     start_global = time.time()
     errori_rete = 0
+    combinatori = genera_path()
+    known = carica_pattern()
+    extra_patterns = known.get("url_patterns", [])
 
-    limits = httpx.Limits(max_connections=CONCURRENCY, max_keepalive_connections=5)
     headers = {
         "User-Agent": "partecipate-monitor/1.0 (https://github.com/dataciviclab/partecipate-monitor)",
         "Accept": "text/html,application/xhtml+xml",
     }
 
     async with httpx.AsyncClient(
-        limits=limits, timeout=TIMEOUT, headers=headers,
-        follow_redirects=True, verify=False
+        limits=httpx.Limits(max_connections=CONCURRENCY, max_keepalive_connections=5),
+        timeout=TIMEOUT, headers=headers, follow_redirects=True, verify=False
     ) as client:
 
         async def scansiona(entry):
+            nonlocal errori_rete
             async with sem:
                 base = normalizza_url(entry["sito_istituzionale"])
                 out = {
@@ -146,63 +190,91 @@ async def scanner(entries, progress_cb=None):
                     "denominazione": entry["denominazione"],
                     "sito": base,
                     "categoria": entry["categoria"],
-                    "trovata": False,
-                    "metodo": "",
-                    "url": "",
-                    "errore": "",
+                    "trovata": False, "metodo": "", "url": "", "errore": "",
+                    "nota": "",    # diagnostica
                 }
+                t0 = time.time()
+
                 try:
+                    # ── STADIO 1: Homepage ──
                     resp = await client.get(base)
+                    out["nota"] = f"homepage: {resp.status_code}"
                     if resp.status_code in (200, 202) and resp.text:
                         frammenti = cerca_trasparenza_in_html(resp.text, base)
                         if frammenti:
                             out["trovata"] = True
                             out["metodo"] = "link_in_homepage"
                             hrefs = [f for f in frammenti if f["tipo"] == "href"]
-                            if hrefs:
-                                out["url"] = hrefs[0]["valore"]
-                            else:
-                                out["url"] = frammenti[0]["valore"]
+                            out["url"] = hrefs[0]["valore"] if hrefs else frammenti[0]["valore"]
                             return out
+                        out["nota"] += f", {len(resp.text)}b, no link trasparen"
 
-                    # PASSO 2: sitemap.xml — cerca URL con "trasparen"
+                    # ── STADIO 2: Sitemap ──
                     for sm_path in ("/sitemap.xml", "/sitemap_index.xml", "/wp-sitemap.xml"):
                         try:
-                            sm_resp = await client.get(base + sm_path)
-                            if sm_resp.status_code in (200, 202) and len(sm_resp.text) > 100:
-                                sm_text = sm_resp.text.lower()
-                                if "trasparen" in sm_text:
-                                    urls = re.findall(
-                                        r'<loc>([^<]*trasparen[^<]*)</loc>',
-                                        sm_resp.text, re.IGNORECASE
-                                    )
-                                    if urls:
-                                        out["trovata"] = True
-                                        out["metodo"] = "sitemap"
-                                        out["url"] = urls[0]
-                                        return out
-                                break  # sitemap trovata ma senza trasparenza
-                        except:
-                            continue
-
-                    # PASSO 3: fallback esteso
-                    for path in FALLBACK_PATHS:
-                        try:
-                            r2 = await client.get(base + path)
-                            if r2.status_code in (200, 202):
-                                out["trovata"] = True
-                                out["metodo"] = "path_diretto"
-                                out["url"] = base + path
-                                return out
-                            elif r2.status_code in (301, 302, 303, 307, 308):
-                                loc = r2.headers.get("location", "").lower()
-                                if "trasparen" in loc:
+                            sm = await client.get(base + sm_path)
+                            if sm.status_code in (200, 202) and "trasparen" in (sm.text or "").lower():
+                                urls = re.findall(r'<loc>([^<]*trasparen[^<]*)</loc>', sm.text or "", re.IGNORECASE)
+                                if urls:
                                     out["trovata"] = True
-                                    out["metodo"] = "redirect"
-                                    out["url"] = base + path
+                                    out["metodo"] = "sitemap"
+                                    out["url"] = urls[0]
                                     return out
                         except:
                             continue
+
+                    # ── STADIO 3: Path combinatori (in parallelo, batch) ──
+                    async def check_path(path):
+                        try:
+                            r = await client.get(base + path)
+                            return (r.status_code, base + path)
+                        except:
+                            return (None, path)
+                    
+                    fallback_403 = 0
+                    # Prova i path in batch da 5
+                    for i in range(0, len(combinatori), 5):
+                        batch = combinatori[i:i+5]
+                        results_batch = await asyncio.gather(*[check_path(p) for p in batch])
+                        for status, url in results_batch:
+                            if status == 403:
+                                fallback_403 += 1
+                            if status in (200, 202):
+                                out["trovata"] = True
+                                out["metodo"] = "path_combinatorio"
+                                out["url"] = url
+                                return out
+                    out["nota"] += f", {len(combinatori)} paths ({fallback_403} forbidden)"
+
+                    # ── STADIO 4: Known patterns ──
+                    for pattern in extra_patterns:
+                        try:
+                            r3 = await client.get(base + pattern)
+                            if r3.status_code in (200, 202):
+                                out["trovata"] = True
+                                out["metodo"] = "known_pattern"
+                                out["url"] = base + pattern
+                                return out
+                        except:
+                            continue
+
+                    # ── STADIO 5: SaaS probe ──
+                    slug = slug_da_nome(entry["denominazione"])
+                    for saas_url in estratti_da_saas(slug, base):
+                        try:
+                            r4 = await client.get(saas_url)
+                            if r4.status_code in (200, 202):
+                                out["trovata"] = True
+                                out["metodo"] = "saas"
+                                out["url"] = saas_url
+                                return out
+                        except:
+                            continue
+
+                    # ── Se arriviamo qui: NON TROVATO ──
+                    elapsed = int((time.time() - t0) * 1000)
+                    out["nota"] += f", {elapsed}ms"
+
                 except httpx.ConnectError:
                     out["errore"] = "connessione_rifiutata"
                 except httpx.TimeoutException:
@@ -233,33 +305,30 @@ def salva_report(results):
     with open(REPORT_FILE, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["cf", "denominazione", "sito", "categoria",
-                      "trovata", "metodo", "url", "errore"])
+                      "trovata", "metodo", "url", "errore", "nota"])
         for r in results:
             w.writerow([
                 r["cf"], r["denominazione"], r["sito"], r["categoria"],
                 "SI" if r["trovata"] else "NO",
                 r.get("metodo", ""), r.get("url", ""), r.get("errore", ""),
+                r.get("nota", ""),
             ])
 
+    from collections import Counter
     totale = len(results)
     trovati = sum(1 for r in results if r["trovata"])
+    per_metodo = Counter(r.get("metodo", "?") for r in results)
+    per_nota = Counter(r.get("nota", "") for r in results if not r["trovata"])
+
     sintesi = {
         "data_scan": datetime.now().isoformat(),
         "totale_siti": totale,
         "sezione_trovata": trovati,
         "sezione_non_trovata": totale - trovati,
         "percentuale": round(100 * trovati / totale, 1),
-        "controllo_pubblico": {
-            "totale": sum(1 for r in results if r["categoria"] == "controllo_pubblico"),
-            "trovata": sum(1 for r in results if r["trovata"] and r["categoria"] == "controllo_pubblico"),
-        },
-        "solo_partecipata": {
-            "totale": sum(1 for r in results if r["categoria"] == "partecipata"),
-            "trovata": sum(1 for r in results if r["trovata"] and r["categoria"] == "partecipata"),
-        },
-        "errori": dict(
-            __import__("collections").Counter(r["errore"] for r in results if r["errore"]).most_common()
-        ),
+        "metodi": dict(per_metodo.most_common()),
+        "diagnostica_non_trovati": dict(per_nota.most_common(10)),
+        "errori": dict(Counter(r["errore"] for r in results if r["errore"]).most_common()),
     }
 
     with open(SINTESI_FILE, "w") as f:
@@ -268,20 +337,22 @@ def salva_report(results):
     print(f"\n[scanner] Report: {REPORT_FILE}")
     print(f"[scanner] Sintesi: {SINTESI_FILE}")
     print(f"[scanner] Trovati: {trovati}/{totale} ({sintesi['percentuale']}%)")
+    print(f"[scanner] Metodi: {dict(per_metodo.most_common(5))}")
+    if per_nota:
+        print(f"[scanner] Diagnostica: {dict(per_nota.most_common(3))}")
     return sintesi
 
 
 def main():
-    import time
-
     only_controllo = "--solo-controllo" in sys.argv
     max_siti = None
     for a in sys.argv:
         if a.startswith("--max="):
             max_siti = int(a.split("=")[1])
 
-    print(f"[scanner] Avvio scan {'solo controllo' if only_controllo else 'tutti'} "
-          f"{f'(max {max_siti})' if max_siti else ''}")
+    print(f"[scanner] Avvio scan v2 (combinatorio + SaaS + diagnostica)")
+    print(f"[scanner] Path combinatori: {len(genera_path())}")
+    print(f"[scanner] Saas probe: {len(SAAS_PLATFORMS)} piattaforme")
 
     def progress(done, total, trovati, errori, rate):
         rimanenti = total - done
