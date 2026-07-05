@@ -14,7 +14,8 @@ import jsonschema
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 REPORTS_DIR = Path(__file__).resolve().parent.parent / "reports"
-SCHEMA_PATH = Path(__file__).resolve().parent / ".." / "schemas" / "foia_target_schema.json"
+SCHEMA_VENDORED = Path(__file__).resolve().parent / ".." / "schemas" / "foia_target_schema.json"
+SCHEMA_SIBLING = Path(__file__).resolve().parent.parent.parent / "data-advocacy" / "schemas" / "foia_target_schema.json"
 GCS_IPA = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 LOCAL_IPA = DATA_DIR / "ipa_enti.parquet"
 
@@ -107,19 +108,15 @@ def genera():
         "targets": targets,
     }
 
-    # Valida contro schema (locale o GitHub)
-    import jsonschema
-    schema = None
-    if SCHEMA_LOCAL.exists():
-        with open(SCHEMA_LOCAL) as f:
-            schema = json.load(f)
-    else:
-        try:
-            resp = urllib.request.urlopen(SCHEMA_URL, timeout=5)
-            schema = json.loads(resp.read())
-        except Exception as e:
-            print(f"[foia] ERRORE: impossibile caricare schema ({e})", file=sys.stderr)
-            sys.exit(1)
+    # Valida contro schema: prima sibling (data-advocacy), poi vendored
+    schema_path = SCHEMA_SIBLING if SCHEMA_SIBLING.exists() else SCHEMA_VENDORED
+    if not schema_path.exists():
+        print(f"[foia] ERRORE: schema non trovato", file=sys.stderr)
+        sys.exit(1)
+    if schema_path == SCHEMA_VENDORED:
+        print("[foia] Attenzione: usa schema vendored (non data-advocacy originale)")
+    with open(schema_path) as f:
+        schema = json.load(f)
     try:
         jsonschema.validate(instance=output, schema=schema)
     except jsonschema.ValidationError as e:
