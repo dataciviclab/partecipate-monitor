@@ -10,6 +10,9 @@ dependencies = [
     "jsonschema>=4.0",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
 [project.scripts]
 partecipate-scan = "src.scanner:main"
 partecipate-catalogo = "src.catalogo:main"

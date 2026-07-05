@@ -16,7 +16,9 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-      - run: pip install -e .
+      - run: pip install -e ".[dev]"
+      - name: Test schema validazione
+        run: python -m pytest tests/ -v
       - name: Fast scan (30 siti)
         run: python src/scanner.py --solo-controllo --max=30
       - name: Catalogo (sui trovati)
