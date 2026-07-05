@@ -26,12 +26,16 @@ FALLBACK_PATHS = [
     "/amministrazione-trasparente",
     "/amministrazione-trasparente/",
     "/amministrazione-trasparente.html",
+    "/amministrazionetrasparente",
     "/societa-trasparente",
     "/societa-trasparente/",
     "/societa-trasparente-2",
     "/societa-trasparente-2/",
     "/societa-trasparente-3",
     "/societa-trasparente-3/",
+    "/societa_trasparente.php",
+    "/societa-trasparente.php",
+    "/amministrazione-trasparente.php",
     "/trasparenza",
     "/trasparenza/",
     "/societa-trasparenza",
@@ -41,8 +45,12 @@ FALLBACK_PATHS = [
     "/it/societa-trasparente",
     "/it/societa-trasparente/",
     "/it/page/amministrazione-trasparente.html",
+    "/it/trasparenza",
+    "/it/trasparenza/",
     "/it/content/trasparenza",
-    "/it/content/trasparenza-actv-0",
+    "/it/ilgruppo/comelavoriamo/pagine/amministrazionetrasparente",
+    "/newsite/trasparenza",
+    "/newsite/trasparenza/",
 ]
 
 
@@ -54,43 +62,59 @@ def normalizza_url(sito):
 
 
 def cerca_trasparenza_in_html(html, base_url):
-    """Cerca link/frammenti 'trasparente'/'trasparenza' nell'HTML.
-    Restituisce lista di dict: {'tipo': 'href'|'testo', 'valore': ...}
-    Esclude link a risorse non-HTML (CSS, JS, immagini, font, etc.)."""
+    """Cerca link a sezioni trasparenza nell'HTML.
+    Cerca tag <a> completi: se l'href o il testo contengono 'trasparen',
+    restituisce l'href assoluto.
+    Esclude link a risorse non-HTML (CSS, JS, immagini, etc.)."""
     if not html:
         return []
     
-    # Estensioni da escludere (asset non-HTML)
     SKIP_EXT = (".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg",
                 ".ico", ".woff", ".woff2", ".ttf", ".eot", ".webp", ".mp4",
                 ".pdf", ".xls", ".xlsx", ".csv", ".xml", ".doc", ".docx",
-                ".zip", ".json", ".ods", ".odt")  # anche documenti, vanno seguiti separatamente
+                ".zip", ".json", ".ods", ".odt")
     
-    html_lower = html.lower()
     risultati = []
-    for m in re.finditer(r'href=["\']([^"\']+?)["\']', html_lower):
+    # Cerca tag <a> completi: href="..." e testo
+    for m in re.finditer(
+        r'<a[^>]*href=["\']([^"\']+?)["\'][^>]*>([^<]*?)</a>',
+        html, re.IGNORECASE | re.DOTALL
+    ):
         href = m.group(1).strip()
-        # Salta asset non-HTML (usa path senza query string)
+        testo = m.group(2).strip()
+        combined = href.lower() + testo.lower()
+        
+        # Deve contenere "trasparen" da qualche parte
+        if "trasparen" not in combined:
+            continue
+        
+        # Salta asset non-HTML
         href_path = urlparse(href).path.lower()
         if any(href_path.endswith(ext) for ext in SKIP_EXT):
             continue
-        # Deve contenere "trasparen" (con t o z)
-        if "trasparen" not in href:
-            continue
+        
+        # Ricostruisci URL assoluto
         if href.startswith("http"):
-            risultati.append({"tipo": "href", "valore": href})
+            url = href
         elif href.startswith("/"):
-            risultati.append({"tipo": "href", "valore": base_url + href})
+            url = base_url + href
         elif href.startswith("#"):
-            risultati.append({"tipo": "href", "valore": base_url + href})
+            url = base_url + href
         else:
-            risultati.append({"tipo": "href", "valore": base_url + "/" + href})
-    for m in re.finditer(r">([^<]*trasparen[tz][^<]*)<", html_lower):
-        risultati.append({"tipo": "testo", "valore": m.group(1).strip()})
+            url = base_url + "/" + href
+        
+        risultati.append({"tipo": "href", "valore": url, "testo": testo[:80]})
+    
+    # Fallback: cerca solo testo (per link non in <a> o malformati)
+    if not risultati:
+        for m in re.finditer(r">([^<]*trasparen[tz][^<]*)<", html.lower()):
+            risultati.append({"tipo": "testo", "valore": m.group(1).strip()})
+    
+    # Dedup
     visti = set()
     unici = []
     for r in risultati:
-        key = r["tipo"] + "::" + r["valore"]
+        key = r.get("valore", r.get("tipo", "")) + r.get("tipo", "")
         if key not in visti:
             visti.add(key)
             unici.append(r)
@@ -111,7 +135,7 @@ async def scanner(entries, progress_cb=None):
 
     async with httpx.AsyncClient(
         limits=limits, timeout=TIMEOUT, headers=headers,
-        follow_redirects=False, verify=False
+        follow_redirects=True, verify=False
     ) as client:
 
         async def scansiona(entry):
