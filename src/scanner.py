@@ -8,6 +8,7 @@ Strategia: homepage → cerca link "trasparen" → fallback su path diretti.
 import asyncio, csv, json, sys, os, time, re
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urlparse
 
 import httpx
 
@@ -43,13 +44,27 @@ def normalizza_url(sito):
 def cerca_trasparenza_in_html(html, base_url):
     """Cerca link/frammenti 'trasparente'/'trasparenza' nell'HTML.
     Restituisce lista di dict: {'tipo': 'href'|'testo', 'valore': ...}
-    Per href restituisce URL assoluto."""
+    Esclude link a risorse non-HTML (CSS, JS, immagini, font, etc.)."""
     if not html:
         return []
+    
+    # Estensioni da escludere (asset non-HTML)
+    SKIP_EXT = (".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg",
+                ".ico", ".woff", ".woff2", ".ttf", ".eot", ".webp", ".mp4",
+                ".pdf", ".xls", ".xlsx", ".csv", ".xml", ".doc", ".docx",
+                ".zip", ".json", ".ods", ".odt")  # anche documenti, vanno seguiti separatamente
+    
     html_lower = html.lower()
     risultati = []
-    for m in re.finditer(r'href=["\']([^"\']*trasparen[tz][^"\']*)["\']', html_lower):
-        href = m.group(1)
+    for m in re.finditer(r'href=["\']([^"\']+?)["\']', html_lower):
+        href = m.group(1).strip()
+        # Salta asset non-HTML (usa path senza query string)
+        href_path = urlparse(href).path.lower()
+        if any(href_path.endswith(ext) for ext in SKIP_EXT):
+            continue
+        # Deve contenere "trasparen" (con t o z)
+        if "trasparen" not in href:
+            continue
         if href.startswith("http"):
             risultati.append({"tipo": "href", "valore": href})
         elif href.startswith("/"):

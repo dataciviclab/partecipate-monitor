@@ -1,0 +1,22 @@
+{
+  "data_scan": "2026-07-05T10:25:16.704084",
+  "totale_siti": 975,
+  "sezione_trovata": 742,
+  "sezione_non_trovata": 233,
+  "percentuale": 76.1,
+  "controllo_pubblico": {
+    "totale": 975,
+    "trovata": 742
+  },
+  "solo_partecipata": {
+    "totale": 0,
+    "trovata": 0
+  },
+  "errori": {
+    "timeout": 39,
+    "connessione_rifiutata": 32,
+    "Server disconnected without sending a response.": 2,
+    "unknown url type: '/www.ausino.it'": 1,
+    "Invalid port: 'SISTEMAAMBIENTELUCCA.IT'": 1
+  }
+}

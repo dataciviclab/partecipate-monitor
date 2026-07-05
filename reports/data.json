@@ -1,0 +1,73 @@
+{
+  "scanner": {
+    "data_scan": "2026-07-05T10:25:16.704084",
+    "totale_siti": 975,
+    "sezione_trovata": 742,
+    "sezione_non_trovata": 233,
+    "percentuale": 76.1,
+    "controllo_pubblico": {
+      "totale": 975,
+      "trovata": 742
+    },
+    "solo_partecipata": {
+      "totale": 0,
+      "trovata": 0
+    },
+    "errori": {
+      "timeout": 39,
+      "connessione_rifiutata": 32,
+      "Server disconnected without sending a response.": 2,
+      "unknown url type: '/www.ausino.it'": 1,
+      "Invalid port: 'SISTEMAAMBIENTELUCCA.IT'": 1
+    }
+  },
+  "formati": {
+    "data_scan": "2026-07-05T10:28:37.894702",
+    "totale_siti_analizzati": 558,
+    "totale_file_trovati": 7327,
+    "siti_con_file": 182,
+    "siti_solo_pdf": 118,
+    "siti_con_formato_aperto": 27,
+    "formati": {
+      "pdf": 6299,
+      "xlsx": 542,
+      "zip": 147,
+      "xls": 136,
+      "xml": 105,
+      "docx": 52,
+      "doc": 30,
+      "ods": 11,
+      "csv": 5
+    }
+  },
+  "catalogo_count": 742,
+  "score_medio": 70.3,
+  "score_max": 100.0,
+  "score_min": 0.0,
+  "distribuzione": {
+    "0-9": 93,
+    "10-19": 3,
+    "20-29": 19,
+    "30-39": 28,
+    "40-49": 17,
+    "50-59": 9,
+    "60-69": 14,
+    "70-79": 12,
+    "80-89": 69,
+    "90-100": 0,
+    "90-99": 294
+  },
+  "categorie": {
+    "disposizioni_generali": 68.8,
+    "organizzazione": 79.2,
+    "consulenti": 68.5,
+    "personale": 73.5,
+    "bandi_contratti": 81.4,
+    "sovvenzioni": 68.6,
+    "bilanci": 75.3,
+    "beni_immobili": 79.4,
+    "controlli": 69.9,
+    "pagamenti": 67.2,
+    "accesso_civico": 56.1
+  }
+}

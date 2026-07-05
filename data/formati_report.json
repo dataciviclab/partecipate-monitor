@@ -1,0 +1,19 @@
+{
+  "data_scan": "2026-07-05T10:28:37.894702",
+  "totale_siti_analizzati": 558,
+  "totale_file_trovati": 7327,
+  "siti_con_file": 182,
+  "siti_solo_pdf": 118,
+  "siti_con_formato_aperto": 27,
+  "formati": {
+    "pdf": 6299,
+    "xlsx": 542,
+    "zip": 147,
+    "xls": 136,
+    "xml": 105,
+    "docx": 52,
+    "doc": 30,
+    "ods": 11,
+    "csv": 5
+  }
+}
