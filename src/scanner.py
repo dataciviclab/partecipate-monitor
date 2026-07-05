@@ -28,6 +28,7 @@ PATTERNS_FILE = Path(__file__).resolve().parent.parent / "data" / "known_pattern
 
 CONCURRENCY = 15
 TIMEOUT = 8
+TIMEOUT_FAST = 3  # primo tentativo: se non risponde in 3s, riprova dopo
 
 # ── Pattern base per generazione combinatoria ──────────────────────────
 
@@ -163,139 +164,151 @@ def estratti_da_saas(slug, dominio):
 # ── Scanner ─────────────────────────────────────────────────────────────
 
 async def scanner(entries, progress_cb=None):
-    sem = asyncio.Semaphore(CONCURRENCY)
-    results = []
-    start_global = time.time()
-    errori_rete = 0
     combinatori = genera_path()
     known = carica_pattern()
     extra_patterns = known.get("url_patterns", [])
-
     headers = {
         "User-Agent": "partecipate-monitor/1.0 (https://github.com/dataciviclab/partecipate-monitor)",
         "Accept": "text/html,application/xhtml+xml",
     }
+    limits = httpx.Limits(max_connections=CONCURRENCY, max_keepalive_connections=5)
 
-    async with httpx.AsyncClient(
-        limits=httpx.Limits(max_connections=CONCURRENCY, max_keepalive_connections=5),
-        timeout=TIMEOUT, headers=headers, follow_redirects=True, verify=False
-    ) as client:
+    async def scansiona(entry, client, timeout_label=""):
+        base = normalizza_url(entry["sito_istituzionale"])
+        out = {
+            "cf": entry["cf_norm"],
+            "denominazione": entry["denominazione"],
+            "sito": base,
+            "categoria": entry["categoria"],
+            "trovata": False, "metodo": "", "url": "", "errore": "",
+            "nota": timeout_label,
+        }
+        t0 = time.time()
+        try:
+            resp = await client.get(base)
+            out["nota"] = f"homepage: {resp.status_code}"
+            if resp.status_code in (200, 202) and resp.text:
+                frammenti = cerca_trasparenza_in_html(resp.text, base)
+                if frammenti:
+                    out["trovata"] = True
+                    out["metodo"] = "link_in_homepage"
+                    hrefs = [f for f in frammenti if f["tipo"] == "href"]
+                    out["url"] = hrefs[0]["valore"] if hrefs else frammenti[0]["valore"]
+                    return out
+                out["nota"] += f", {len(resp.text)}b, no link trasparen"
 
-        async def scansiona(entry):
-            nonlocal errori_rete
-            async with sem:
-                base = normalizza_url(entry["sito_istituzionale"])
-                out = {
-                    "cf": entry["cf_norm"],
-                    "denominazione": entry["denominazione"],
-                    "sito": base,
-                    "categoria": entry["categoria"],
-                    "trovata": False, "metodo": "", "url": "", "errore": "",
-                    "nota": "",    # diagnostica
-                }
-                t0 = time.time()
-
+            for sm_path in ("/sitemap.xml", "/sitemap_index.xml", "/wp-sitemap.xml"):
                 try:
-                    # ── STADIO 1: Homepage ──
-                    resp = await client.get(base)
-                    out["nota"] = f"homepage: {resp.status_code}"
-                    if resp.status_code in (200, 202) and resp.text:
-                        frammenti = cerca_trasparenza_in_html(resp.text, base)
-                        if frammenti:
+                    sm = await client.get(base + sm_path)
+                    if sm.status_code in (200, 202) and "trasparen" in (sm.text or "").lower():
+                        urls = re.findall(r'<loc>([^<]*trasparen[^<]*)</loc>', sm.text or "", re.IGNORECASE)
+                        if urls:
                             out["trovata"] = True
-                            out["metodo"] = "link_in_homepage"
-                            hrefs = [f for f in frammenti if f["tipo"] == "href"]
-                            out["url"] = hrefs[0]["valore"] if hrefs else frammenti[0]["valore"]
+                            out["metodo"] = "sitemap"
+                            out["url"] = urls[0]
                             return out
-                        out["nota"] += f", {len(resp.text)}b, no link trasparen"
+                except:
+                    continue
 
-                    # ── STADIO 2: Sitemap ──
-                    for sm_path in ("/sitemap.xml", "/sitemap_index.xml", "/wp-sitemap.xml"):
-                        try:
-                            sm = await client.get(base + sm_path)
-                            if sm.status_code in (200, 202) and "trasparen" in (sm.text or "").lower():
-                                urls = re.findall(r'<loc>([^<]*trasparen[^<]*)</loc>', sm.text or "", re.IGNORECASE)
-                                if urls:
-                                    out["trovata"] = True
-                                    out["metodo"] = "sitemap"
-                                    out["url"] = urls[0]
-                                    return out
-                        except:
-                            continue
+            # Path combinatori
+            async def check_path(path):
+                try:
+                    r = await client.get(base + path)
+                    ok = r.status_code in (200, 202) and r.text and "trasparen" in r.text.lower()[:5000]
+                    return (r.status_code, base + path, ok)
+                except:
+                    return (None, path, False)
 
-                    # ── STADIO 3: Path combinatori (in parallelo, batch) ──
-                    async def check_path(path):
-                        try:
-                            r = await client.get(base + path)
-                            ok = r.status_code in (200, 202) and r.text and "trasparen" in r.text.lower()[:5000]
-                            return (r.status_code, base + path, ok)
-                        except:
-                            return (None, path, False)
+            fallback_403 = 0
+            for i in range(0, len(combinatori), 5):
+                batch = combinatori[i:i+5]
+                rb = await asyncio.gather(*[check_path(p) for p in batch])
+                for status, url, content_ok in rb:
+                    if status == 403: fallback_403 += 1
+                    if status in (200, 202) and content_ok:
+                        out["trovata"] = True
+                        out["metodo"] = "path_combinatorio"
+                        out["url"] = url
+                        return out
+            out["nota"] += f", {len(combinatori)} paths ({fallback_403} forbidden)"
 
-                    fallback_403 = 0
-                    for i in range(0, len(combinatori), 5):
-                        batch = combinatori[i:i+5]
-                        results_batch = await asyncio.gather(*[check_path(p) for p in batch])
-                        for status, url, content_ok in results_batch:
-                            if status == 403:
-                                fallback_403 += 1
-                            if status in (200, 202) and content_ok:
-                                out["trovata"] = True
-                                out["metodo"] = "path_combinatorio"
-                                out["url"] = url
-                                return out
-                    out["nota"] += f", {len(combinatori)} paths ({fallback_403} forbidden)"
+            # Known patterns
+            for pattern in extra_patterns:
+                try:
+                    r3 = await client.get(base + pattern)
+                    if r3.status_code in (200, 202) and r3.text and "trasparen" in r3.text.lower()[:5000]:
+                        out["trovata"] = True
+                        out["metodo"] = "known_pattern"
+                        out["url"] = base + pattern
+                        return out
+                except:
+                    continue
 
-                    # ── STADIO 4: Known patterns ──
-                    for pattern in extra_patterns:
-                        try:
-                            r3 = await client.get(base + pattern)
-                            if r3.status_code in (200, 202):
-                                out["trovata"] = True
-                                out["metodo"] = "known_pattern"
-                                out["url"] = base + pattern
-                                return out
-                        except:
-                            continue
+            # SaaS probe
+            slug = slug_da_nome(entry["denominazione"])
+            for saas_url in estratti_da_saas(slug, base):
+                try:
+                    r4 = await client.get(saas_url)
+                    if r4.status_code in (200, 202) and r4.text and "trasparen" in r4.text.lower()[:5000]:
+                        out["trovata"] = True
+                        out["metodo"] = "saas"
+                        out["url"] = saas_url
+                        return out
+                except:
+                    continue
 
-                    # ── STADIO 5: SaaS probe ──
-                    slug = slug_da_nome(entry["denominazione"])
-                    for saas_url in estratti_da_saas(slug, base):
-                        try:
-                            r4 = await client.get(saas_url)
-                            if r4.status_code in (200, 202) and r4.text and "trasparen" in r4.text.lower()[:5000]:
-                                out["trovata"] = True
-                                out["metodo"] = "saas"
-                                out["url"] = saas_url
-                                return out
-                        except:
-                            continue
+            elapsed = int((time.time() - t0) * 1000)
+            out["nota"] += f", {elapsed}ms"
 
-                    # ── Se arriviamo qui: NON TROVATO ──
-                    elapsed = int((time.time() - t0) * 1000)
-                    out["nota"] += f", {elapsed}ms"
+        except httpx.TimeoutException:
+            out["errore"] = "timeout"
+        except httpx.ConnectError:
+            out["errore"] = "connessione_rifiutata"
+        except Exception as e:
+            out["errore"] = str(e)[:80]
+        return out
 
-                except httpx.ConnectError:
-                    out["errore"] = "connessione_rifiutata"
-                except httpx.TimeoutException:
-                    out["errore"] = "timeout"
-                except Exception as e:
-                    out["errore"] = str(e)[:80]
-                return out
-
-        tasks = [asyncio.create_task(scansiona(e)) for e in entries]
-        n = len(entries)
+    # ── Passaggio 1: veloce (3s timeout) ──
+    print(f"[scanner] Passaggio 1: veloce ({TIMEOUT_FAST}s timeout)...")
+    results = []
+    sem = asyncio.Semaphore(CONCURRENCY)
+    async with httpx.AsyncClient(limits=limits, timeout=TIMEOUT_FAST,
+                                  headers=headers, follow_redirects=True, verify=False) as client:
+        async def run_fast(e):
+            async with sem:
+                return await scansiona(e, client, "fast")
+        tasks = [asyncio.create_task(run_fast(e)) for e in entries]
         for i, coro in enumerate(asyncio.as_completed(tasks)):
             r = await coro
             results.append(r)
-            if r["errore"]:
-                errori_rete += 1
-            if progress_cb and (i + 1) % 50 == 0:
+            if progress_cb and (i + 1) % 100 == 0:
                 trovati = sum(1 for x in results if x["trovata"])
-                elapsed = time.time() - start_global
-                rate = (i + 1) / elapsed if elapsed > 0 else 0
-                progress_cb(i + 1, n, trovati, errori_rete, rate)
+                print(f"  [passaggio 1: {i+1}/{len(entries)}] trovati {trovati}", flush=True)
 
+    # ── Passaggio 2: lento (8s) solo timeout ──
+    timeout_sites = [e for e, r in zip(entries, results) if r["errore"] == "timeout"]
+    if timeout_sites:
+        print(f"[scanner] Passaggio 2: lento ({TIMEOUT}s) su {len(timeout_sites)} siti in timeout...")
+        sem2 = asyncio.Semaphore(CONCURRENCY)
+        async with httpx.AsyncClient(limits=limits, timeout=TIMEOUT,
+                                      headers=headers, follow_redirects=True, verify=False) as client:
+            async def run_slow(e):
+                async with sem2:
+                    return await scansiona(e, client, "slow")
+            tasks2 = [asyncio.create_task(run_slow(e)) for e in timeout_sites]
+            # Sostituisci i risultati dei timeout con quelli nuovi
+            timeout_idx = {e.get("cf_norm", i): i for i, e in enumerate(entries)}
+            for coro in asyncio.as_completed(tasks2):
+                r = await coro
+                # Trova l'indice originale
+                for idx, entry in enumerate(entries):
+                    if entry["cf_norm"] == r["cf"]:
+                        results[idx] = r
+                        break
+
+    trovati = sum(1 for r in results if r["trovata"])
+    errori = sum(1 for r in results if r["errore"])
+    print(f"[scanner] Trovati: {trovati}/{len(entries)} ({round(100*trovati/len(entries),1)}%)")
     return results
 
 
@@ -353,16 +366,13 @@ def main():
     print(f"[scanner] Avvio scan v2 (combinatorio + SaaS + diagnostica)")
     print(f"[scanner] Path combinatori: {len(genera_path())}")
     print(f"[scanner] Saas probe: {len(SAAS_PLATFORMS)} piattaforme")
-
-    def progress(done, total, trovati, errori, rate):
-        rimanenti = total - done
-        stima = rimanenti / rate if rate > 0 else 0
-        print(f"  [{done}/{total}] trovati {trovati} | errori {errori} | "
-              f"{rate:.1f}/s | stima ~{stima/60:.0f}min", flush=True)
+    print(f"[scanner] Timeout: {TIMEOUT_FAST}s primo passaggio, {TIMEOUT}s secondo")
 
     entries = estrai_partecipate(only_controllo=only_controllo, max_siti=max_siti)
     start = time.time()
-    results = asyncio.run(scanner(entries, progress))
+    results = asyncio.run(scanner(entries))
+    print(f"[scanner] Tempo: {time.time()-start:.1f}s")
+    salva_report(results)
     print(f"[scanner] Tempo: {time.time()-start:.1f}s")
     salva_report(results)
 

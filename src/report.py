@@ -18,6 +18,28 @@ FILES = {
 }
 
 
+def carica_trend():
+    """Legge gli snapshot storici in data/history/ e produce serie temporale."""
+    trend = []
+    HISTORY_DIR = DATA_DIR / "history"
+    if not HISTORY_DIR.exists():
+        return trend
+    
+    dates = sorted([d for d in HISTORY_DIR.iterdir() if d.is_dir() and d.name[:4].isdigit()])
+    for d in dates:
+        snap_file = d / "scanner_report.json"
+        if snap_file.exists():
+            with open(snap_file) as f:
+                snap = json.load(f)
+            trend.append({
+                "data": d.name,
+                "totale_siti": snap.get("totale_siti", 0),
+                "sezione_trovata": snap.get("sezione_trovata", 0),
+                "percentuale": snap.get("percentuale", 0),
+            })
+    return trend
+
+
 def carica_dati():
     dati = {}
     if FILES["scanner"].exists():
@@ -55,6 +77,7 @@ def carica_dati():
                 cat_stat[c] = round(100 * n / len(raggiungibili), 1)
             dati["categorie"] = cat_stat
 
+    dati["trend"] = carica_trend()
     return dati
 
 
@@ -156,6 +179,19 @@ def genera_html(dati):
             bar = '█' * int(pct / 5)
             h.append(f"<tr><td>{label}</td><td>{bar} {pct}%</td></tr>")
         h.append("</table>")
+
+    # Trend storico
+    trend = dati.get("trend", [])
+    if len(trend) >= 2:
+        h.append("<h2>Trend Storico</h2>")
+        h.append("<table><tr><th>Data</th><th>Trovati</th><th>%</th></tr>")
+        for t in trend:
+            h.append(f"<tr><td>{t['data']}</td><td>{t['sezione_trovata']}/{t['totale_siti']}</td><td>{t['percentuale']}%</td></tr>")
+        h.append("</table>")
+        first, last = trend[0], trend[-1]
+        delta = round(last['percentuale'] - first['percentuale'], 1)
+        icon = "📈" if delta > 0 else "📉"
+        h.append(f"<p>{icon} Dall'inizio: <strong>{delta:+.1f}%</strong></p>")
 
     h.append("""
 <div class="footer">
