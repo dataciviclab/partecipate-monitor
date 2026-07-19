@@ -135,6 +135,29 @@ def profilo_appalti(cf, con):
     }
 
 
+def profilo_appalti_vinti(cf, con):
+    """Gare vinte (ANAC Aggiudicatari)."""
+    df = con.execute(f"""
+        SELECT anno,
+               COUNT(*) AS n_gare,
+               SUM(importo) AS importo_totale,
+               AVG(importo) AS importo_medio
+        FROM read_parquet('{FATTI}')
+        WHERE cf = ? AND fonte = 'aggiudicatario'
+        GROUP BY anno
+        ORDER BY anno
+    """, [cf]).fetchdf()
+
+    if df.empty:
+        return {}
+
+    return {
+        "gare_per_anno": df.to_dict("records"),
+        "totale_gare": int(df["n_gare"].sum()),
+        "importo_complessivo_totale": float(df["importo_totale"].sum()),
+    }
+
+
 def profilo_aiuti(cf, con):
     """Aiuti di Stato (RNA)."""
     df = con.execute(f"""
@@ -171,6 +194,7 @@ def calcola_score(profilo):
     """Score composito: esposizione (0-100) + performance (0-100) + copertura (0-100)."""
     occ = profilo.get("occupazione", {})
     app = profilo.get("appalti", {})
+    app_vinti = profilo.get("appalti_vinti", {})
     aiu = profilo.get("aiuti_stato", {})
     gov = profilo.get("governance", {})
     att = profilo.get("assetto", {})
@@ -181,13 +205,15 @@ def calcola_score(profilo):
         addetti = max(vals) if vals else 0
 
     importo_appalti = app.get("importo_complessivo_totale", 0) if app else 0
+    importo_appalti_vinti = app_vinti.get("importo_complessivo_totale", 0) if app_vinti else 0
     importo_aiuti = aiu.get("totale_esl", 0) if aiu else 0
     valore_produzione = att.get("valore_produzione", 0) or 0
 
-    # ── Esposizione (peso 50) ──
+    # ── Esposizione ──
     esp = 0
     esp += _fascia(addetti, [(100000, 25), (50000, 20), (10000, 12), (1000, 6), (500, 3), (100, 1)])
     esp += _fascia(importo_appalti, [(10e9, 25), (1e9, 18), (100e6, 10), (10e6, 5), (1e6, 2)])
+    esp += _fascia(importo_appalti_vinti, [(10e9, 15), (1e9, 10), (100e6, 5), (10e6, 2)])
     esp += _fascia(importo_aiuti, [(500e6, 20), (100e6, 12), (10e6, 6), (1e6, 3)])
 
     # Bonus: valore produzione (disponibile solo per non-IAS)
@@ -244,6 +270,7 @@ def profila_cf(cf, denominazione=None):
         "occupazione": profilo_occupazione(cf, con),
         "governance": profilo_governance(cf, con),
         "appalti": profilo_appalti(cf, con),
+        "appalti_vinti": profilo_appalti_vinti(cf, con),
         "aiuti_stato": profilo_aiuti(cf, con),
         "score": {},
     }

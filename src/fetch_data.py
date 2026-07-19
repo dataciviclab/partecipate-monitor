@@ -15,6 +15,7 @@ GCS_IPA  = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 GCS_ANAC = "gs://dataciviclab-clean/anac_bandi_gara/*/*.parquet"
 GCS_RNA  = "gs://dataciviclab-clean/rna_aiuti_stato/*/*.parquet"
 GCS_RAPP = "gs://dataciviclab-clean/mef_rappresentanti_partecipate/*/*.parquet"
+GCS_AGGI = "gs://dataciviclab-clean/anac_aggiudicatari/*/*.parquet"
 
 # Cache locali
 LOCAL_MEF  = DATA_DIR / "mef_partecipazioni.parquet"
@@ -22,6 +23,7 @@ LOCAL_IPA  = DATA_DIR / "ipa_enti.parquet"
 LOCAL_ANAC = DATA_DIR / "anac_bandi_gara.parquet"
 LOCAL_RNA  = DATA_DIR / "rna_aiuti_stato.parquet"
 LOCAL_RAPP = DATA_DIR / "mef_rappresentanti_partecipate.parquet"
+LOCAL_AGGI = DATA_DIR / "anac_aggiudicatari.parquet"
 
 
 def _conn():
@@ -110,6 +112,12 @@ def fetch_rappresentanti(force=False, cfs=None):
     return str(LOCAL_RAPP)
 
 
+def fetch_aggiudicatari(force=False, cfs=None):
+    """Scarica anac_aggiudicatari da GCS (gare vinte)."""
+    return _fetch_parquet("anac_aggiudicatari", GCS_AGGI, LOCAL_AGGI, force,
+                          cfs=cfs, cf_col="codice_fiscale")
+
+
 def fetch_all(force=False, cfs=None):
     """Scarica tutti i dataset. Se cfs=None, scarica full."""
     fetch_mef(force)
@@ -117,6 +125,7 @@ def fetch_all(force=False, cfs=None):
     fetch_anac(force, cfs)
     fetch_rna(force, cfs)
     fetch_rappresentanti(force, cfs)
+    fetch_aggiudicatari(force, cfs)
 
 
 def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=False):
