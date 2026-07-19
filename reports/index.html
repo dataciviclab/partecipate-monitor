@@ -127,8 +127,10 @@ function filtra() {
     // se anno selezionato, mostra solo chi ha dati per quell'anno
     if (a) {
       const add = x.occupazione?.addetti_per_anno||{};
-      const app = (x.appalti?.gare_per_anno||[]).some(g => g.anno == a);
-      if (!add[a] && !app) return false;
+      const band = (x.appalti?.gare_per_anno||[]).some(g => String(g.anno) === a);
+      const vinti = (x.appalti_vinti?.gare_per_anno||[]).some(g => String(g.anno) === a);
+      const aiuti = (x.aiuti_stato?.aiuti_per_anno||[]).some(g => String(g.anno) === a);
+      if (!add[a] && !band && !vinti && !aiuti) return false;
     }
     return true;
   });

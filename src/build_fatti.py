@@ -106,7 +106,7 @@ def step_aggiudicatari(con, aggi_path, agg_path):
                MAX(a.denominazione) AS denominazione,
                '' AS settore
         FROM read_parquet('{aggi_path}') a
-        JOIN read_parquet('{agg_path}') ag USING (cig)
+        JOIN read_parquet('{agg_path}') ag ON a.id_aggiudicazione = ag.id_aggiudicazione
         WHERE a.codice_fiscale IS NOT NULL
           AND ag.importo_aggiudicazione IS NOT NULL
           AND ag.importo_aggiudicazione > 0
