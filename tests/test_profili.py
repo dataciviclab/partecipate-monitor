@@ -67,6 +67,15 @@ GOLD = {
         "ha_aiuti": True,
         "ha_governance": True,
     },
+    "11957540153": {  # A2A
+        "denominazione": "A2A",
+        "addetti_min": 10000,
+        "addetti_max": 15000,
+        "score_esposizione_min": 40,
+        "ha_appalti": True,
+        "ha_aiuti": True,
+        "ha_governance": True,
+    },
     "05754381001": {  # GSE
         "denominazione": "GSE",
         "addetti_min": 500,

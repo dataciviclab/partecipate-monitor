@@ -125,7 +125,7 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
     Args:
         only_controllo: solo partecipate con controllo pubblico dichiarato.
         max_siti: limite massimo di risultati.
-        solo_mef_centrali: solo partecipate MEF 100% (>100 addetti, controllo pieno).
+        solo_mef_centrali: partecipate a controllo pubblico con >500 addetti.
     """
     mef_path = fetch_mef()
     ipa_path = fetch_ipa()
@@ -135,11 +135,12 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
         filtro_controllo = "AND tipo_controllo IS NOT NULL AND tipo_controllo != '' AND tipo_controllo != 'nessuno'"
 
     filtro_centrali = ""
+    soglia_addetti = 500
     if solo_mef_centrali:
-        filtro_centrali = """
-            AND amministrazione_denominazione = 'MINISTERO DELL''ECONOMIA E DELLE FINANZE'
+        filtro_centrali = f"""
+            AND tipo_controllo IS NOT NULL AND tipo_controllo != '' AND tipo_controllo != 'nessuno'
             AND partecipata_stato_giuridico = 'Attiva'
-            AND partecipata_numero_di_addetti >= 100
+            AND partecipata_numero_di_addetti >= {soglia_addetti}
         """
 
     join_type = "LEFT" if solo_mef_centrali else "INNER"
@@ -175,7 +176,7 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
 
 
 def cf_targets_centrali():
-    """Estrae i CF delle partecipate MEF 100% (>100 addetti)."""
+    """Estrae i CF delle partecipate a controllo pubblico con >500 addetti."""
     partecipate = estrai_partecipate(solo_mef_centrali=True)
     return [p["cf_norm"] for p in partecipate if p["cf_norm"]]
 
