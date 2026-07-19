@@ -142,6 +142,9 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
             AND partecipata_numero_di_addetti >= 100
         """
 
+    join_type = "LEFT" if solo_mef_centrali else "INNER"
+    filter_sito = "" if solo_mef_centrali else "AND i.sito_istituzionale IS NOT NULL"
+
     con = duckdb.connect()
     q = f"""
     WITH mef AS (
@@ -159,9 +162,9 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
     SELECT m.cf_norm, m.denominazione, m.addetti, m.categoria, m.quotata,
            i.sito_istituzionale, i.tipologia AS tipologia_ipa
     FROM mef m
-    {'LEFT' if solo_mef_centrali else ''} JOIN read_parquet('{ipa_path}') i
+    {join_type} JOIN read_parquet('{ipa_path}') i
          ON m.cf_norm = i.codice_fiscale_ente
-    WHERE solo_mef_centrali OR i.sito_istituzionale IS NOT NULL
+    {filter_sito}
     ORDER BY m.addetti DESC NULLS LAST
     """
     df = con.execute(q).fetchdf()
