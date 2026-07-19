@@ -20,4 +20,13 @@ jobs:
         run: python -m src.profiler 00000000000
 
       - name: Verifica appalti_vinti in data.json
-        run: python -c "import json,sys; d=json.load(open('reports/data.json')); p=d.get('profili',[]); assert p, 'nessun profilo'; assert any(x.get('appalti_vinti') for x in p), 'nessun appalti_vinti'; print(f'OK: {len(p)} profili, {sum(1 for x in p if x.get(\"appalti_vinti\"))} con vinti')"
+        run: |
+          python -c "
+          import json
+          d = json.load(open('reports/data.json'))
+          p = d.get('profili', [])
+          assert p, 'nessun profilo'
+          av = [x for x in p if x.get('appalti_vinti')]
+          assert av, 'nessun appalti_vinti'
+          print(f'OK: {len(p)} profili, {len(av)} con vinti')
+          "
