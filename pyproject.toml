@@ -4,9 +4,7 @@ version = "0.1.0"
 description = "Intelligence sulle societa' partecipate pubbliche italiane — profili multi-fonte (MEF, ANAC, RNA)"
 requires-python = ">=3.12"
 dependencies = [
-    "httpx>=0.28",
     "duckdb>=1.0",
-    "pandas>=2.0",
 ]
 
 [tool.setuptools.packages.find]

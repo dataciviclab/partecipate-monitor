@@ -20,8 +20,10 @@ def _conn():
     return duckdb.connect()
 
 
-def _df(con, sql):
+def _df(con, sql, params=None):
     """Esegue SQL e restituisce lista di dict."""
+    if params:
+        return con.execute(sql, params).fetchdf().to_dict("records")
     return con.execute(sql).fetchdf().to_dict("records")
 
 
@@ -32,16 +34,16 @@ def profilo_assetto(cf, con):
     # Prendi l'ultimo anno disponibile per questo cf
     ultimo = con.execute(f"""
         SELECT MAX(anno) AS anno FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef'
-    """).fetchone()[0]
+        WHERE cf = ? AND fonte = 'mef'
+    """, [cf]).fetchone()[0]
     if not ultimo:
         return {"errore": f"CF {cf} non trovato"}
 
     rows = _df(con, f"""
         SELECT metrica, importo, denominazione, settore
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef' AND anno = {ultimo}
-    """)
+        WHERE cf = ? AND fonte = 'mef' AND anno = {ultimo}
+    """, params=[cf])
 
     if not rows:
         return {"errore": f"Nessun dato MEF per {cf}"}
@@ -69,9 +71,9 @@ def profilo_occupazione(cf, con):
     rows = _df(con, f"""
         SELECT anno, importo AS addetti
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef' AND metrica = 'addetti'
+        WHERE cf = ? AND fonte = 'mef' AND metrica = 'addetti'
         ORDER BY anno
-    """)
+    """, params=[cf])
 
     if not rows:
         return {}
@@ -91,9 +93,9 @@ def profilo_governance(cf, con):
     rows = _df(con, f"""
         SELECT anno, importo AS compenso
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'rappresentanti' AND metrica = 'compenso'
+        WHERE cf = ? AND fonte = 'rappresentanti' AND metrica = 'compenso'
         ORDER BY anno
-    """)
+    """, params=[cf])
 
     if not rows:
         return {}
@@ -118,10 +120,10 @@ def profilo_appalti(cf, con):
                SUM(importo) AS importo_totale,
                AVG(importo) AS importo_medio
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'anac'
+        WHERE cf = ? AND fonte = 'anac'
         GROUP BY anno
         ORDER BY anno
-    """).fetchdf()
+    """, [cf]).fetchdf()
 
     if df.empty:
         return {}
@@ -140,10 +142,10 @@ def profilo_aiuti(cf, con):
                COUNT(*) AS n_aiuti,
                SUM(importo) AS totale_esl
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'aiuto_stato'
+        WHERE cf = ? AND fonte = 'aiuto_stato'
         GROUP BY anno
         ORDER BY anno
-    """).fetchdf()
+    """, [cf]).fetchdf()
 
     if df.empty:
         return {}
@@ -157,39 +159,72 @@ def profilo_aiuti(cf, con):
 
 # ── Score ───────────────────────────────────────────────────────
 
+def _fascia(val, soglie):
+    """Restituisce punti per fasce: [(soglia, punti), ...]."""
+    for soglia, punti in sorted(soglie, reverse=True):
+        if val >= soglia:
+            return punti
+    return 0
+
+
 def calcola_score(profilo):
-    score = {"esposizione": 0, "performance": 0}
+    """Score composito: esposizione (0-100) + performance (0-100) + copertura (0-100)."""
+    occ = profilo.get("occupazione", {})
+    app = profilo.get("appalti", {})
+    aiu = profilo.get("aiuti_stato", {})
+    gov = profilo.get("governance", {})
+    att = profilo.get("assetto", {})
 
     addetti = 0
-    occ = profilo.get("occupazione", {})
     if occ and "addetti_per_anno" in occ:
         vals = list(occ["addetti_per_anno"].values())
         addetti = max(vals) if vals else 0
 
-    appalti = profilo.get("appalti", {})
-    importo_appalti = appalti.get("importo_complessivo_totale", 0) if appalti else 0
+    importo_appalti = app.get("importo_complessivo_totale", 0) if app else 0
+    importo_aiuti = aiu.get("totale_esl", 0) if aiu else 0
+    valore_produzione = att.get("valore_produzione", 0) or 0
 
-    aiuti = profilo.get("aiuti_stato", {})
-    importo_aiuti = aiuti.get("totale_esl", 0) if aiuti else 0
+    # ── Esposizione (peso 50) ──
+    esp = 0
+    esp += _fascia(addetti, [(100000, 25), (50000, 20), (10000, 12), (1000, 6), (500, 3), (100, 1)])
+    esp += _fascia(importo_appalti, [(10e9, 25), (1e9, 18), (100e6, 10), (10e6, 5), (1e6, 2)])
+    esp += _fascia(importo_aiuti, [(500e6, 20), (100e6, 12), (10e6, 6), (1e6, 3)])
 
-    pts = 0
-    if addetti > 50000: pts += 40
-    elif addetti > 10000: pts += 20
-    elif addetti > 1000: pts += 10
-    if importo_appalti > 1e9: pts += 40
-    elif importo_appalti > 1e8: pts += 20
-    elif importo_appalti > 1e7: pts += 10
-    if importo_aiuti > 1e8: pts += 20
-    elif importo_aiuti > 1e7: pts += 10
-    elif importo_aiuti > 1e6: pts += 5
-    score["esposizione"] = min(pts, 100)
+    # Bonus: valore produzione (disponibile solo per non-IAS)
+    if valore_produzione > 0:
+        esp += min(10, _fascia(valore_produzione, [(10e9, 10), (1e9, 7), (100e6, 4), (10e6, 2)]))
+
+    score = {}
+    score["esposizione"] = min(esp, 100)
+
+    # ── Performance (trend + robustezza) ──
+    perf = 50  # base
 
     if occ and "trend_percentuale" in occ:
         t = occ["trend_percentuale"]
-        if t > 5: score["performance"] = 80
-        elif t > 0: score["performance"] = 60
-        elif t > -10: score["performance"] = 40
-        else: score["performance"] = 20
+        perf += _fascia(t, [(20, 30), (10, 20), (5, 10), (2, 5), (0, 0), (-5, -10), (-10, -20)])
+    else:
+        perf -= 20  # nessun dato occupazionale
+
+    # Bonus per completezza informativa
+    if valore_produzione > 0:
+        perf += 10  # bilancio CO.E.P. disponibile
+    if gov:
+        perf += 5   # governance trasparente
+    if app and aiu:
+        perf += 5   # multi-fonte
+
+    score["performance"] = max(0, min(perf, 100))
+
+    # ── Copertura informativa (quante fonti hanno dati) ──
+    copertura = sum([
+        bool(occ and occ.get("addetti_per_anno")),
+        bool(gov),
+        bool(app),
+        bool(aiu),
+        valore_produzione > 0,
+    ])
+    score["copertura"] = copertura * 20  # 0-100
 
     return score
 
