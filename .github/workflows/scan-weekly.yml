@@ -22,7 +22,8 @@ jobs:
 
       - run: pip install -e .
 
-      - name: Fetch dati
+      # ── Scanner trasparenza (invariato) ──
+      - name: Fetch dati base
         run: python src/fetch_data.py
 
       - name: Scanner trasparenza
@@ -34,9 +35,17 @@ jobs:
       - name: Analisi formati
         run: python src/formati.py
 
-      - name: Genera report
-        run: python src/report.py
+      # ── Intelligence partecipate centrali (nuovo) ──
+      - name: Fetch dati intelligence
+        run: python src/fetch_data.py --centrali
 
+      - name: Build tabella fatti
+        run: python src/build_fatti.py
+
+      - name: Genera report con profili
+        run: python src/report.py --profili
+
+      # ── Storico e deploy (invariato) ──
       - name: Salva snapshot storico
         run: bash scripts/update_history.sh
 

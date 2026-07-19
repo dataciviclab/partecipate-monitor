@@ -5,96 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Osservatorio Partecipate Pubbliche</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
-  h1 { color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 8px; }
-  h2 { color: #2c3e50; margin-top: 30px; }
-  table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 20px; color: #333; }
+  h1 { color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 8px; }
+  h2 { color: #2c3e50; margin-top: 30px; font-size: 1.1em; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.9em; }
+  th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
   th { background: #f5f5f5; font-weight: 600; }
-  td:last-child { text-align: right; }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-weight: bold; font-size: 0.9em; }
-  .badge-green { background: #27ae60; color: white; }
-  .badge-red { background: #e74c3c; color: white; }
-  .badge-gray { background: #95a5a6; color: white; }
-  .summary { display: flex; gap: 15px; flex-wrap: wrap; margin: 20px 0; }
-  .card { flex: 1; min-width: 150px; padding: 15px; border-radius: 8px; text-align: center; }
-  .card h3 { margin: 0 0 5px 0; font-size: 0.9em; }
-  .card .num { font-size: 1.8em; font-weight: bold; }
-  .card-green { background: #e8f8f0; border: 1px solid #27ae60; }
-  .card-red { background: #fdecea; border: 1px solid #e74c3c; }
-  .card-gray { background: #f5f5f5; border: 1px solid #95a5a6; }
-  .footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 0.85em; color: #666; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; font-weight: bold; color: #fff; }
+  .badge-alto { background: #27ae60; }
+  .badge-medio { background: #f39c12; }
+  .badge-basso { background: #e74c3c; }
+  a { color: #2980b9; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer { margin-top: 40px; border-top: 1px solid #ddd; padding-top: 15px; font-size: 0.85em; color: #666; }
+  .cards { display: flex; gap: 15px; flex-wrap: wrap; margin: 15px 0; }
+  .card { flex: 1; min-width: 140px; padding: 12px; border-radius: 8px; text-align: center; background: #f8f9fa; }
+  .card .val { font-size: 1.6em; font-weight: bold; }
+  .card .lbl { font-size: 0.8em; color: #666; }
+  .trend-up { color: #27ae60; }
+  .trend-down { color: #e74c3c; }
 </style>
 </head>
 <body>
-
 <h1>Osservatorio Partecipate Pubbliche</h1>
-<p><em>Report generato il 13/07/2026 08:33</em></p>
+<p id="meta">Caricamento...</p>
 
-<div class="summary">
-  <div class="card card-green">
-    <h3>Con sezione trasparenza</h3>
-    <div class="num">876</div>
-    <div>89.8% del totale</div>
-  </div>
-  <div class="card card-red">
-    <h3>Senza sezione</h3>
-    <div class="num">99</div>
-    <div>10.2% del totale</div>
-  </div>
-  <div class="card card-gray">
-    <h3>Siti scansionati</h3>
-    <div class="num">975</div>
-    <div>controllo pubblico</div>
-  </div>
-</div>
-
-<h2>Sezione Trasparenza</h2>
-<table><tr><th>Indicatore</th><th>Valore</th></tr>
-<tr><td>Siti scansionati</td><td>975</td></tr>
-<tr><td>Con sezione trasparenza</td><td><span class='badge badge-green'>876</span> (89.8%)</td></tr>
-<tr><td>Senza sezione</td><td><span class='badge badge-red'>99</span> (10.2%)</td></tr>
-</table>
-<h2>Formati di Pubblicazione</h2>
-<p>Siti con formato aperto (CSV/XML/JSON/ODS): <strong>51</strong> su 678</p>
-<table><tr><th>Formato</th><th>File</th><th>%</th></tr>
-<tr><td><code>.pdf</code></td><td>40567</td><td>85.3%</td></tr>
-<tr><td><code>.xlsx</code></td><td>4102</td><td>8.6%</td></tr>
-<tr><td><code>.xls</code></td><td>1014</td><td>2.1%</td></tr>
-<tr><td><code>.docx</code></td><td>484</td><td>1.0%</td></tr>
-<tr><td><code>.zip</code></td><td>431</td><td>0.9%</td></tr>
-<tr><td><code>.doc</code></td><td>368</td><td>0.8%</td></tr>
-<tr><td><code>.xml</code></td><td>298</td><td>0.6%</td></tr>
-<tr><td><code>.csv</code></td><td>137</td><td>0.3%</td></tr>
-<tr><td><code>.ods</code></td><td>116</td><td>0.2%</td></tr>
-<tr><td><code>.odt</code></td><td>48</td><td>0.1%</td></tr>
-</table>
-<p>Siti solo PDF: <strong>262</strong></p>
-<h2>Categorie Pubblicate</h2>
-<p>Score medio: <strong>73.1%</strong></p>
-<table><tr><th>Categoria</th><th>% presenza</th></tr>
-<tr><td>Bandi Contratti</td><td>████████████████ 82.4%</td></tr>
-<tr><td>Organizzazione</td><td>████████████████ 82.0%</td></tr>
-<tr><td>Beni Immobili</td><td>████████████████ 80.8%</td></tr>
-<tr><td>Bilanci</td><td>███████████████ 78.5%</td></tr>
-<tr><td>Personale</td><td>███████████████ 77.1%</td></tr>
-<tr><td>Controlli</td><td>██████████████ 73.2%</td></tr>
-<tr><td>Sovvenzioni</td><td>██████████████ 72.7%</td></tr>
-<tr><td>Disposizioni Generali</td><td>██████████████ 72.3%</td></tr>
-<tr><td>Consulenti</td><td>██████████████ 72.1%</td></tr>
-<tr><td>Pagamenti</td><td>██████████████ 71.5%</td></tr>
-<tr><td>Accesso Civico</td><td>████████████ 60.9%</td></tr>
-</table>
-<h2>Trend Storico</h2>
-<table><tr><th>Data</th><th>Trovati</th><th>%</th></tr>
-<tr><td>2026-07-05</td><td>875/975</td><td>89.7%</td></tr>
-<tr><td>2026-07-06</td><td>878/975</td><td>90.1%</td></tr>
-</table>
-<p>📈 Dall'inizio: <strong>+0.4%</strong></p>
+<div id="dashboard"></div>
 
 <div class="footer">
-<p>Dati aggiornati settimanalmente.</p>
-<p><a href="https://github.com/dataciviclab/partecipate-monitor">github.com/dataciviclab/partecipate-monitor</a></p>
+  <p>Generato da <a href="https://github.com/dataciviclab/partecipate-monitor">partecipate-monitor</a>.</p>
 </div>
+
+<script>
+fetch('data.json')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('meta').textContent =
+      'Report generato il ' + (d.generato_il ? new Date(d.generato_il).toLocaleDateString('it') : '?');
+
+    const out = document.getElementById('dashboard');
+    out.innerHTML = '';
+
+    // ── Statistiche scanner ──
+    const s = d.scanner;
+    if (s) {
+      out.innerHTML += `<div class="cards">
+        <div class="card"><div class="val">${s.sezione_trovata}</div><div class="lbl">Con trasparenza</div></div>
+        <div class="card"><div class="val">${s.totale_siti - s.sezione_trovata}</div><div class="lbl">Senza</div></div>
+        <div class="card"><div class="val">${s.totale_siti}</div><div class="lbl">Siti scansionati</div></div>
+      </div>`;
+    }
+
+    // ── Formati ──
+    const f = d.formati;
+    if (f && f.formati) {
+      out.innerHTML += '<h2>Formati di pubblicazione</h2><table><tr><th>Formato</th><th>File</th></tr>';
+      for (const [fmt, cnt] of Object.entries(f.formati))
+        out.innerHTML += `<tr><td><code>.${fmt}</code></td><td class="num">${cnt.toLocaleString()}</td></tr>`;
+      out.innerHTML += '</table>';
+    }
+
+    // ── Profili intelligence ──
+    if (d.profili && d.profili.length) {
+      out.innerHTML += '<h2>Partecipate centrali — score intelligence</h2>';
+      out.innerHTML += '<table><tr><th>Società</th><th class="num">Esposizione</th><th class="num">Performance</th><th class="num">Addetti</th><th class="num">Appalti</th><th class="num">Aiuti</th></tr>';
+
+      d.profili.sort((a, b) => (b.score?.esposizione||0) - (a.score?.esposizione||0));
+      for (const p of d.profili) {
+        const sc = p.score || {};
+        const occ = p.occupazione || {};
+        const app = p.appalti || {};
+        const aiu = p.aiuti_stato || {};
+
+        const badge = (v) => `<span class="badge ${v >= 70 ? 'badge-alto' : v >= 40 ? 'badge-medio' : 'badge-basso'}">${v}</span>`;
+
+        out.innerHTML += `<tr>
+          <td><a href="#${p.cf}">${p.denominazione || p.cf}</a></td>
+          <td class="num">${badge(sc.esposizione||0)}</td>
+          <td class="num">${badge(sc.performance||0)}</td>
+          <td class="num">${occ.addetti_per_anno ? Object.values(occ.addetti_per_anno).pop().toLocaleString() : '—'}</td>
+          <td class="num">${app.importo_complessivo_totale ? '€' + (app.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—'}</td>
+          <td class="num">${aiu.totale_esl ? '€' + (aiu.totale_esl/1e6).toFixed(0) + ' M' : '—'}</td>
+        </tr>`;
+      }
+      out.innerHTML += '</table>';
+
+      // ── Dettaglio per ogni partecipata ──
+      for (const p of d.profili) {
+        const att = p.assetto || {};
+        const occ = p.occupazione || {};
+        const gov = p.governance || {};
+        const app = p.appalti || {};
+        const aiu = p.aiuti_stato || {};
+        const sc = p.score || {};
+
+        out.innerHTML += `<h2 id="${p.cf}">${p.denominazione}</h2>
+          <p>CF: ${p.cf} · Score esposizione: ${sc.esposizione||'—'} · Score performance: ${sc.performance||'—'}</p>`;
+
+        if (att.denominazione) {
+          out.innerHTML += '<table><tr><th colspan="2">Assetto</th></tr>';
+          for (const [k, v] of Object.entries({Settore: att.settore, Addetti: att.addetti, 'Valore produzione': att.valore_produzione}))
+            if (v) out.innerHTML += `<tr><td>${k}</td><td class="num">${typeof v === 'number' ? v.toLocaleString() : v}</td></tr>`;
+          out.innerHTML += '</table>';
+        }
+
+        if (occ.addetti_per_anno) {
+          out.innerHTML += '<table><tr><th colspan="3">Occupazione</th></tr>';
+          out.innerHTML += Object.entries(occ.addetti_per_anno).map(([a, v]) =>
+            `<tr><td>${a}</td><td class="num">${v.toLocaleString()}</td></tr>`
+          ).join('');
+          if (occ.trend_percentuale != null)
+            out.innerHTML += `<tr><td><strong>Trend</strong></td><td class="num ${occ.trend_percentuale >= 0 ? 'trend-up' : 'trend-down'}"><strong>${occ.trend_percentuale > 0 ? '+' : ''}${occ.trend_percentuale}%</strong></td></tr>`;
+          out.innerHTML += '</table>';
+        }
+
+        if (gov.compenso_totale) {
+          out.innerHTML += '<table><tr><th colspan="2">Governance</th></tr>';
+          out.innerHTML += `<tr><td>Compensi totali</td><td class="num">€${(gov.compenso_totale/1000).toFixed(0)}k</td></tr>`;
+          if (gov.n_incarichi_remunerati) out.innerHTML += `<tr><td>Incarichi retribuiti</td><td class="num">${gov.n_incarichi_remunerati}</td></tr>`;
+          out.innerHTML += '</table>';
+        }
+
+        if (app.totale_gare) {
+          out.innerHTML += '<table><tr><th colspan="3">Appalti banditi</th></tr>';
+          out.innerHTML += `<tr><td>Gare totali</td><td class="num">${app.totale_gare.toLocaleString()}</td></tr>`;
+          out.innerHTML += `<tr><td>Importo complessivo</td><td class="num">€${(app.importo_complessivo_totale/1e9).toFixed(1)} Mld</td></tr>`;
+          if (app.gare_per_anno) {
+            out.innerHTML += '<tr><th>Anno</th><th class="num">Gare</th><th class="num">Importo</th></tr>';
+            for (const g of app.gare_per_anno.slice(-5))
+              out.innerHTML += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`;
+          }
+          out.innerHTML += '</table>';
+        }
+
+        if (aiu.totale_esl) {
+          out.innerHTML += '<table><tr><th colspan="3">Aiuti di Stato</th></tr>';
+          out.innerHTML += `<tr><td>Totale ESL</td><td class="num">€${(aiu.totale_esl/1e6).toFixed(0)} M</td></tr>`;
+          out.innerHTML += `<tr><td>Aiuti distinti</td><td class="num">${aiu.n_aiuti_distinti}</td></tr>`;
+          if (aiu.aiuti_per_anno) {
+            out.innerHTML += '<tr><th>Anno</th><th class="num">Aiuti</th><th class="num">ESL</th></tr>';
+            for (const a of aiu.aiuti_per_anno)
+              out.innerHTML += `<tr><td>${a.anno}</td><td class="num">${a.n_aiuti}</td><td class="num">€${(a.totale_esl/1e6).toFixed(1)} M</td></tr>`;
+          }
+          out.innerHTML += '</table>';
+        }
+      }
+    }
+
+    if (!d.profili && !d.scanner) {
+      out.innerHTML = '<p>Nessun dato disponibile. Avvia la pipeline CI per generare il primo report.</p>';
+    }
+  })
+  .catch(e => {
+    document.getElementById('dashboard').innerHTML = `<p>Errore caricamento dati: ${e.message}</p>`;
+  });
+</script>
 </body>
 </html>
