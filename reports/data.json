@@ -1,5 +1,5 @@
 {
-  "generato_il": "2026-07-19T19:27:45.424622",
+  "generato_il": "2026-07-19T19:47:57.494628",
   "profili": [
     {
       "cf": "97103880585",
@@ -39,62 +39,62 @@
           {
             "anno": 2016,
             "n_gare": 1006,
-            "importo_totale": 3300931168.1499996,
-            "importo_medio": 3281243.7059145127
+            "importo_totale": 3300931168.1500006,
+            "importo_medio": 3281243.7059145137
           },
           {
             "anno": 2017,
             "n_gare": 994,
-            "importo_totale": 1195335852.54,
-            "importo_medio": 1202551.1594969819
+            "importo_totale": 1195335852.5399997,
+            "importo_medio": 1202551.1594969817
           },
           {
             "anno": 2018,
             "n_gare": 892,
-            "importo_totale": 1613166791.0300002,
-            "importo_medio": 1808482.949585202
+            "importo_totale": 1613166791.0299997,
+            "importo_medio": 1808482.9495852015
           },
           {
             "anno": 2019,
             "n_gare": 800,
-            "importo_totale": 2566292650.6699996,
-            "importo_medio": 3207865.8133374993
+            "importo_totale": 2566292650.669998,
+            "importo_medio": 3207865.813337498
           },
           {
             "anno": 2020,
             "n_gare": 660,
-            "importo_totale": 1304407133.6499999,
-            "importo_medio": 1976374.444924242
+            "importo_totale": 1304407133.65,
+            "importo_medio": 1976374.4449242426
           },
           {
             "anno": 2021,
             "n_gare": 767,
-            "importo_totale": 1429778738.37,
-            "importo_medio": 1864118.3029595825
+            "importo_totale": 1429778738.3700001,
+            "importo_medio": 1864118.302959583
           },
           {
             "anno": 2022,
             "n_gare": 843,
-            "importo_totale": 1463804504.71,
-            "importo_medio": 1736422.9000118624
+            "importo_totale": 1463804504.7099996,
+            "importo_medio": 1736422.900011862
           },
           {
             "anno": 2023,
             "n_gare": 692,
-            "importo_totale": 1454521862.0900006,
-            "importo_medio": 2101910.205332371
+            "importo_totale": 1454521862.0899997,
+            "importo_medio": 2101910.2053323695
           },
           {
             "anno": 2024,
             "n_gare": 562,
-            "importo_totale": 479744226.7059999,
-            "importo_medio": 853637.4140676155
+            "importo_totale": 479744226.706,
+            "importo_medio": 853637.4140676156
           },
           {
             "anno": 2025,
             "n_gare": 540,
-            "importo_totale": 1243774306.1939998,
-            "importo_medio": 2303285.7522111107
+            "importo_totale": 1243774306.1939995,
+            "importo_medio": 2303285.75221111
           }
         ],
         "totale_gare": 7756,
@@ -120,7 +120,7 @@
           {
             "anno": 2021,
             "n_aiuti": 37,
-            "totale_esl": 24006165.189999998
+            "totale_esl": 24006165.189999994
           },
           {
             "anno": 2022,
@@ -196,7 +196,7 @@
           {
             "anno": 2018,
             "n_aiuti": 15,
-            "totale_esl": 7765848.499999999
+            "totale_esl": 7765848.5
           },
           {
             "anno": 2019,
@@ -216,7 +216,7 @@
           {
             "anno": 2022,
             "n_aiuti": 28,
-            "totale_esl": 90929757.54000002
+            "totale_esl": 90929757.54
           },
           {
             "anno": 2023,
@@ -239,7 +239,7 @@
             "totale_esl": 10165643.97
           }
         ],
-        "totale_esl": 166455388.03000003,
+        "totale_esl": 166455388.03,
         "n_aiuti_distinti": 106
       },
       "score": {
@@ -287,8 +287,8 @@
           {
             "anno": 2016,
             "n_gare": 853,
-            "importo_totale": 632566844.5499997,
-            "importo_medio": 741578.9502344662
+            "importo_totale": 632566844.55,
+            "importo_medio": 741578.9502344666
           },
           {
             "anno": 2017,
@@ -299,31 +299,31 @@
           {
             "anno": 2018,
             "n_gare": 1067,
-            "importo_totale": 1194266109.7599995,
-            "importo_medio": 1119274.7045548263
+            "importo_totale": 1194266109.7599998,
+            "importo_medio": 1119274.7045548265
           },
           {
             "anno": 2019,
             "n_gare": 1060,
-            "importo_totale": 819773734.8100001,
-            "importo_medio": 773371.4479339623
+            "importo_totale": 819773734.8100002,
+            "importo_medio": 773371.4479339625
           },
           {
             "anno": 2020,
             "n_gare": 1030,
-            "importo_totale": 1472796268.08,
-            "importo_medio": 1429899.289398058
+            "importo_totale": 1472796268.0799994,
+            "importo_medio": 1429899.2893980576
           },
           {
             "anno": 2021,
             "n_gare": 1047,
-            "importo_totale": 944565982.8800001,
-            "importo_medio": 902164.2625405922
+            "importo_totale": 944565982.8799999,
+            "importo_medio": 902164.262540592
           },
           {
             "anno": 2022,
             "n_gare": 1065,
-            "importo_totale": 1122224621.47,
+            "importo_totale": 1122224621.4700003,
             "importo_medio": 1053732.0389389673
           },
           {
@@ -335,18 +335,18 @@
           {
             "anno": 2024,
             "n_gare": 3612,
-            "importo_totale": 956347428.9400007,
-            "importo_medio": 264769.49859911425
+            "importo_totale": 956347428.94,
+            "importo_medio": 264769.4985991141
           },
           {
             "anno": 2025,
             "n_gare": 3933,
-            "importo_totale": 1571894221.5400012,
-            "importo_medio": 399667.99428934685
+            "importo_totale": 1571894221.539999,
+            "importo_medio": 399667.99428934633
           }
         ],
         "totale_gare": 15668,
-        "importo_complessivo_totale": 10576380760.470001
+        "importo_complessivo_totale": 10576380760.47
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -419,8 +419,8 @@
           {
             "anno": 2017,
             "n_gare": 94,
-            "importo_totale": 838854558.6600001,
-            "importo_medio": 8923984.666595746
+            "importo_totale": 838854558.66,
+            "importo_medio": 8923984.666595744
           },
           {
             "anno": 2018,
@@ -431,8 +431,8 @@
           {
             "anno": 2019,
             "n_gare": 84,
-            "importo_totale": 1324765052.18,
-            "importo_medio": 15771012.525952382
+            "importo_totale": 1324765052.1799998,
+            "importo_medio": 15771012.525952378
           },
           {
             "anno": 2020,
@@ -569,19 +569,19 @@
           {
             "anno": 2016,
             "n_gare": 443,
-            "importo_totale": 171065231.4,
-            "importo_medio": 386151.7638826185
+            "importo_totale": 171065231.39999998,
+            "importo_medio": 386151.76388261846
           },
           {
             "anno": 2017,
             "n_gare": 440,
-            "importo_totale": 155704420.90999994,
-            "importo_medio": 353873.6838863635
+            "importo_totale": 155704420.90999997,
+            "importo_medio": 353873.6838863636
           },
           {
             "anno": 2018,
             "n_gare": 458,
-            "importo_totale": 121271731.61,
+            "importo_totale": 121271731.61000001,
             "importo_medio": 264785.44019650656
           },
           {
@@ -599,8 +599,8 @@
           {
             "anno": 2021,
             "n_gare": 186,
-            "importo_totale": 364261004.81000006,
-            "importo_medio": 1958392.498978495
+            "importo_totale": 364261004.81,
+            "importo_medio": 1958392.4989784947
           },
           {
             "anno": 2022,
@@ -617,14 +617,14 @@
           {
             "anno": 2024,
             "n_gare": 540,
-            "importo_totale": 129486379.55999997,
-            "importo_medio": 239789.59177777774
+            "importo_totale": 129486379.56000002,
+            "importo_medio": 239789.59177777782
           },
           {
             "anno": 2025,
             "n_gare": 755,
-            "importo_totale": 262447222.33199984,
-            "importo_medio": 347612.2150092713
+            "importo_totale": 262447222.3319999,
+            "importo_medio": 347612.2150092714
           }
         ],
         "totale_gare": 3758,
@@ -778,8 +778,8 @@
           {
             "anno": 2016,
             "n_gare": 127,
-            "importo_totale": 310488438.68,
-            "importo_medio": 2444790.8557480318
+            "importo_totale": 310488438.68000007,
+            "importo_medio": 2444790.855748032
           },
           {
             "anno": 2017,
@@ -790,8 +790,8 @@
           {
             "anno": 2018,
             "n_gare": 137,
-            "importo_totale": 614024889.89,
-            "importo_medio": 4481933.502846715
+            "importo_totale": 614024889.8900001,
+            "importo_medio": 4481933.502846716
           },
           {
             "anno": 2019,
@@ -808,8 +808,8 @@
           {
             "anno": 2021,
             "n_gare": 189,
-            "importo_totale": 907324954.3299999,
-            "importo_medio": 4800661.134021164
+            "importo_totale": 907324954.3300002,
+            "importo_medio": 4800661.134021165
           },
           {
             "anno": 2022,
@@ -826,8 +826,8 @@
           {
             "anno": 2024,
             "n_gare": 108,
-            "importo_totale": 828016379.0400001,
-            "importo_medio": 7666818.324444445
+            "importo_totale": 828016379.04,
+            "importo_medio": 7666818.324444444
           },
           {
             "anno": 2025,
@@ -899,7 +899,7 @@
           {
             "anno": 2016,
             "n_gare": 652,
-            "importo_totale": 447542163.3900001,
+            "importo_totale": 447542163.39000016,
             "importo_medio": 686414.3610276076
           },
           {
@@ -911,14 +911,14 @@
           {
             "anno": 2018,
             "n_gare": 876,
-            "importo_totale": 490571225.4900001,
-            "importo_medio": 560012.8144863015
+            "importo_totale": 490571225.49,
+            "importo_medio": 560012.8144863014
           },
           {
             "anno": 2019,
             "n_gare": 535,
-            "importo_totale": 527863426.86999995,
-            "importo_medio": 986660.6109719626
+            "importo_totale": 527863426.8699997,
+            "importo_medio": 986660.6109719621
           },
           {
             "anno": 2020,
@@ -929,19 +929,19 @@
           {
             "anno": 2021,
             "n_gare": 424,
-            "importo_totale": 400919058.3900001,
-            "importo_medio": 945563.8169575474
+            "importo_totale": 400919058.39000005,
+            "importo_medio": 945563.8169575473
           },
           {
             "anno": 2022,
             "n_gare": 581,
-            "importo_totale": 323465899.3300001,
-            "importo_medio": 556739.9300000002
+            "importo_totale": 323465899.33000004,
+            "importo_medio": 556739.93
           },
           {
             "anno": 2023,
             "n_gare": 331,
-            "importo_totale": 405592531.45,
+            "importo_totale": 405592531.45000005,
             "importo_medio": 1225355.0799093656
           },
           {
@@ -958,7 +958,7 @@
           }
         ],
         "totale_gare": 5428,
-        "importo_complessivo_totale": 5127647988.962061
+        "importo_complessivo_totale": 5127647988.96206
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -1064,20 +1064,20 @@
           {
             "anno": 2022,
             "n_gare": 44,
-            "importo_totale": 7629769.0200000005,
-            "importo_medio": 173403.84136363637
+            "importo_totale": 7629769.02,
+            "importo_medio": 173403.84136363634
           },
           {
             "anno": 2023,
             "n_gare": 29,
-            "importo_totale": 9635863.6,
-            "importo_medio": 332271.15862068965
+            "importo_totale": 9635863.600000001,
+            "importo_medio": 332271.1586206897
           },
           {
             "anno": 2024,
             "n_gare": 85,
-            "importo_totale": 9825226.719999999,
-            "importo_medio": 115590.90258823529
+            "importo_totale": 9825226.72,
+            "importo_medio": 115590.9025882353
           },
           {
             "anno": 2025,
@@ -1160,14 +1160,14 @@
           {
             "anno": 2017,
             "n_gare": 140,
-            "importo_totale": 1073494751.1600001,
-            "importo_medio": 7667819.651142858
+            "importo_totale": 1073494751.1599998,
+            "importo_medio": 7667819.651142856
           },
           {
             "anno": 2018,
             "n_gare": 139,
-            "importo_totale": 1857911705.08,
-            "importo_medio": 13366271.259568345
+            "importo_totale": 1857911705.0800002,
+            "importo_medio": 13366271.259568347
           },
           {
             "anno": 2019,
@@ -1201,7 +1201,7 @@
           }
         ],
         "totale_gare": 456,
-        "importo_complessivo_totale": 4702477585.669999
+        "importo_complessivo_totale": 4702477585.67
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -1270,20 +1270,20 @@
           {
             "anno": 2016,
             "n_gare": 141,
-            "importo_totale": 91931397.37,
-            "importo_medio": 651995.7260283688
+            "importo_totale": 91931397.36999997,
+            "importo_medio": 651995.7260283686
           },
           {
             "anno": 2017,
             "n_gare": 193,
-            "importo_totale": 106488307.84,
+            "importo_totale": 106488307.83999999,
             "importo_medio": 551752.8903626943
           },
           {
             "anno": 2018,
             "n_gare": 171,
-            "importo_totale": 98190266.23,
-            "importo_medio": 574212.0832163743
+            "importo_totale": 98190266.22999999,
+            "importo_medio": 574212.0832163742
           },
           {
             "anno": 2019,
@@ -1294,26 +1294,26 @@
           {
             "anno": 2020,
             "n_gare": 183,
-            "importo_totale": 268895803.57000005,
-            "importo_medio": 1469375.97579235
+            "importo_totale": 268895803.56999993,
+            "importo_medio": 1469375.9757923493
           },
           {
             "anno": 2021,
             "n_gare": 175,
-            "importo_totale": 118447382.55999997,
-            "importo_medio": 676842.1860571427
+            "importo_totale": 118447382.56,
+            "importo_medio": 676842.1860571429
           },
           {
             "anno": 2022,
             "n_gare": 212,
-            "importo_totale": 137324183.23,
-            "importo_medio": 647755.5812735849
+            "importo_totale": 137324183.23000002,
+            "importo_medio": 647755.581273585
           },
           {
             "anno": 2023,
             "n_gare": 221,
-            "importo_totale": 348564271.2099999,
-            "importo_medio": 1577213.8968778276
+            "importo_totale": 348564271.20999986,
+            "importo_medio": 1577213.8968778274
           },
           {
             "anno": 2024,
@@ -1518,8 +1518,8 @@
           {
             "anno": 2018,
             "n_gare": 71,
-            "importo_totale": 46930567.49000001,
-            "importo_medio": 660993.9083098593
+            "importo_totale": 46930567.489999995,
+            "importo_medio": 660993.9083098591
           },
           {
             "anno": 2019,
@@ -1542,19 +1542,19 @@
           {
             "anno": 2022,
             "n_gare": 70,
-            "importo_totale": 64468742.4,
-            "importo_medio": 920982.0342857143
+            "importo_totale": 64468742.39999999,
+            "importo_medio": 920982.0342857142
           },
           {
             "anno": 2023,
             "n_gare": 119,
-            "importo_totale": 84797507.47,
-            "importo_medio": 712584.0963865547
+            "importo_totale": 84797507.47000001,
+            "importo_medio": 712584.0963865548
           },
           {
             "anno": 2024,
             "n_gare": 227,
-            "importo_totale": 66140057.05000001,
+            "importo_totale": 66140057.05000002,
             "importo_medio": 291365.8900881058
           },
           {
@@ -1625,7 +1625,7 @@
           {
             "anno": 2018,
             "n_gare": 106,
-            "importo_totale": 57931594.10000001,
+            "importo_totale": 57931594.1,
             "importo_medio": 546524.4726415095
           },
           {
@@ -1637,32 +1637,32 @@
           {
             "anno": 2020,
             "n_gare": 237,
-            "importo_totale": 30521411.730000004,
-            "importo_medio": 128782.32797468356
+            "importo_totale": 30521411.729999997,
+            "importo_medio": 128782.32797468353
           },
           {
             "anno": 2021,
             "n_gare": 307,
-            "importo_totale": 46894241.21000001,
-            "importo_medio": 152749.9713680782
+            "importo_totale": 46894241.20999998,
+            "importo_medio": 152749.9713680781
           },
           {
             "anno": 2022,
             "n_gare": 419,
-            "importo_totale": 224940594.42000005,
-            "importo_medio": 536851.0606682579
+            "importo_totale": 224940594.42000008,
+            "importo_medio": 536851.060668258
           },
           {
             "anno": 2023,
             "n_gare": 266,
-            "importo_totale": 156138767.06999996,
-            "importo_medio": 586987.8461278194
+            "importo_totale": 156138767.07,
+            "importo_medio": 586987.8461278195
           },
           {
             "anno": 2024,
             "n_gare": 289,
-            "importo_totale": 164690521.38999996,
-            "importo_medio": 569863.3958131486
+            "importo_totale": 164690521.39000005,
+            "importo_medio": 569863.3958131489
           },
           {
             "anno": 2025,
@@ -1763,8 +1763,8 @@
           {
             "anno": 2018,
             "n_gare": 14,
-            "importo_totale": 13740850.229999999,
-            "importo_medio": 981489.302142857
+            "importo_totale": 13740850.23,
+            "importo_medio": 981489.3021428572
           },
           {
             "anno": 2019,
@@ -1787,20 +1787,20 @@
           {
             "anno": 2022,
             "n_gare": 30,
-            "importo_totale": 19494928.78,
-            "importo_medio": 649830.9593333334
+            "importo_totale": 19494928.779999997,
+            "importo_medio": 649830.9593333333
           },
           {
             "anno": 2023,
             "n_gare": 27,
-            "importo_totale": 27253838.680000003,
-            "importo_medio": 1009401.4325925927
+            "importo_totale": 27253838.68,
+            "importo_medio": 1009401.4325925926
           },
           {
             "anno": 2024,
             "n_gare": 100,
-            "importo_totale": 209681577.76,
-            "importo_medio": 2096815.7776
+            "importo_totale": 209681577.75999996,
+            "importo_medio": 2096815.7775999997
           },
           {
             "anno": 2025,
@@ -1884,8 +1884,8 @@
           {
             "anno": 2016,
             "n_gare": 87,
-            "importo_totale": 3842353925.24,
-            "importo_medio": 44164987.64643678
+            "importo_totale": 3842353925.2400007,
+            "importo_medio": 44164987.64643679
           },
           {
             "anno": 2017,
@@ -1896,26 +1896,26 @@
           {
             "anno": 2018,
             "n_gare": 90,
-            "importo_totale": 8056085060.73,
-            "importo_medio": 89512056.23033333
+            "importo_totale": 8056085060.7300005,
+            "importo_medio": 89512056.23033334
           },
           {
             "anno": 2019,
             "n_gare": 83,
-            "importo_totale": 11427740204.319998,
-            "importo_medio": 137683616.91951805
+            "importo_totale": 11427740204.32,
+            "importo_medio": 137683616.91951808
           },
           {
             "anno": 2020,
             "n_gare": 209,
-            "importo_totale": 7352097146.320001,
-            "importo_medio": 35177498.3077512
+            "importo_totale": 7352097146.32,
+            "importo_medio": 35177498.30775119
           },
           {
             "anno": 2021,
             "n_gare": 75,
-            "importo_totale": 9786305733.05,
-            "importo_medio": 130484076.44066666
+            "importo_totale": 9786305733.050001,
+            "importo_medio": 130484076.44066668
           },
           {
             "anno": 2022,
@@ -1926,14 +1926,14 @@
           {
             "anno": 2023,
             "n_gare": 87,
-            "importo_totale": 16596484553.2,
-            "importo_medio": 190764190.26666668
+            "importo_totale": 16596484553.199999,
+            "importo_medio": 190764190.26666665
           },
           {
             "anno": 2024,
             "n_gare": 152,
-            "importo_totale": 15153964734.350002,
-            "importo_medio": 99697136.41019738
+            "importo_totale": 15153964734.349998,
+            "importo_medio": 99697136.41019736
           },
           {
             "anno": 2025,
@@ -2283,18 +2283,18 @@
           {
             "anno": 2024,
             "n_gare": 127,
-            "importo_totale": 2698633.08,
-            "importo_medio": 21249.07937007874
+            "importo_totale": 2698633.0799999996,
+            "importo_medio": 21249.079370078736
           },
           {
             "anno": 2025,
             "n_gare": 87,
-            "importo_totale": 3068296.4600000004,
+            "importo_totale": 3068296.46,
             "importo_medio": 35267.77540229885
           }
         ],
         "totale_gare": 265,
-        "importo_complessivo_totale": 26189911.380000003
+        "importo_complessivo_totale": 26189911.38
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -2412,8 +2412,8 @@
           {
             "anno": 2025,
             "n_gare": 153,
-            "importo_totale": 227517294.3,
-            "importo_medio": 1487041.1392156864
+            "importo_totale": 227517294.29999998,
+            "importo_medio": 1487041.1392156861
           }
         ],
         "totale_gare": 697,
@@ -2481,8 +2481,8 @@
           {
             "anno": 2020,
             "n_gare": 58,
-            "importo_totale": 14496236.56,
-            "importo_medio": 249935.1131034483
+            "importo_totale": 14496236.560000002,
+            "importo_medio": 249935.11310344833
           },
           {
             "anno": 2021,
@@ -2493,8 +2493,8 @@
           {
             "anno": 2022,
             "n_gare": 141,
-            "importo_totale": 748607060.82,
-            "importo_medio": 5309269.934893617
+            "importo_totale": 748607060.8199999,
+            "importo_medio": 5309269.9348936165
           },
           {
             "anno": 2023,
@@ -2505,8 +2505,8 @@
           {
             "anno": 2024,
             "n_gare": 115,
-            "importo_totale": 78943293.32,
-            "importo_medio": 686463.420173913
+            "importo_totale": 78943293.32000001,
+            "importo_medio": 686463.4201739131
           },
           {
             "anno": 2025,
@@ -2516,7 +2516,7 @@
           }
         ],
         "totale_gare": 650,
-        "importo_complessivo_totale": 3364094652.2200003
+        "importo_complessivo_totale": 3364094652.22
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -2624,8 +2624,8 @@
           {
             "anno": 2023,
             "n_gare": 287,
-            "importo_totale": 74540236.85999998,
-            "importo_medio": 259722.07965156788
+            "importo_totale": 74540236.86,
+            "importo_medio": 259722.07965156794
           },
           {
             "anno": 2024,
@@ -2641,7 +2641,7 @@
           }
         ],
         "totale_gare": 1667,
-        "importo_complessivo_totale": 394226435.7099999
+        "importo_complessivo_totale": 394226435.71000004
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -2888,7 +2888,7 @@
           {
             "anno": 2023,
             "n_gare": 28,
-            "importo_totale": 3856331.8099999996,
+            "importo_totale": 3856331.81,
             "importo_medio": 137726.13607142857
           },
           {
@@ -2900,12 +2900,12 @@
           {
             "anno": 2025,
             "n_gare": 364,
-            "importo_totale": 156583895.22000003,
-            "importo_medio": 430175.5363186814
+            "importo_totale": 156583895.2200001,
+            "importo_medio": 430175.53631868155
           }
         ],
         "totale_gare": 608,
-        "importo_complessivo_totale": 248778146.59000003
+        "importo_complessivo_totale": 248778146.5900001
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -2969,8 +2969,8 @@
           {
             "anno": 2016,
             "n_gare": 24,
-            "importo_totale": 24438087.919999998,
-            "importo_medio": 1018253.6633333332
+            "importo_totale": 24438087.92,
+            "importo_medio": 1018253.6633333334
           },
           {
             "anno": 2017,
@@ -2981,8 +2981,8 @@
           {
             "anno": 2018,
             "n_gare": 26,
-            "importo_totale": 12374997.28,
-            "importo_medio": 475961.43384615384
+            "importo_totale": 12374997.280000001,
+            "importo_medio": 475961.4338461539
           },
           {
             "anno": 2019,
@@ -2999,7 +2999,7 @@
           {
             "anno": 2021,
             "n_gare": 47,
-            "importo_totale": 27094666.96,
+            "importo_totale": 27094666.960000005,
             "importo_medio": 576482.2757446809
           },
           {
@@ -3011,24 +3011,24 @@
           {
             "anno": 2023,
             "n_gare": 66,
-            "importo_totale": 49174024.230000004,
-            "importo_medio": 745060.9731818183
+            "importo_totale": 49174024.23,
+            "importo_medio": 745060.9731818181
           },
           {
             "anno": 2024,
             "n_gare": 98,
-            "importo_totale": 37160141.190000005,
-            "importo_medio": 379185.1141836735
+            "importo_totale": 37160141.19,
+            "importo_medio": 379185.11418367346
           },
           {
             "anno": 2025,
             "n_gare": 158,
-            "importo_totale": 115368100.98999998,
+            "importo_totale": 115368100.99,
             "importo_medio": 730177.8543670885
           }
         ],
         "totale_gare": 561,
-        "importo_complessivo_totale": 368822944.04999995
+        "importo_complessivo_totale": 368822944.05
       },
       "aiuti_stato": {
         "aiuti_per_anno": [
@@ -3123,8 +3123,8 @@
           {
             "anno": 2017,
             "n_gare": 14,
-            "importo_totale": 1913333.6799999997,
-            "importo_medio": 136666.69142857142
+            "importo_totale": 1913333.6800000002,
+            "importo_medio": 136666.69142857144
           },
           {
             "anno": 2018,
@@ -3147,8 +3147,8 @@
           {
             "anno": 2021,
             "n_gare": 19,
-            "importo_totale": 35451564.720000006,
-            "importo_medio": 1865871.8273684215
+            "importo_totale": 35451564.72,
+            "importo_medio": 1865871.827368421
           },
           {
             "anno": 2022,
