@@ -1,7 +1,7 @@
 name: Scan settimanale
 on:
   schedule:
-    - cron: '0 5 * * 1'   # Ogni lunedì alle 6:00 italiane (UTC+1)
+    - cron: '0 5 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
 
       - run: pip install -e .
 
-      # ── Scanner trasparenza (invariato) ──
+      # ── Scanner trasparenza ──
       - name: Fetch dati base
         run: python src/fetch_data.py
 
@@ -35,7 +35,7 @@ jobs:
       - name: Analisi formati
         run: python src/formati.py
 
-      # ── Intelligence partecipate centrali (nuovo) ──
+      # ── Intelligence partecipate centrali ──
       - name: Fetch dati intelligence
         run: python src/fetch_data.py --centrali
 
@@ -45,7 +45,7 @@ jobs:
       - name: Genera report con profili
         run: python src/report.py --profili
 
-      # ── Storico e deploy (invariato) ──
+      # ── Storico e deploy ──
       - name: Salva snapshot storico
         run: bash scripts/update_history.sh
 
