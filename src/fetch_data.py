@@ -9,9 +9,9 @@ from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-# Path GCS dataset clean — NOTA: i dataset su GCS usano underscore, non trattino
+# Path GCS dataset clean — TUTTI con underscore (verificati su GCS)
 GCS_MEF  = "gs://dataciviclab-clean/mef_partecipazioni/*/*.parquet"
-GCS_IPA  = "gs://dataciviclab-clean/ipa-enti/*/*.parquet"
+GCS_IPA  = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
 GCS_ANAC = "gs://dataciviclab-clean/anac_bandi_gara/*/*.parquet"
 GCS_RNA  = "gs://dataciviclab-clean/rna_aiuti_stato/*/*.parquet"
 GCS_RAPP = "gs://dataciviclab-clean/mef_rappresentanti_partecipate/*/*.parquet"
@@ -137,7 +137,7 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
     filtro_centrali = ""
     if solo_mef_centrali:
         filtro_centrali = """
-            AND amministrazione_denominazione = 'MINISTERO DELL'ECONOMIA E DELLE FINANZE'
+            AND amministrazione_denominazione = 'MINISTERO DELL''ECONOMIA E DELLE FINANZE'
             AND partecipata_stato_giuridico = 'Attiva'
             AND partecipata_numero_di_addetti >= 100
         """
