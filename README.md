@@ -5,7 +5,7 @@
 
 Intelligence sulle **società partecipate pubbliche italiane**.
 
-Incrocisa 5 dataset (MEF Partecipazioni, MEF Rappresentanti, ANAC Bandi Gara, RNA Aiuti di Stato, IndicePA) e produce profili strutturati per le 26 partecipate a controllo MEF diretto.
+Incrocia 5 dataset (MEF Partecipazioni, MEF Rappresentanti, ANAC Bandi Gara, RNA Aiuti di Stato, IndicePA) e produce profili strutturati per le 26 partecipate a controllo MEF diretto.
 
 > **Nota**: il monitoraggio della trasparenza dei siti web (ex scanner) è stato dismesso.
 > I dati storici (89% siti con sezione AT, 84,9% file in PDF, 7,5% formato aperto)
@@ -53,19 +53,45 @@ partecipate-monitor/
 
 ## Utilizzo
 
+### Makefile
 ```bash
-git clone https://github.com/dataciviclab/partecipate-monitor.git
-cd partecipate-monitor
+make fetch      # Scarica dati per le 26 partecipate
+make build      # Costruisce tabella fatti unificata
+make report     # Genera data.json con profili
+make profile    # Profilo Poste Italiane
+make all        # fetch + build + report
+make clean      # Rimuove cache e output
+```
+
+### Manuale
+```bash
 pip install -e .
-
-# Pipeline completa
-python src/fetch_data.py --centrali   # Scarica dati per le 26 partecipate
-python src/build_fatti.py             # Costruisce tabella fatti
-python src/report.py --profili        # Genera data.json con profili
-
-# Profilo singola partecipata
+python src/fetch_data.py --centrali
+python src/build_fatti.py
+python src/report.py --profili
 python src/profiler.py 97103880585    # Poste Italiane
 ```
+
+## Test
+
+```bash
+pytest tests/ -v
+```
+
+Gold set test (`tests/test_profili.py`) verifica per 6 partecipate centrali:
+- denominazione, addetti in range, score esposizione minimo
+- presenza/assenza di appalti, aiuti, governance
+- dati CO.E.P. (per società non IAS)
+
+## Score intelligence
+
+Il profiler calcola tre score (0-100):
+
+| Score | Componenti | Peso |
+|---|---|---|
+| **Esposizione** | Addetti + Appalti banditi + Aiuti ricevuti + Valore produzione | 100 |
+| **Performance** | Trend occupazionale + Completezza informativa + Multi-fonte | 100 |
+| **Copertura** | Quante fonti su 5 hanno dati per il CF | 100 |
 
 ## Fonti
 
