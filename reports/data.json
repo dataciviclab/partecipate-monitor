@@ -1,119 +1,3184 @@
 {
-  "scanner": {
-    "data_scan": "2026-07-13T08:23:29.351829",
-    "totale_siti": 975,
-    "sezione_trovata": 876,
-    "sezione_non_trovata": 99,
-    "percentuale": 89.8,
-    "metodi": {
-      "link_in_homepage": 746,
-      "": 99,
-      "saas": 86,
-      "path_combinatorio": 40,
-      "sitemap": 4
-    },
-    "diagnostica_non_trovati": {
-      "slow": 57,
-      "fast": 42
-    },
-    "errori": {
-      "timeout": 55,
-      "connessione_rifiutata": 41,
-      "unknown url type: '/www.ausino.it'": 1,
-      "Server disconnected without sending a response.": 1,
-      "Invalid port: 'SISTEMAAMBIENTELUCCA.IT'": 1
-    }
-  },
-  "formati": {
-    "data_scan": "2026-07-13T08:33:09.602865",
-    "totale_siti_analizzati": 678,
-    "totale_file_trovati": 47565,
-    "siti_con_file": 446,
-    "siti_solo_pdf": 262,
-    "siti_con_formato_aperto": 51,
-    "siti_aperti_solo_shallow": 33,
-    "siti_aperti_grazie_deep": 18,
-    "sotto_pagine_analizzate": 3904,
-    "media_sotto_pagine_per_sito": 5.8,
-    "file_shallow": {
-      "pdf": 6616,
-      "xlsx": 609,
-      "xls": 138,
-      "xml": 115,
-      "zip": 105,
-      "docx": 61,
-      "ods": 36,
-      "csv": 35,
-      "odt": 19,
-      "doc": 18
-    },
-    "file_deep": {
-      "pdf": 33951,
-      "xlsx": 3493,
-      "xls": 876,
-      "docx": 423,
-      "doc": 350,
-      "zip": 326,
-      "xml": 183,
-      "csv": 102,
-      "ods": 80,
-      "odt": 29
-    },
-    "formati": {
-      "pdf": 40567,
-      "xlsx": 4102,
-      "xls": 1014,
-      "docx": 484,
-      "zip": 431,
-      "doc": 368,
-      "xml": 298,
-      "csv": 137,
-      "ods": 116,
-      "odt": 48
-    }
-  },
-  "catalogo_count": 876,
-  "score_medio": 73.1,
-  "score_max": 100.0,
-  "score_min": 0.0,
-  "distribuzione": {
-    "0-9": 96,
-    "10-19": 6,
-    "20-29": 13,
-    "30-39": 43,
-    "40-49": 22,
-    "50-59": 6,
-    "60-69": 10,
-    "70-79": 18,
-    "80-89": 66,
-    "90-100": 0,
-    "90-99": 398
-  },
-  "categorie": {
-    "disposizioni_generali": 72.3,
-    "organizzazione": 82.0,
-    "consulenti": 72.1,
-    "personale": 77.1,
-    "bandi_contratti": 82.4,
-    "sovvenzioni": 72.7,
-    "bilanci": 78.5,
-    "beni_immobili": 80.8,
-    "controlli": 73.2,
-    "pagamenti": 71.5,
-    "accesso_civico": 60.9
-  },
-  "trend": [
+  "trend": [],
+  "generato_il": "2026-07-19T19:30:05.682325",
+  "profili": [
     {
-      "data": "2026-07-05",
-      "totale_siti": 975,
-      "sezione_trovata": 875,
-      "percentuale": 89.7
+      "cf": "97103880585",
+      "denominazione": "POSTE ITALIANE - SOCIETA' PER AZIONI",
+      "assetto": {
+        "denominazione": "POSTE ITALIANE - SOCIETA' PER AZIONI",
+        "settore": "Settore Terziario",
+        "addetti": 104413.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 113847,
+          "2021": 108465,
+          "2022": 106653,
+          "2023": 104413
+        },
+        "trend_percentuale": -8.3
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 439598.0,
+        "compenso_medio": 33815.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 1006,
+            "importo_totale": 3300931168.1500015,
+            "importo_medio": 3281243.7059145146
+          },
+          {
+            "anno": 2017,
+            "n_gare": 994,
+            "importo_totale": 1195335852.540001,
+            "importo_medio": 1202551.1594969828
+          },
+          {
+            "anno": 2018,
+            "n_gare": 892,
+            "importo_totale": 1613166791.0300002,
+            "importo_medio": 1808482.949585202
+          },
+          {
+            "anno": 2019,
+            "n_gare": 800,
+            "importo_totale": 2566292650.67,
+            "importo_medio": 3207865.8133375
+          },
+          {
+            "anno": 2020,
+            "n_gare": 660,
+            "importo_totale": 1304407133.6499996,
+            "importo_medio": 1976374.4449242419
+          },
+          {
+            "anno": 2021,
+            "n_gare": 767,
+            "importo_totale": 1429778738.37,
+            "importo_medio": 1864118.3029595825
+          },
+          {
+            "anno": 2022,
+            "n_gare": 843,
+            "importo_totale": 1463804504.71,
+            "importo_medio": 1736422.9000118624
+          },
+          {
+            "anno": 2023,
+            "n_gare": 692,
+            "importo_totale": 1454521862.0900016,
+            "importo_medio": 2101910.2053323723
+          },
+          {
+            "anno": 2024,
+            "n_gare": 562,
+            "importo_totale": 479744226.7060002,
+            "importo_medio": 853637.414067616
+          },
+          {
+            "anno": 2025,
+            "n_gare": 540,
+            "importo_totale": 1243774306.1939998,
+            "importo_medio": 2303285.7522111107
+          }
+        ],
+        "totale_gare": 7756,
+        "importo_complessivo_totale": 16051757234.110004
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 3,
+            "totale_esl": 11500774.98
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 5,
+            "totale_esl": 723995.01
+          },
+          {
+            "anno": 2020,
+            "n_aiuti": 3,
+            "totale_esl": 10709192.819999998
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 37,
+            "totale_esl": 24006165.189999998
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 62,
+            "totale_esl": 560631368.2099997
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 49,
+            "totale_esl": 3789726.8099999996
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 36,
+            "totale_esl": 27973135.169999998
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 50,
+            "totale_esl": 1858522.29
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 74,
+            "totale_esl": 353944905.43000007
+          }
+        ],
+        "totale_esl": 995137785.9099997,
+        "n_aiuti_distinti": 319
+      },
+      "score": {
+        "esposizione": 100,
+        "performance": 40
+      }
     },
     {
-      "data": "2026-07-06",
-      "totale_siti": 975,
-      "sezione_trovata": 878,
-      "percentuale": 90.1
+      "cf": "00401990585",
+      "denominazione": "LEONARDO -  SOCIETA' PER AZIONI",
+      "assetto": {
+        "denominazione": "LEONARDO -  SOCIETA' PER AZIONI",
+        "settore": "Settore Secondario",
+        "addetti": 31255.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 29007,
+          "2021": 29739,
+          "2022": 30457,
+          "2023": 31255
+        },
+        "trend_percentuale": 7.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 732430.0,
+        "compenso_medio": 56341.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {},
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 15,
+            "totale_esl": 7765848.5
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 10,
+            "totale_esl": 764467.28
+          },
+          {
+            "anno": 2020,
+            "n_aiuti": 3,
+            "totale_esl": 4594070.48
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 7,
+            "totale_esl": 12581306.700000001
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 28,
+            "totale_esl": 90929757.54
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 13,
+            "totale_esl": 1681210.51
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 17,
+            "totale_esl": 35777897.019999996
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 9,
+            "totale_esl": 2195186.03
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 4,
+            "totale_esl": 10165643.969999999
+          }
+        ],
+        "totale_esl": 166455388.03,
+        "n_aiuti_distinti": 106
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "06382641006",
+      "denominazione": "RAI - RADIOTELEVISIONE ITALIANA S.P.A.",
+      "assetto": {
+        "denominazione": "RAI - RADIOTELEVISIONE ITALIANA S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 11177.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 11440,
+          "2021": 11386,
+          "2022": 11146,
+          "2023": 11177
+        },
+        "trend_percentuale": -2.3
+      },
+      "governance": {
+        "n_incarichi_remunerati": 6,
+        "compenso_totale": 329819.0,
+        "compenso_medio": 54970.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 853,
+            "importo_totale": 632566844.5500004,
+            "importo_medio": 741578.950234467
+          },
+          {
+            "anno": 2017,
+            "n_gare": 923,
+            "importo_totale": 611623769.4000001,
+            "importo_medio": 662647.6374864574
+          },
+          {
+            "anno": 2018,
+            "n_gare": 1067,
+            "importo_totale": 1194266109.7599998,
+            "importo_medio": 1119274.7045548265
+          },
+          {
+            "anno": 2019,
+            "n_gare": 1060,
+            "importo_totale": 819773734.81,
+            "importo_medio": 773371.4479339622
+          },
+          {
+            "anno": 2020,
+            "n_gare": 1030,
+            "importo_totale": 1472796268.0799997,
+            "importo_medio": 1429899.2893980579
+          },
+          {
+            "anno": 2021,
+            "n_gare": 1047,
+            "importo_totale": 944565982.8800001,
+            "importo_medio": 902164.2625405922
+          },
+          {
+            "anno": 2022,
+            "n_gare": 1065,
+            "importo_totale": 1122224621.47,
+            "importo_medio": 1053732.0389389673
+          },
+          {
+            "anno": 2023,
+            "n_gare": 1078,
+            "importo_totale": 1250321779.0400002,
+            "importo_medio": 1159853.2273098333
+          },
+          {
+            "anno": 2024,
+            "n_gare": 3612,
+            "importo_totale": 956347428.9399991,
+            "importo_medio": 264769.49859911384
+          },
+          {
+            "anno": 2025,
+            "n_gare": 3933,
+            "importo_totale": 1571894221.5399973,
+            "importo_medio": 399667.99428934586
+          }
+        ],
+        "totale_gare": 15668,
+        "importo_complessivo_totale": 10576380760.469997
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 28260.0
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 1,
+            "totale_esl": 26044.0
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 1,
+            "totale_esl": 29175.0
+          }
+        ],
+        "totale_esl": 83479.0,
+        "n_aiuti_distinti": 3
+      },
+      "score": {
+        "esposizione": 60,
+        "performance": 40
+      }
+    },
+    {
+      "cf": "00484960588",
+      "denominazione": "ENI S.P.A.",
+      "assetto": {
+        "denominazione": "ENI S.P.A.",
+        "settore": "Settore Secondario",
+        "addetti": 10034.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 12338,
+          "2021": 11996,
+          "2022": 11266,
+          "2023": 10034
+        },
+        "trend_percentuale": -18.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 760000.0,
+        "compenso_medio": 58462.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 107,
+            "importo_totale": 1002426119.7099999,
+            "importo_medio": 9368468.408504672
+          },
+          {
+            "anno": 2017,
+            "n_gare": 94,
+            "importo_totale": 838854558.66,
+            "importo_medio": 8923984.666595744
+          },
+          {
+            "anno": 2018,
+            "n_gare": 113,
+            "importo_totale": 2624246710.21,
+            "importo_medio": 23223422.21424779
+          },
+          {
+            "anno": 2019,
+            "n_gare": 84,
+            "importo_totale": 1324765052.1799998,
+            "importo_medio": 15771012.525952378
+          },
+          {
+            "anno": 2020,
+            "n_gare": 68,
+            "importo_totale": 320447709.56,
+            "importo_medio": 4712466.317058824
+          },
+          {
+            "anno": 2021,
+            "n_gare": 57,
+            "importo_totale": 368099453.34000003,
+            "importo_medio": 6457885.14631579
+          },
+          {
+            "anno": 2022,
+            "n_gare": 50,
+            "importo_totale": 440668846.58000004,
+            "importo_medio": 8813376.9316
+          },
+          {
+            "anno": 2023,
+            "n_gare": 52,
+            "importo_totale": 1697072461.85,
+            "importo_medio": 32636008.88173077
+          },
+          {
+            "anno": 2024,
+            "n_gare": 15,
+            "importo_totale": 134964000.0,
+            "importo_medio": 8997600.0
+          },
+          {
+            "anno": 2025,
+            "n_gare": 37,
+            "importo_totale": 604442842.3100001,
+            "importo_medio": 16336293.035405407
+          }
+        ],
+        "totale_gare": 677,
+        "importo_complessivo_totale": 9355987754.4
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 3,
+            "totale_esl": 1267711.6
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 3,
+            "totale_esl": 133703.68
+          },
+          {
+            "anno": 2020,
+            "n_aiuti": 5,
+            "totale_esl": 42199332.59
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 4,
+            "totale_esl": 355902294.0
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 19,
+            "totale_esl": 127487169.6
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 4,
+            "totale_esl": 8884098.45
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 5,
+            "totale_esl": 4976118.67
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 16092363.55
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 8,
+            "totale_esl": 173201117.56
+          }
+        ],
+        "totale_esl": 730143909.7,
+        "n_aiuti_distinti": 53
+      },
+      "score": {
+        "esposizione": 80,
+        "performance": 20
+      }
+    },
+    {
+      "cf": "97016000586",
+      "denominazione": "ENAV S.P.A.",
+      "assetto": {
+        "denominazione": "ENAV S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 4254.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 3330,
+          "2021": 3295,
+          "2022": 3306,
+          "2023": 4254
+        },
+        "trend_percentuale": 27.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 340620.0,
+        "compenso_medio": 26202.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 443,
+            "importo_totale": 171065231.4,
+            "importo_medio": 386151.7638826185
+          },
+          {
+            "anno": 2017,
+            "n_gare": 440,
+            "importo_totale": 155704420.90999994,
+            "importo_medio": 353873.6838863635
+          },
+          {
+            "anno": 2018,
+            "n_gare": 458,
+            "importo_totale": 121271731.60999998,
+            "importo_medio": 264785.4401965065
+          },
+          {
+            "anno": 2019,
+            "n_gare": 296,
+            "importo_totale": 211051880.3,
+            "importo_medio": 713013.1091216217
+          },
+          {
+            "anno": 2020,
+            "n_gare": 209,
+            "importo_totale": 280800819.86,
+            "importo_medio": 1343544.592631579
+          },
+          {
+            "anno": 2021,
+            "n_gare": 186,
+            "importo_totale": 364261004.81000006,
+            "importo_medio": 1958392.498978495
+          },
+          {
+            "anno": 2022,
+            "n_gare": 187,
+            "importo_totale": 217227231.07,
+            "importo_medio": 1161642.9468983957
+          },
+          {
+            "anno": 2023,
+            "n_gare": 244,
+            "importo_totale": 644362233.2199998,
+            "importo_medio": 2640828.8246721304
+          },
+          {
+            "anno": 2024,
+            "n_gare": 540,
+            "importo_totale": 129486379.55999996,
+            "importo_medio": 239789.5917777777
+          },
+          {
+            "anno": 2025,
+            "n_gare": 755,
+            "importo_totale": 262447222.3319999,
+            "importo_medio": 347612.2150092714
+          }
+        ],
+        "totale_gare": 3758,
+        "importo_complessivo_totale": 2557678155.0719995
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 2,
+            "totale_esl": 150574.6
+          },
+          {
+            "anno": 2020,
+            "n_aiuti": 2,
+            "totale_esl": 303183.45
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 1,
+            "totale_esl": 4330.0
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 2,
+            "totale_esl": 176532.36000000002
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 435510.41
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 619057.42
+          }
+        ],
+        "totale_esl": 1689188.2400000002,
+        "n_aiuti_distinti": 10
+      },
+      "score": {
+        "esposizione": 55,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "15907661001",
+      "denominazione": "ITALIA TRASPORTO AEREO S.P.A.",
+      "assetto": {
+        "denominazione": "ITALIA TRASPORTO AEREO S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 3259.0,
+        "valore_produzione": 2421744000.0,
+        "risultato_esercizio": null,
+        "patrimonio_netto": 749643317.0,
+        "costo_personale": 292067000.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 35,
+          "2021": 496,
+          "2022": 3188,
+          "2023": 3259
+        },
+        "trend_percentuale": 9211.4
+      },
+      "governance": {
+        "n_incarichi_remunerati": 10,
+        "compenso_totale": 188614.0,
+        "compenso_medio": 18861.0,
+        "anni_coperti": [
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {},
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2023,
+            "n_aiuti": 1,
+            "totale_esl": 6500.0
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 3,
+            "totale_esl": 90049750.24
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 5,
+            "totale_esl": 342455.34
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 4,
+            "totale_esl": 824620.6799999999
+          }
+        ],
+        "totale_esl": 91223326.26,
+        "n_aiuti_distinti": 13
+      },
+      "score": {
+        "esposizione": 20,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "02327910580",
+      "denominazione": "SOGEI - SOCIETA' GENERALE D'INFORMATICA - S.P.A.                 E IN FORMA ABBREVIATA SOGEI S.P.A.",
+      "assetto": {
+        "denominazione": "SOGEI - SOCIETA' GENERALE D'INFORMATICA - S.P.A.                 E IN FORMA ABBREVIATA SOGEI S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 2768.0,
+        "valore_produzione": 1008467771.0,
+        "risultato_esercizio": 38273896.0,
+        "patrimonio_netto": 269543051.0,
+        "costo_personale": 217030304.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 2164,
+          "2021": 2319,
+          "2022": 2507,
+          "2023": 2768
+        },
+        "trend_percentuale": 27.9
+      },
+      "governance": {
+        "n_incarichi_remunerati": 17,
+        "compenso_totale": 222820.0,
+        "compenso_medio": 13107.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 127,
+            "importo_totale": 310488438.68,
+            "importo_medio": 2444790.8557480318
+          },
+          {
+            "anno": 2017,
+            "n_gare": 134,
+            "importo_totale": 228511908.57999998,
+            "importo_medio": 1705312.7505970148
+          },
+          {
+            "anno": 2018,
+            "n_gare": 137,
+            "importo_totale": 614024889.89,
+            "importo_medio": 4481933.502846715
+          },
+          {
+            "anno": 2019,
+            "n_gare": 159,
+            "importo_totale": 554144272.8499999,
+            "importo_medio": 3485184.1059748423
+          },
+          {
+            "anno": 2020,
+            "n_gare": 158,
+            "importo_totale": 377220835.29999995,
+            "importo_medio": 2387473.64113924
+          },
+          {
+            "anno": 2021,
+            "n_gare": 189,
+            "importo_totale": 907324954.3300002,
+            "importo_medio": 4800661.134021165
+          },
+          {
+            "anno": 2022,
+            "n_gare": 211,
+            "importo_totale": 804434539.7300001,
+            "importo_medio": 3812485.970284361
+          },
+          {
+            "anno": 2023,
+            "n_gare": 175,
+            "importo_totale": 1018234243.3100002,
+            "importo_medio": 5818481.390342859
+          },
+          {
+            "anno": 2024,
+            "n_gare": 108,
+            "importo_totale": 828016379.04,
+            "importo_medio": 7666818.324444444
+          },
+          {
+            "anno": 2025,
+            "n_gare": 186,
+            "importo_totale": 1143930070.3599997,
+            "importo_medio": 6150161.668602149
+          }
+        ],
+        "totale_gare": 1584,
+        "importo_complessivo_totale": 6786330532.07
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 73219.85
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 2,
+            "totale_esl": 201629.5
+          }
+        ],
+        "totale_esl": 274849.35,
+        "n_aiuti_distinti": 3
+      },
+      "score": {
+        "esposizione": 50,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "00399810589",
+      "denominazione": "ISTITUTO POLIGRAFICO E ZECCA DELLO STATO - SOCIETA' PER AZIONI   IN BREVE 'IPZS S.P.A'",
+      "assetto": {
+        "denominazione": "ISTITUTO POLIGRAFICO E ZECCA DELLO STATO - SOCIETA' PER AZIONI   IN BREVE 'IPZS S.P.A'",
+        "settore": "Settore Secondario",
+        "addetti": 1821.0,
+        "valore_produzione": 580579767.0,
+        "risultato_esercizio": 137392200.0,
+        "patrimonio_netto": 566642785.0,
+        "costo_personale": 108711427.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 1630,
+          "2021": 1700,
+          "2022": 1673,
+          "2023": 1821
+        },
+        "trend_percentuale": 11.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 12,
+        "compenso_totale": 183623.0,
+        "compenso_medio": 15302.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 652,
+            "importo_totale": 447542163.3900002,
+            "importo_medio": 686414.3610276077
+          },
+          {
+            "anno": 2017,
+            "n_gare": 562,
+            "importo_totale": 297665361.5,
+            "importo_medio": 529653.6681494662
+          },
+          {
+            "anno": 2018,
+            "n_gare": 876,
+            "importo_totale": 490571225.4900001,
+            "importo_medio": 560012.8144863015
+          },
+          {
+            "anno": 2019,
+            "n_gare": 535,
+            "importo_totale": 527863426.86999947,
+            "importo_medio": 986660.6109719616
+          },
+          {
+            "anno": 2020,
+            "n_gare": 478,
+            "importo_totale": 200791989.40000004,
+            "importo_medio": 420066.92343096243
+          },
+          {
+            "anno": 2021,
+            "n_gare": 424,
+            "importo_totale": 400919058.39,
+            "importo_medio": 945563.8169575471
+          },
+          {
+            "anno": 2022,
+            "n_gare": 581,
+            "importo_totale": 323465899.3300001,
+            "importo_medio": 556739.9300000002
+          },
+          {
+            "anno": 2023,
+            "n_gare": 331,
+            "importo_totale": 405592531.4500002,
+            "importo_medio": 1225355.0799093663
+          },
+          {
+            "anno": 2024,
+            "n_gare": 338,
+            "importo_totale": 1270629789.90106,
+            "importo_medio": 3759259.7334350892
+          },
+          {
+            "anno": 2025,
+            "n_gare": 651,
+            "importo_totale": 762606543.2410002,
+            "importo_medio": 1171438.6224900156
+          }
+        ],
+        "totale_gare": 5428,
+        "importo_complessivo_totale": 5127647988.96206
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2021,
+            "n_aiuti": 3,
+            "totale_esl": 2420000.0
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 6758618.08
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 4,
+            "totale_esl": 4460984.41
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 18639.92
+          }
+        ],
+        "totale_esl": 13658242.41,
+        "n_aiuti_distinti": 9
+      },
+      "score": {
+        "esposizione": 60,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "01530510542",
+      "denominazione": "SVILUPPO LAVORO ITALIA S.P.A.",
+      "assetto": {
+        "denominazione": "SVILUPPO LAVORO ITALIA S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 909.0,
+        "valore_produzione": 66465060.0,
+        "risultato_esercizio": 347564.0,
+        "patrimonio_netto": 89226159.0,
+        "costo_personale": 54772027.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 553,
+          "2021": 653,
+          "2022": 906,
+          "2023": 909
+        },
+        "trend_percentuale": 64.4
+      },
+      "governance": {
+        "n_incarichi_remunerati": 4,
+        "compenso_totale": 36135.0,
+        "compenso_medio": 9034.0,
+        "anni_coperti": [
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 30,
+            "importo_totale": 13991663.569999998,
+            "importo_medio": 466388.78566666663
+          },
+          {
+            "anno": 2017,
+            "n_gare": 16,
+            "importo_totale": 2598004.83,
+            "importo_medio": 162375.301875
+          },
+          {
+            "anno": 2018,
+            "n_gare": 19,
+            "importo_totale": 2090818.8699999999,
+            "importo_medio": 110043.09842105262
+          },
+          {
+            "anno": 2019,
+            "n_gare": 35,
+            "importo_totale": 6944701.99,
+            "importo_medio": 198420.05685714286
+          },
+          {
+            "anno": 2020,
+            "n_gare": 22,
+            "importo_totale": 6634858.75,
+            "importo_medio": 301584.48863636365
+          },
+          {
+            "anno": 2021,
+            "n_gare": 29,
+            "importo_totale": 3963084.37,
+            "importo_medio": 136658.08172413794
+          },
+          {
+            "anno": 2022,
+            "n_gare": 44,
+            "importo_totale": 7629769.02,
+            "importo_medio": 173403.84136363634
+          },
+          {
+            "anno": 2023,
+            "n_gare": 29,
+            "importo_totale": 9635863.600000001,
+            "importo_medio": 332271.1586206897
+          },
+          {
+            "anno": 2024,
+            "n_gare": 85,
+            "importo_totale": 9825226.72,
+            "importo_medio": 115590.9025882353
+          },
+          {
+            "anno": 2025,
+            "n_gare": 87,
+            "importo_totale": 13730571.149999999,
+            "importo_medio": 157822.6568965517
+          }
+        ],
+        "totale_gare": 396,
+        "importo_complessivo_totale": 77044562.87
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2021,
+            "n_aiuti": 1,
+            "totale_esl": 435.2
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 274.04
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 2,
+            "totale_esl": 475514.68
+          }
+        ],
+        "totale_esl": 476223.92,
+        "n_aiuti_distinti": 4
+      },
+      "score": {
+        "esposizione": 10,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "00811720580",
+      "denominazione": "ENEL - SPA",
+      "assetto": {
+        "denominazione": "ENEL - SPA",
+        "settore": "Settore Terziario",
+        "addetti": 902.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 725,
+          "2021": 811,
+          "2022": 864,
+          "2023": 902
+        },
+        "trend_percentuale": 24.4
+      },
+      "governance": {
+        "n_incarichi_remunerati": 11,
+        "compenso_totale": 622573.0,
+        "compenso_medio": 56598.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 12,
+            "importo_totale": 501698942.0,
+            "importo_medio": 41808245.166666664
+          },
+          {
+            "anno": 2017,
+            "n_gare": 140,
+            "importo_totale": 1073494751.16,
+            "importo_medio": 7667819.651142857
+          },
+          {
+            "anno": 2018,
+            "n_gare": 139,
+            "importo_totale": 1857911705.0800002,
+            "importo_medio": 13366271.259568347
+          },
+          {
+            "anno": 2019,
+            "n_gare": 92,
+            "importo_totale": 583117133.2800001,
+            "importo_medio": 6338229.709565219
+          },
+          {
+            "anno": 2020,
+            "n_gare": 36,
+            "importo_totale": 165970166.60999998,
+            "importo_medio": 4610282.405833333
+          },
+          {
+            "anno": 2021,
+            "n_gare": 13,
+            "importo_totale": 395200085.27,
+            "importo_medio": 30400006.559230767
+          },
+          {
+            "anno": 2022,
+            "n_gare": 14,
+            "importo_totale": 119706605.28,
+            "importo_medio": 8550471.805714285
+          },
+          {
+            "anno": 2023,
+            "n_gare": 10,
+            "importo_totale": 5378196.99,
+            "importo_medio": 537819.699
+          }
+        ],
+        "totale_gare": 456,
+        "importo_complessivo_totale": 4702477585.67
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 45869.36
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 3,
+            "totale_esl": 382729.48000000004
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 2,
+            "totale_esl": 190917.82
+          }
+        ],
+        "totale_esl": 619516.66,
+        "n_aiuti_distinti": 6
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "05779721009",
+      "denominazione": "SO.G.I.N. - SOCIETA' GESTIONE IMPIANTI NUCLEARI PER AZIONI",
+      "assetto": {
+        "denominazione": "SO.G.I.N. - SOCIETA' GESTIONE IMPIANTI NUCLEARI PER AZIONI",
+        "settore": "Settore Secondario",
+        "addetti": 832.0,
+        "valore_produzione": 212920214.0,
+        "risultato_esercizio": 1245902.0,
+        "patrimonio_netto": 75534776.0,
+        "costo_personale": 73009588.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 917,
+          "2021": 894,
+          "2022": 856,
+          "2023": 832
+        },
+        "trend_percentuale": -9.3
+      },
+      "governance": {
+        "n_incarichi_remunerati": 12,
+        "compenso_totale": 268835.0,
+        "compenso_medio": 22403.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 141,
+            "importo_totale": 91931397.36999999,
+            "importo_medio": 651995.7260283687
+          },
+          {
+            "anno": 2017,
+            "n_gare": 193,
+            "importo_totale": 106488307.83999997,
+            "importo_medio": 551752.8903626942
+          },
+          {
+            "anno": 2018,
+            "n_gare": 171,
+            "importo_totale": 98190266.23000002,
+            "importo_medio": 574212.0832163744
+          },
+          {
+            "anno": 2019,
+            "n_gare": 189,
+            "importo_totale": 83837273.55,
+            "importo_medio": 443583.45793650794
+          },
+          {
+            "anno": 2020,
+            "n_gare": 183,
+            "importo_totale": 268895803.57,
+            "importo_medio": 1469375.9757923498
+          },
+          {
+            "anno": 2021,
+            "n_gare": 175,
+            "importo_totale": 118447382.56,
+            "importo_medio": 676842.1860571429
+          },
+          {
+            "anno": 2022,
+            "n_gare": 212,
+            "importo_totale": 137324183.23,
+            "importo_medio": 647755.5812735849
+          },
+          {
+            "anno": 2023,
+            "n_gare": 221,
+            "importo_totale": 348564271.21000004,
+            "importo_medio": 1577213.8968778283
+          },
+          {
+            "anno": 2024,
+            "n_gare": 241,
+            "importo_totale": 446349643.70500004,
+            "importo_medio": 1852073.210394191
+          },
+          {
+            "anno": 2025,
+            "n_gare": 302,
+            "importo_totale": 744682629.3028002,
+            "importo_medio": 2465836.5208701994
+          }
+        ],
+        "totale_gare": 2028,
+        "importo_complessivo_totale": 2444711158.5678
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 1,
+            "totale_esl": 1113.54
+          }
+        ],
+        "totale_esl": 1113.54,
+        "n_aiuti_distinti": 1
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 40
+      }
+    },
+    {
+      "cf": "06359501001",
+      "denominazione": "FERROVIE DELLO STATO ITALIANE S.P.A.",
+      "assetto": {
+        "denominazione": "FERROVIE DELLO STATO ITALIANE S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 695.0,
+        "valore_produzione": null,
+        "risultato_esercizio": null,
+        "patrimonio_netto": null,
+        "costo_personale": null,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 642,
+          "2021": 653,
+          "2022": 710,
+          "2023": 695
+        },
+        "trend_percentuale": 8.3
+      },
+      "governance": {
+        "n_incarichi_remunerati": 19,
+        "compenso_totale": 538875.0,
+        "compenso_medio": 28362.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 24,
+            "importo_totale": 48858129.67,
+            "importo_medio": 2035755.4029166668
+          },
+          {
+            "anno": 2017,
+            "n_gare": 56,
+            "importo_totale": 193943778.22,
+            "importo_medio": 3463281.7539285715
+          },
+          {
+            "anno": 2018,
+            "n_gare": 68,
+            "importo_totale": 55847132.91,
+            "importo_medio": 821281.3663235294
+          },
+          {
+            "anno": 2019,
+            "n_gare": 163,
+            "importo_totale": 66326909.250000015,
+            "importo_medio": 406913.5536809817
+          },
+          {
+            "anno": 2020,
+            "n_gare": 25,
+            "importo_totale": 26549254.37,
+            "importo_medio": 1061970.1748000002
+          },
+          {
+            "anno": 2021,
+            "n_gare": 28,
+            "importo_totale": 27609729.22,
+            "importo_medio": 986061.7578571428
+          },
+          {
+            "anno": 2022,
+            "n_gare": 15,
+            "importo_totale": 4423713.17,
+            "importo_medio": 294914.21133333334
+          },
+          {
+            "anno": 2023,
+            "n_gare": 10,
+            "importo_totale": 85195090.31,
+            "importo_medio": 8519509.031
+          },
+          {
+            "anno": 2024,
+            "n_gare": 2,
+            "importo_totale": 20018370.24,
+            "importo_medio": 10009185.12
+          },
+          {
+            "anno": 2025,
+            "n_gare": 7,
+            "importo_totale": 154532194.56,
+            "importo_medio": 22076027.794285715
+          }
+        ],
+        "totale_gare": 398,
+        "importo_complessivo_totale": 683304301.9200001
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 8,
+            "totale_esl": 2165832.94
+          }
+        ],
+        "totale_esl": 2165832.94,
+        "n_aiuti_distinti": 8
+      },
+      "score": {
+        "esposizione": 25,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "05754381001",
+      "denominazione": "GESTORE DEI SERVIZI ENERGETICI - GSE S.P.A.",
+      "assetto": {
+        "denominazione": "GESTORE DEI SERVIZI ENERGETICI - GSE S.P.A.",
+        "settore": "Settore Secondario",
+        "addetti": 688.0,
+        "valore_produzione": 15041070148.0,
+        "risultato_esercizio": 15571199.0,
+        "patrimonio_netto": 71043526.0,
+        "costo_personale": 56549666.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 638,
+          "2021": 654,
+          "2022": 678,
+          "2023": 688
+        },
+        "trend_percentuale": 7.8
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 491066.0,
+        "compenso_medio": 37774.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 53,
+            "importo_totale": 60400672.129999995,
+            "importo_medio": 1139635.3232075472
+          },
+          {
+            "anno": 2017,
+            "n_gare": 60,
+            "importo_totale": 39083224.73,
+            "importo_medio": 651387.0788333333
+          },
+          {
+            "anno": 2018,
+            "n_gare": 71,
+            "importo_totale": 46930567.489999995,
+            "importo_medio": 660993.9083098591
+          },
+          {
+            "anno": 2019,
+            "n_gare": 48,
+            "importo_totale": 17133134.8,
+            "importo_medio": 356940.30833333335
+          },
+          {
+            "anno": 2020,
+            "n_gare": 59,
+            "importo_totale": 72371175.17,
+            "importo_medio": 1226630.0876271187
+          },
+          {
+            "anno": 2021,
+            "n_gare": 59,
+            "importo_totale": 39717193.050000004,
+            "importo_medio": 673172.7635593221
+          },
+          {
+            "anno": 2022,
+            "n_gare": 70,
+            "importo_totale": 64468742.39999999,
+            "importo_medio": 920982.0342857142
+          },
+          {
+            "anno": 2023,
+            "n_gare": 119,
+            "importo_totale": 84797507.47,
+            "importo_medio": 712584.0963865547
+          },
+          {
+            "anno": 2024,
+            "n_gare": 227,
+            "importo_totale": 66140057.05,
+            "importo_medio": 291365.8900881057
+          },
+          {
+            "anno": 2025,
+            "n_gare": 278,
+            "importo_totale": 38548308.370000005,
+            "importo_medio": 138662.97974820147
+          }
+        ],
+        "totale_gare": 1044,
+        "importo_complessivo_totale": 529590582.66
+      },
+      "aiuti_stato": {},
+      "score": {
+        "esposizione": 20,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "07207761003",
+      "denominazione": "SPORT E SALUTE S.P.A.",
+      "assetto": {
+        "denominazione": "SPORT E SALUTE S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 605.0,
+        "valore_produzione": 146866348.0,
+        "risultato_esercizio": 3528060.0,
+        "patrimonio_netto": 46745832.0,
+        "costo_personale": 42012120.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 738,
+          "2021": 725,
+          "2022": 623,
+          "2023": 605
+        },
+        "trend_percentuale": -18.0
+      },
+      "governance": {
+        "n_incarichi_remunerati": 7,
+        "compenso_totale": 79956.0,
+        "compenso_medio": 11422.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 99,
+            "importo_totale": 48482844.92,
+            "importo_medio": 489725.7062626263
+          },
+          {
+            "anno": 2017,
+            "n_gare": 90,
+            "importo_totale": 62380933.230000004,
+            "importo_medio": 693121.4803333334
+          },
+          {
+            "anno": 2018,
+            "n_gare": 106,
+            "importo_totale": 57931594.099999994,
+            "importo_medio": 546524.4726415094
+          },
+          {
+            "anno": 2019,
+            "n_gare": 357,
+            "importo_totale": 39467777.65000001,
+            "importo_medio": 110553.99901960789
+          },
+          {
+            "anno": 2020,
+            "n_gare": 237,
+            "importo_totale": 30521411.73,
+            "importo_medio": 128782.32797468355
+          },
+          {
+            "anno": 2021,
+            "n_gare": 307,
+            "importo_totale": 46894241.20999999,
+            "importo_medio": 152749.97136807814
+          },
+          {
+            "anno": 2022,
+            "n_gare": 419,
+            "importo_totale": 224940594.42000005,
+            "importo_medio": 536851.0606682579
+          },
+          {
+            "anno": 2023,
+            "n_gare": 266,
+            "importo_totale": 156138767.07,
+            "importo_medio": 586987.8461278195
+          },
+          {
+            "anno": 2024,
+            "n_gare": 289,
+            "importo_totale": 164690521.39,
+            "importo_medio": 569863.3958131487
+          },
+          {
+            "anno": 2025,
+            "n_gare": 399,
+            "importo_totale": 164915368.25399998,
+            "importo_medio": 413321.7249473684
+          }
+        ],
+        "totale_gare": 2569,
+        "importo_complessivo_totale": 996364053.974
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2021,
+            "n_aiuti": 3,
+            "totale_esl": 226197.6
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 3,
+            "totale_esl": 1461.12
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 5,
+            "totale_esl": 434436.57
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 3,
+            "totale_esl": 63168.44
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 2,
+            "totale_esl": 70115.09
+          }
+        ],
+        "totale_esl": 795378.82,
+        "n_aiuti_distinti": 16
+      },
+      "score": {
+        "esposizione": 20,
+        "performance": 20
+      }
+    },
+    {
+      "cf": "04681091007",
+      "denominazione": "SOGESID S.P.A.",
+      "assetto": {
+        "denominazione": "SOGESID S.P.A.",
+        "settore": "Settore Secondario",
+        "addetti": 510.0,
+        "valore_produzione": 52664370.0,
+        "risultato_esercizio": null,
+        "patrimonio_netto": 42602248.0,
+        "costo_personale": 25277107.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 476,
+          "2021": 518,
+          "2022": 510,
+          "2023": 510
+        },
+        "trend_percentuale": 7.1
+      },
+      "governance": {
+        "n_incarichi_remunerati": 13,
+        "compenso_totale": 894000.0,
+        "compenso_medio": 68769.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 12,
+            "importo_totale": 12846474.58,
+            "importo_medio": 1070539.5483333333
+          },
+          {
+            "anno": 2017,
+            "n_gare": 8,
+            "importo_totale": 4423848.57,
+            "importo_medio": 552981.07125
+          },
+          {
+            "anno": 2018,
+            "n_gare": 14,
+            "importo_totale": 13740850.23,
+            "importo_medio": 981489.3021428572
+          },
+          {
+            "anno": 2019,
+            "n_gare": 6,
+            "importo_totale": 1055383.99,
+            "importo_medio": 175897.33166666667
+          },
+          {
+            "anno": 2020,
+            "n_gare": 12,
+            "importo_totale": 11203156.41,
+            "importo_medio": 933596.3675
+          },
+          {
+            "anno": 2021,
+            "n_gare": 30,
+            "importo_totale": 9873759.5,
+            "importo_medio": 329125.31666666665
+          },
+          {
+            "anno": 2022,
+            "n_gare": 30,
+            "importo_totale": 19494928.78,
+            "importo_medio": 649830.9593333334
+          },
+          {
+            "anno": 2023,
+            "n_gare": 27,
+            "importo_totale": 27253838.679999996,
+            "importo_medio": 1009401.4325925924
+          },
+          {
+            "anno": 2024,
+            "n_gare": 100,
+            "importo_totale": 209681577.76,
+            "importo_medio": 2096815.7776
+          },
+          {
+            "anno": 2025,
+            "n_gare": 224,
+            "importo_totale": 249115277.17000008,
+            "importo_medio": 1112121.7730803576
+          }
+        ],
+        "totale_gare": 463,
+        "importo_complessivo_totale": 558689095.6700001
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 1,
+            "totale_esl": 247.9
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 1,
+            "totale_esl": 10130.0
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 1,
+            "totale_esl": 9581.44
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 9581.44
+          }
+        ],
+        "totale_esl": 29540.78,
+        "n_aiuti_distinti": 4
+      },
+      "score": {
+        "esposizione": 20,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "05359681003",
+      "denominazione": "'CONSIP S.P.A.'",
+      "assetto": {
+        "denominazione": "'CONSIP S.P.A.'",
+        "settore": "Settore Terziario",
+        "addetti": 430.0,
+        "valore_produzione": 90386398.0,
+        "risultato_esercizio": 11012768.0,
+        "patrimonio_netto": 56951256.0,
+        "costo_personale": 35645856.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 431,
+          "2021": 425,
+          "2022": 417,
+          "2023": 430
+        },
+        "trend_percentuale": -0.2
+      },
+      "governance": {
+        "n_incarichi_remunerati": 18,
+        "compenso_totale": 285601.0,
+        "compenso_medio": 15867.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 87,
+            "importo_totale": 3842353925.24,
+            "importo_medio": 44164987.64643678
+          },
+          {
+            "anno": 2017,
+            "n_gare": 81,
+            "importo_totale": 6601499963.759999,
+            "importo_medio": 81499999.55259259
+          },
+          {
+            "anno": 2018,
+            "n_gare": 90,
+            "importo_totale": 8056085060.73,
+            "importo_medio": 89512056.23033333
+          },
+          {
+            "anno": 2019,
+            "n_gare": 83,
+            "importo_totale": 11427740204.32,
+            "importo_medio": 137683616.91951808
+          },
+          {
+            "anno": 2020,
+            "n_gare": 209,
+            "importo_totale": 7352097146.32,
+            "importo_medio": 35177498.30775119
+          },
+          {
+            "anno": 2021,
+            "n_gare": 75,
+            "importo_totale": 9786305733.05,
+            "importo_medio": 130484076.44066666
+          },
+          {
+            "anno": 2022,
+            "n_gare": 91,
+            "importo_totale": 15544506586.09,
+            "importo_medio": 170818753.6932967
+          },
+          {
+            "anno": 2023,
+            "n_gare": 87,
+            "importo_totale": 16596484553.2,
+            "importo_medio": 190764190.26666668
+          },
+          {
+            "anno": 2024,
+            "n_gare": 152,
+            "importo_totale": 15153964734.35,
+            "importo_medio": 99697136.41019738
+          },
+          {
+            "anno": 2025,
+            "n_gare": 180,
+            "importo_totale": 36456751047.9,
+            "importo_medio": 202537505.8216667
+          }
+        ],
+        "totale_gare": 1135,
+        "importo_complessivo_totale": 130817788954.96002
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 49.14
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 1,
+            "totale_esl": 181793.0
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 3,
+            "totale_esl": 27959.83
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 2,
+            "totale_esl": 29915.79
+          }
+        ],
+        "totale_esl": 239717.76000000004,
+        "n_aiuti_distinti": 7
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 40
+      }
+    },
+    {
+      "cf": "05828330638",
+      "denominazione": "AMCO - ASSET MANAGEMENT COMPANY S.P.A.",
+      "assetto": {
+        "denominazione": "AMCO - ASSET MANAGEMENT COMPANY S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 417.0,
+        "valore_produzione": 484209000.0,
+        "risultato_esercizio": null,
+        "patrimonio_netto": 2021889084.0,
+        "costo_personale": 49571258.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2023": 417
+        },
+        "trend_percentuale": 0
+      },
+      "governance": {
+        "n_incarichi_remunerati": 15,
+        "compenso_totale": 315669.0,
+        "compenso_medio": 21045.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {},
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2017,
+            "n_aiuti": 1,
+            "totale_esl": 15000.0
+          },
+          {
+            "anno": 2018,
+            "n_aiuti": 2,
+            "totale_esl": 33185.46
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 1,
+            "totale_esl": 1910.79
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 3,
+            "totale_esl": 448525.34
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 2,
+            "totale_esl": 164989.72
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 4173.87
+          }
+        ],
+        "totale_esl": 667785.18,
+        "n_aiuti_distinti": 11
+      },
+      "score": {
+        "esposizione": 0,
+        "performance": 40
+      }
+    },
+    {
+      "cf": "05058230961",
+      "denominazione": "RICERCA SUL SISTEMA ENERGETICO - RSE S.P.A.",
+      "assetto": {
+        "denominazione": "RICERCA SUL SISTEMA ENERGETICO - RSE S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 371.0,
+        "valore_produzione": 44579413.0,
+        "risultato_esercizio": 25707.0,
+        "patrimonio_netto": 3001175.0,
+        "costo_personale": 27586523.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 314,
+          "2021": 323,
+          "2022": 332,
+          "2023": 371
+        },
+        "trend_percentuale": 18.2
+      },
+      "governance": {
+        "n_incarichi_remunerati": 44,
+        "compenso_totale": 755042.0,
+        "compenso_medio": 17160.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 10,
+            "importo_totale": 1042017.0,
+            "importo_medio": 104201.7
+          },
+          {
+            "anno": 2017,
+            "n_gare": 16,
+            "importo_totale": 1362713.5899999999,
+            "importo_medio": 85169.59937499999
+          },
+          {
+            "anno": 2018,
+            "n_gare": 7,
+            "importo_totale": 485000.0,
+            "importo_medio": 69285.71428571429
+          },
+          {
+            "anno": 2019,
+            "n_gare": 14,
+            "importo_totale": 1250128.75,
+            "importo_medio": 89294.91071428571
+          },
+          {
+            "anno": 2020,
+            "n_gare": 31,
+            "importo_totale": 2672138.4,
+            "importo_medio": 86198.0129032258
+          },
+          {
+            "anno": 2021,
+            "n_gare": 43,
+            "importo_totale": 5251979.92,
+            "importo_medio": 122139.06790697674
+          },
+          {
+            "anno": 2022,
+            "n_gare": 57,
+            "importo_totale": 5703155.99,
+            "importo_medio": 100055.36824561404
+          },
+          {
+            "anno": 2023,
+            "n_gare": 93,
+            "importo_totale": 10260438.5,
+            "importo_medio": 110327.29569892473
+          },
+          {
+            "anno": 2024,
+            "n_gare": 122,
+            "importo_totale": 4202615.597,
+            "importo_medio": 34447.66882786885
+          },
+          {
+            "anno": 2025,
+            "n_gare": 200,
+            "importo_totale": 17245660.509999998,
+            "importo_medio": 86228.30255
+          }
+        ],
+        "totale_gare": 593,
+        "importo_complessivo_totale": 49475848.257
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2017,
+            "n_aiuti": 1,
+            "totale_esl": 39329.7
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 3,
+            "totale_esl": 70868.93
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 1,
+            "totale_esl": 5912.0
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 3,
+            "totale_esl": 644166.85
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 164773.76
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 61644.24
+          }
+        ],
+        "totale_esl": 986695.48,
+        "n_aiuti_distinti": 11
+      },
+      "score": {
+        "esposizione": 10,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "09982061005",
+      "denominazione": "EQUITALIA GIUSTIZIA S.P.A.",
+      "assetto": {
+        "denominazione": "EQUITALIA GIUSTIZIA S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 341.0,
+        "valore_produzione": 29808590.0,
+        "risultato_esercizio": 876766.0,
+        "patrimonio_netto": 12956418.0,
+        "costo_personale": 17353018.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 276,
+          "2021": 281,
+          "2022": 293,
+          "2023": 341
+        },
+        "trend_percentuale": 23.6
+      },
+      "governance": {
+        "n_incarichi_remunerati": 9,
+        "compenso_totale": 183944.0,
+        "compenso_medio": 20438.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 2,
+            "importo_totale": 613244.5,
+            "importo_medio": 306622.25
+          },
+          {
+            "anno": 2017,
+            "n_gare": 11,
+            "importo_totale": 1187592.47,
+            "importo_medio": 107962.95181818181
+          },
+          {
+            "anno": 2018,
+            "n_gare": 3,
+            "importo_totale": 545457.44,
+            "importo_medio": 181819.14666666664
+          },
+          {
+            "anno": 2019,
+            "n_gare": 9,
+            "importo_totale": 3821168.9000000004,
+            "importo_medio": 424574.3222222223
+          },
+          {
+            "anno": 2020,
+            "n_gare": 5,
+            "importo_totale": 4224425.54,
+            "importo_medio": 844885.108
+          },
+          {
+            "anno": 2021,
+            "n_gare": 11,
+            "importo_totale": 5301394.0,
+            "importo_medio": 481944.9090909091
+          },
+          {
+            "anno": 2022,
+            "n_gare": 5,
+            "importo_totale": 2316972.46,
+            "importo_medio": 463394.49199999997
+          },
+          {
+            "anno": 2023,
+            "n_gare": 5,
+            "importo_totale": 2412726.5300000003,
+            "importo_medio": 482545.30600000004
+          },
+          {
+            "anno": 2024,
+            "n_gare": 127,
+            "importo_totale": 2698633.08,
+            "importo_medio": 21249.07937007874
+          },
+          {
+            "anno": 2025,
+            "n_gare": 87,
+            "importo_totale": 3068296.46,
+            "importo_medio": 35267.77540229885
+          }
+        ],
+        "totale_gare": 265,
+        "importo_complessivo_totale": 26189911.380000003
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2025,
+            "n_aiuti": 1,
+            "totale_esl": 3982.69
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 7416.24
+          }
+        ],
+        "totale_esl": 11398.93,
+        "n_aiuti_distinti": 2
+      },
+      "score": {
+        "esposizione": 10,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "05877611003",
+      "denominazione": "ACQUIRENTE UNICO S.P.A.                                          IN FORMA ABBREVIATA 'AU S.P.A.'",
+      "assetto": {
+        "denominazione": "ACQUIRENTE UNICO S.P.A.                                          IN FORMA ABBREVIATA 'AU S.P.A.'",
+        "settore": "Settore Secondario",
+        "addetti": 324.0,
+        "valore_produzione": 3436123671.0,
+        "risultato_esercizio": 79650.0,
+        "patrimonio_netto": 8743915.0,
+        "costo_personale": 23603402.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 271,
+          "2021": 294,
+          "2022": 314,
+          "2023": 324
+        },
+        "trend_percentuale": 19.6
+      },
+      "governance": {
+        "n_incarichi_remunerati": 37,
+        "compenso_totale": 1149067.0,
+        "compenso_medio": 31056.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 50,
+            "importo_totale": 304506603.85,
+            "importo_medio": 6090132.0770000005
+          },
+          {
+            "anno": 2017,
+            "n_gare": 38,
+            "importo_totale": 43323420.11,
+            "importo_medio": 1140090.0028947368
+          },
+          {
+            "anno": 2018,
+            "n_gare": 139,
+            "importo_totale": 1716390646.2699997,
+            "importo_medio": 12348134.145827336
+          },
+          {
+            "anno": 2019,
+            "n_gare": 36,
+            "importo_totale": 65680192.11000001,
+            "importo_medio": 1824449.7808333335
+          },
+          {
+            "anno": 2020,
+            "n_gare": 31,
+            "importo_totale": 28015107.990000002,
+            "importo_medio": 903713.160967742
+          },
+          {
+            "anno": 2021,
+            "n_gare": 27,
+            "importo_totale": 24350209.24,
+            "importo_medio": 901859.6014814815
+          },
+          {
+            "anno": 2022,
+            "n_gare": 55,
+            "importo_totale": 1202973692.13,
+            "importo_medio": 21872248.947818182
+          },
+          {
+            "anno": 2023,
+            "n_gare": 52,
+            "importo_totale": 344682492.86,
+            "importo_medio": 6628509.478076924
+          },
+          {
+            "anno": 2024,
+            "n_gare": 116,
+            "importo_totale": 252785290.08999997,
+            "importo_medio": 2179183.5352586205
+          },
+          {
+            "anno": 2025,
+            "n_gare": 153,
+            "importo_totale": 227517294.3,
+            "importo_medio": 1487041.1392156864
+          }
+        ],
+        "totale_gare": 697,
+        "importo_complessivo_totale": 4210224948.9500003
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 47788.670000000006
+          }
+        ],
+        "totale_esl": 47788.670000000006,
+        "n_aiuti_distinti": 2
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "15376371009",
+      "denominazione": "PAGOPA S.P.A.",
+      "assetto": {
+        "denominazione": "PAGOPA S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 319.0,
+        "valore_produzione": 78880803.0,
+        "risultato_esercizio": 7378753.0,
+        "patrimonio_netto": 16628234.0,
+        "costo_personale": 22728172.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 46,
+          "2021": 120,
+          "2022": 319,
+          "2023": 319
+        },
+        "trend_percentuale": 593.5
+      },
+      "governance": {
+        "n_incarichi_remunerati": 18,
+        "compenso_totale": 586346.0,
+        "compenso_medio": 32575.0,
+        "anni_coperti": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2019,
+            "n_gare": 9,
+            "importo_totale": 25650542.0,
+            "importo_medio": 2850060.222222222
+          },
+          {
+            "anno": 2020,
+            "n_gare": 58,
+            "importo_totale": 14496236.56,
+            "importo_medio": 249935.1131034483
+          },
+          {
+            "anno": 2021,
+            "n_gare": 68,
+            "importo_totale": 39992686.0,
+            "importo_medio": 588127.7352941176
+          },
+          {
+            "anno": 2022,
+            "n_gare": 141,
+            "importo_totale": 748607060.8199999,
+            "importo_medio": 5309269.9348936165
+          },
+          {
+            "anno": 2023,
+            "n_gare": 108,
+            "importo_totale": 718960136.9699999,
+            "importo_medio": 6657038.305277777
+          },
+          {
+            "anno": 2024,
+            "n_gare": 115,
+            "importo_totale": 78943293.32000001,
+            "importo_medio": 686463.4201739131
+          },
+          {
+            "anno": 2025,
+            "n_gare": 151,
+            "importo_totale": 1737444696.5500002,
+            "importo_medio": 11506256.268543048
+          }
+        ],
+        "totale_gare": 650,
+        "importo_complessivo_totale": 3364094652.2200003
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 6112.56
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 47468.58
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 60071.37
+          }
+        ],
+        "totale_esl": 113652.51000000001,
+        "n_aiuti_distinti": 4
+      },
+      "score": {
+        "esposizione": 40,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "11638811007",
+      "denominazione": "CINECITTA' SOCIETA' PER AZIONI",
+      "assetto": {
+        "denominazione": "CINECITTA' SOCIETA' PER AZIONI",
+        "settore": "Settore Terziario",
+        "addetti": 307.0,
+        "valore_produzione": 103565831.0,
+        "risultato_esercizio": 1300614.0,
+        "patrimonio_netto": 23910622.0,
+        "costo_personale": 22153114.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 268,
+          "2021": 280,
+          "2022": 288,
+          "2023": 307
+        },
+        "trend_percentuale": 14.6
+      },
+      "governance": {
+        "n_incarichi_remunerati": 3,
+        "compenso_totale": 53973.0,
+        "compenso_medio": 17991.0,
+        "anni_coperti": [
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 12,
+            "importo_totale": 1508393.44,
+            "importo_medio": 125699.45333333332
+          },
+          {
+            "anno": 2017,
+            "n_gare": 10,
+            "importo_totale": 864000.0,
+            "importo_medio": 86400.0
+          },
+          {
+            "anno": 2018,
+            "n_gare": 23,
+            "importo_totale": 9587687.08,
+            "importo_medio": 416855.96
+          },
+          {
+            "anno": 2019,
+            "n_gare": 38,
+            "importo_totale": 15774261.680000002,
+            "importo_medio": 415112.14947368426
+          },
+          {
+            "anno": 2020,
+            "n_gare": 35,
+            "importo_totale": 10234719.36,
+            "importo_medio": 292420.5531428571
+          },
+          {
+            "anno": 2021,
+            "n_gare": 118,
+            "importo_totale": 39668874.26,
+            "importo_medio": 336176.90050847456
+          },
+          {
+            "anno": 2022,
+            "n_gare": 212,
+            "importo_totale": 160124385.89,
+            "importo_medio": 755303.7070283018
+          },
+          {
+            "anno": 2023,
+            "n_gare": 287,
+            "importo_totale": 74540236.85999998,
+            "importo_medio": 259722.07965156788
+          },
+          {
+            "anno": 2024,
+            "n_gare": 504,
+            "importo_totale": 41614675.29,
+            "importo_medio": 82568.80017857143
+          },
+          {
+            "anno": 2025,
+            "n_gare": 428,
+            "importo_totale": 40309201.849999994,
+            "importo_medio": 94180.3781542056
+          }
+        ],
+        "totale_gare": 1667,
+        "importo_complessivo_totale": 394226435.7099999
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2018,
+            "n_aiuti": 8,
+            "totale_esl": 47396.380000000005
+          },
+          {
+            "anno": 2019,
+            "n_aiuti": 1,
+            "totale_esl": 657.42
+          },
+          {
+            "anno": 2020,
+            "n_aiuti": 3,
+            "totale_esl": 16642.33
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 24,
+            "totale_esl": 673837.9700000002
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 17,
+            "totale_esl": 554781.17
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 5,
+            "totale_esl": 286618.66000000003
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 4,
+            "totale_esl": 192586.50000000003
+          }
+        ],
+        "totale_esl": 1772520.4300000002,
+        "n_aiuti_distinti": 62
+      },
+      "score": {
+        "esposizione": 25,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "05081150582",
+      "denominazione": "NUCLECO - SOCIETA' PER L'ECOINGEGNERIA NUCLEARE - SOCIETA' PER AZIONI",
+      "assetto": {
+        "denominazione": "NUCLECO - SOCIETA' PER L'ECOINGEGNERIA NUCLEARE - SOCIETA' PER AZIONI",
+        "settore": "Settore Terziario",
+        "addetti": 267.0,
+        "valore_produzione": 39814115.0,
+        "risultato_esercizio": 2453525.0,
+        "patrimonio_netto": 19149462.0,
+        "costo_personale": 16698576.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 225,
+          "2021": 251,
+          "2022": 255,
+          "2023": 267
+        },
+        "trend_percentuale": 18.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 12,
+        "compenso_totale": 244000.0,
+        "compenso_medio": 20333.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 34,
+            "importo_totale": 7018200.0,
+            "importo_medio": 206417.64705882352
+          },
+          {
+            "anno": 2018,
+            "n_gare": 1,
+            "importo_totale": 802400.0,
+            "importo_medio": 802400.0
+          },
+          {
+            "anno": 2020,
+            "n_gare": 4,
+            "importo_totale": 1588093.37,
+            "importo_medio": 397023.3425
+          },
+          {
+            "anno": 2021,
+            "n_gare": 51,
+            "importo_totale": 14906333.22,
+            "importo_medio": 292281.0435294118
+          },
+          {
+            "anno": 2022,
+            "n_gare": 55,
+            "importo_totale": 10935010.09,
+            "importo_medio": 198818.36527272727
+          },
+          {
+            "anno": 2023,
+            "n_gare": 51,
+            "importo_totale": 22565250.200000003,
+            "importo_medio": 442455.8862745099
+          },
+          {
+            "anno": 2024,
+            "n_gare": 67,
+            "importo_totale": 8539767.29,
+            "importo_medio": 127459.21328358208
+          },
+          {
+            "anno": 2025,
+            "n_gare": 111,
+            "importo_totale": 15371735.73,
+            "importo_medio": 138484.10567567567
+          }
+        ],
+        "totale_gare": 374,
+        "importo_complessivo_totale": 81726789.9
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 22192.32
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 65470.65000000001
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 2500.0
+          }
+        ],
+        "totale_esl": 90162.97,
+        "n_aiuti_distinti": 4
+      },
+      "score": {
+        "esposizione": 10,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "04570621005",
+      "denominazione": "CONSAP CONCESSIONARIA SERVIZI ASSICURATIVI PUBBLICI S.P.A.",
+      "assetto": {
+        "denominazione": "CONSAP CONCESSIONARIA SERVIZI ASSICURATIVI PUBBLICI S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 219.0,
+        "valore_produzione": 34485722.0,
+        "risultato_esercizio": 9577220.0,
+        "patrimonio_netto": 154683256.0,
+        "costo_personale": 20526470.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 214,
+          "2021": 217,
+          "2022": 220,
+          "2023": 219
+        },
+        "trend_percentuale": 2.3
+      },
+      "governance": {
+        "n_incarichi_remunerati": 11,
+        "compenso_totale": 168937.0,
+        "compenso_medio": 15358.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 18,
+            "importo_totale": 2223213.39,
+            "importo_medio": 123511.85500000001
+          },
+          {
+            "anno": 2017,
+            "n_gare": 9,
+            "importo_totale": 12451184.4,
+            "importo_medio": 1383464.9333333333
+          },
+          {
+            "anno": 2018,
+            "n_gare": 20,
+            "importo_totale": 9373792.190000001,
+            "importo_medio": 468689.6095000001
+          },
+          {
+            "anno": 2019,
+            "n_gare": 21,
+            "importo_totale": 13424942.14,
+            "importo_medio": 639282.959047619
+          },
+          {
+            "anno": 2020,
+            "n_gare": 25,
+            "importo_totale": 7735699.199999999,
+            "importo_medio": 309427.968
+          },
+          {
+            "anno": 2021,
+            "n_gare": 19,
+            "importo_totale": 4505357.79,
+            "importo_medio": 237124.09421052632
+          },
+          {
+            "anno": 2022,
+            "n_gare": 30,
+            "importo_totale": 27969145.14,
+            "importo_medio": 932304.838
+          },
+          {
+            "anno": 2023,
+            "n_gare": 28,
+            "importo_totale": 3856331.8099999996,
+            "importo_medio": 137726.13607142857
+          },
+          {
+            "anno": 2024,
+            "n_gare": 74,
+            "importo_totale": 10654585.31,
+            "importo_medio": 143980.88256756758
+          },
+          {
+            "anno": 2025,
+            "n_gare": 364,
+            "importo_totale": 156583895.22000006,
+            "importo_medio": 430175.5363186815
+          }
+        ],
+        "totale_gare": 608,
+        "importo_complessivo_totale": 248778146.59000006
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2023,
+            "n_aiuti": 2,
+            "totale_esl": 247180.0
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 3,
+            "totale_esl": 78909.43000000001
+          }
+        ],
+        "totale_esl": 326089.43,
+        "n_aiuti_distinti": 5
+      },
+      "score": {
+        "esposizione": 20,
+        "performance": 60
+      }
+    },
+    {
+      "cf": "80045870583",
+      "denominazione": "EUR S.P.A.",
+      "assetto": {
+        "denominazione": "EUR S.P.A.",
+        "settore": "Settore Terziario",
+        "addetti": 129.0,
+        "valore_produzione": 48592271.0,
+        "risultato_esercizio": 15250938.0,
+        "patrimonio_netto": 680394123.0,
+        "costo_personale": 9285899.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 106,
+          "2021": 114,
+          "2022": 131,
+          "2023": 129
+        },
+        "trend_percentuale": 21.7
+      },
+      "governance": {
+        "n_incarichi_remunerati": 30,
+        "compenso_totale": 994900.0,
+        "compenso_medio": 33163.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 24,
+            "importo_totale": 24438087.92,
+            "importo_medio": 1018253.6633333334
+          },
+          {
+            "anno": 2017,
+            "n_gare": 15,
+            "importo_totale": 4312790.98,
+            "importo_medio": 287519.3986666667
+          },
+          {
+            "anno": 2018,
+            "n_gare": 26,
+            "importo_totale": 12374997.280000001,
+            "importo_medio": 475961.4338461539
+          },
+          {
+            "anno": 2019,
+            "n_gare": 40,
+            "importo_totale": 46093443.120000005,
+            "importo_medio": 1152336.0780000002
+          },
+          {
+            "anno": 2020,
+            "n_gare": 36,
+            "importo_totale": 28329978.799999997,
+            "importo_medio": 786943.8555555554
+          },
+          {
+            "anno": 2021,
+            "n_gare": 47,
+            "importo_totale": 27094666.959999993,
+            "importo_medio": 576482.2757446807
+          },
+          {
+            "anno": 2022,
+            "n_gare": 51,
+            "importo_totale": 24476712.580000002,
+            "importo_medio": 479935.54078431375
+          },
+          {
+            "anno": 2023,
+            "n_gare": 66,
+            "importo_totale": 49174024.23000001,
+            "importo_medio": 745060.9731818184
+          },
+          {
+            "anno": 2024,
+            "n_gare": 98,
+            "importo_totale": 37160141.19,
+            "importo_medio": 379185.11418367346
+          },
+          {
+            "anno": 2025,
+            "n_gare": 158,
+            "importo_totale": 115368100.98999995,
+            "importo_medio": 730177.8543670883
+          }
+        ],
+        "totale_gare": 561,
+        "importo_complessivo_totale": 368822944.04999995
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2020,
+            "n_aiuti": 1,
+            "totale_esl": 44456.0
+          },
+          {
+            "anno": 2021,
+            "n_aiuti": 1,
+            "totale_esl": 79579.0
+          },
+          {
+            "anno": 2022,
+            "n_aiuti": 3,
+            "totale_esl": 132721.69
+          },
+          {
+            "anno": 2023,
+            "n_aiuti": 2,
+            "totale_esl": 48332.8
+          },
+          {
+            "anno": 2024,
+            "n_aiuti": 3,
+            "totale_esl": 23509.89
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 3,
+            "totale_esl": 1276631.1600000001
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 2,
+            "totale_esl": 6257.07
+          }
+        ],
+        "totale_esl": 1611487.61,
+        "n_aiuti_distinti": 15
+      },
+      "score": {
+        "esposizione": 25,
+        "performance": 80
+      }
+    },
+    {
+      "cf": "06208031002",
+      "denominazione": "'GESTORE DEI MERCATI ENERGETICI S.P.A.'",
+      "assetto": {
+        "denominazione": "'GESTORE DEI MERCATI ENERGETICI S.P.A.'",
+        "settore": "Settore Secondario",
+        "addetti": 120.0,
+        "valore_produzione": 43750895592.0,
+        "risultato_esercizio": 11800371.0,
+        "patrimonio_netto": 37527149.0,
+        "costo_personale": 11953249.0,
+        "ultimo_anno": 2023
+      },
+      "occupazione": {
+        "addetti_per_anno": {
+          "2020": 112,
+          "2021": 116,
+          "2022": 117,
+          "2023": 120
+        },
+        "trend_percentuale": 7.1
+      },
+      "governance": {
+        "n_incarichi_remunerati": 45,
+        "compenso_totale": 1178498.0,
+        "compenso_medio": 26189.0,
+        "anni_coperti": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023
+        ]
+      },
+      "appalti": {
+        "gare_per_anno": [
+          {
+            "anno": 2016,
+            "n_gare": 11,
+            "importo_totale": 27074869.410000004,
+            "importo_medio": 2461351.764545455
+          },
+          {
+            "anno": 2017,
+            "n_gare": 14,
+            "importo_totale": 1913333.6800000002,
+            "importo_medio": 136666.69142857144
+          },
+          {
+            "anno": 2018,
+            "n_gare": 15,
+            "importo_totale": 4601855.3100000005,
+            "importo_medio": 306790.35400000005
+          },
+          {
+            "anno": 2019,
+            "n_gare": 15,
+            "importo_totale": 3051324.27,
+            "importo_medio": 203421.618
+          },
+          {
+            "anno": 2020,
+            "n_gare": 18,
+            "importo_totale": 6491422.4799999995,
+            "importo_medio": 360634.5822222222
+          },
+          {
+            "anno": 2021,
+            "n_gare": 19,
+            "importo_totale": 35451564.72,
+            "importo_medio": 1865871.827368421
+          },
+          {
+            "anno": 2022,
+            "n_gare": 21,
+            "importo_totale": 10280789.75,
+            "importo_medio": 489561.4166666667
+          },
+          {
+            "anno": 2023,
+            "n_gare": 19,
+            "importo_totale": 7622749.19,
+            "importo_medio": 401197.3257894737
+          },
+          {
+            "anno": 2024,
+            "n_gare": 19,
+            "importo_totale": 4812134.4,
+            "importo_medio": 253270.2315789474
+          },
+          {
+            "anno": 2025,
+            "n_gare": 30,
+            "importo_totale": 2810786.8099999996,
+            "importo_medio": 93692.89366666666
+          }
+        ],
+        "totale_gare": 181,
+        "importo_complessivo_totale": 104110830.02000001
+      },
+      "aiuti_stato": {
+        "aiuti_per_anno": [
+          {
+            "anno": 2022,
+            "n_aiuti": 1,
+            "totale_esl": 5000.0
+          },
+          {
+            "anno": 2025,
+            "n_aiuti": 2,
+            "totale_esl": 4991.55
+          },
+          {
+            "anno": 2026,
+            "n_aiuti": 1,
+            "totale_esl": 500.0
+          }
+        ],
+        "totale_esl": 10491.55,
+        "n_aiuti_distinti": 4
+      },
+      "score": {
+        "esposizione": 20,
+        "performance": 80
+      }
     }
   ]
 }

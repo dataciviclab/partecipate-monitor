@@ -3,7 +3,6 @@ on:
   pull_request:
     paths:
       - 'src/**'
-      - 'scripts/**'
       - 'pyproject.toml'
   workflow_dispatch:
 
@@ -17,11 +16,7 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
       - run: pip install -e .
-      - name: Fast scan (30 siti)
-        run: python src/scanner.py --solo-controllo --max=30
-      - name: Catalogo (sui trovati)
-        run: python src/catalogo.py
-      - name: Formati
-        run: python src/formati.py
-      - name: Report
-        run: python src/report.py
+      - name: Test import moduli
+        run: python -c "from src.fetch_data import fetch_mef; from src.build_fatti import step_mef; from src.profiler import profila_cf; from src.report import main; print('OK')"
+      - name: Smoke test profiler
+        run: python -m src.profiler 00000000000

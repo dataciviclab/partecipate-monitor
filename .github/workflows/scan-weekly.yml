@@ -1,4 +1,4 @@
-name: Scan settimanale
+name: Report intelligence
 on:
   schedule:
     - cron: '0 5 * * 1'
@@ -10,44 +10,22 @@ permissions:
   id-token: write
 
 jobs:
-  scan:
+  intelligence:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip'
-
       - run: pip install -e .
 
-      # ── Scanner trasparenza ──
-      - name: Fetch dati base
-        run: python src/fetch_data.py
-
-      - name: Scanner trasparenza
-        run: python src/scanner.py --solo-controllo
-
-      - name: Catalogo categorie
-        run: python src/catalogo.py
-
-      - name: Analisi formati
-        run: python src/formati.py
-
-      # ── Intelligence partecipate centrali ──
       - name: Fetch dati intelligence
         run: python src/fetch_data.py --centrali
-
       - name: Build tabella fatti
         run: python src/build_fatti.py
-
       - name: Genera report con profili
         run: python src/report.py --profili
-
-      # ── Storico e deploy ──
-      - name: Salva snapshot storico
-        run: bash scripts/update_history.sh
 
       - name: Commit risultati
         run: |
@@ -63,7 +41,7 @@ jobs:
           path: reports/
 
   deploy:
-    needs: scan
+    needs: intelligence
     runs-on: ubuntu-latest
     environment:
       name: github-pages
