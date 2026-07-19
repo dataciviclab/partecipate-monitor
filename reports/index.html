@@ -5,142 +5,157 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partecipate Monitor</title>
 <style>
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 20px; color: #333; }
-  h1 { color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 8px; }
-  h2 { color: #2c3e50; margin-top: 30px; font-size: 1.1em; }
-  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.9em; }
-  th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
-  th { background: #f5f5f5; font-weight: 600; }
-  .num { text-align: right; font-variant-numeric: tabular-nums; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.85em; font-weight: bold; color: #fff; }
-  .badge-alto { background: #27ae60; }
-  .badge-medio { background: #f39c12; }
-  .badge-basso { background: #e74c3c; }
-  a { color: #2980b9; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .footer { margin-top: 40px; border-top: 1px solid #ddd; padding-top: 15px; font-size: 0.85em; color: #666; }
-  .cards { display: flex; gap: 15px; flex-wrap: wrap; margin: 15px 0; }
-  .card { flex: 1; min-width: 140px; padding: 12px; border-radius: 8px; text-align: center; background: #f8f9fa; }
-  .card .val { font-size: 1.6em; font-weight: bold; }
-  .card .lbl { font-size: 0.8em; color: #666; }
-  .trend-up { color: #27ae60; }
-  .trend-down { color: #e74c3c; }
+*, *::before, *::after { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 16px; color: #1a1a1a; font-size: 15px; line-height: 1.5; }
+h1 { font-size: 1.4em; margin: 0 0 4px; color: #1a1a1a; }
+.meta { font-size: 0.8em; color: #666; margin: 0 0 20px; }
+
+/* Cards riepilogo */
+.cards { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.card { flex: 1; min-width: 100px; background: #f4f6f8; border-radius: 8px; padding: 12px; text-align: center; }
+.card .num { font-size: 1.5em; font-weight: 700; }
+.card .lbl { font-size: 0.75em; color: #555; }
+
+/* Tabella */
+table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 10px 0; }
+th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+th { background: #f4f6f8; font-weight: 600; white-space: nowrap; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:hover td { background: #fafbfc; }
+
+.col-soc { width: 30%; }
+.col-badge { width: 9%; text-align: center; }
+.col-num { width: 13%; }
+
+/* Badge score */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.82em; font-weight: 600; color: #fff; min-width: 28px; text-align: center; }
+.badge-h { background: #1a7f37; }
+.badge-m { background: #d4870b; }
+.badge-l { background: #cf222e; }
+
+/* Schede dettaglio */
+.scheda { margin: 20px 0; padding: 16px; background: #fafbfc; border-radius: 8px; border: 1px solid #e0e0e0; }
+.scheda h2 { font-size: 1.1em; margin: 0 0 4px; }
+.scheda .sub { font-size: 0.82em; color: #555; margin-bottom: 10px; }
+.scheda .grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.scheda .stat { background: #fff; border-radius: 6px; padding: 8px 12px; flex: 1; min-width: 120px; border: 1px solid #e8e8e8; }
+.scheda .stat .val { font-size: 1.1em; font-weight: 600; }
+.scheda .stat .lbl { font-size: 0.78em; color: #555; }
+.scheda table { font-size: 0.82em; margin: 8px 0; }
+.scheda table th { background: #fff; border-bottom: 2px solid #e0e0e0; }
+
+.trend-up { color: #1a7f37; }
+.trend-down { color: #cf222e; }
+
+.footer { margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 12px; font-size: 0.8em; color: #666; }
+a { color: #0969da; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  body { padding: 8px; font-size: 14px; }
+  table { font-size: 0.75em; }
+  th, td { padding: 4px 4px; }
+  .col-soc { width: 26%; }
+  .col-badge { width: 8%; }
+  .col-num { width: 11%; }
+  .scheda { padding: 10px; }
+}
 </style>
 </head>
 <body>
+
 <h1>Partecipate Monitor</h1>
-<p id="meta">Caricamento...</p>
-
-<div id="dashboard"></div>
-
+<p class="meta" id="meta">Caricamento...</p>
+<div id="app"></div>
 <div class="footer">
-  <p>Generato da <a href="https://github.com/dataciviclab/partecipate-monitor">partecipate-monitor</a>.</p>
+  <p>Generato da <a href="https://github.com/dataciviclab/partecipate-monitor">partecipate-monitor</a> · <a href="data.json">data.json</a></p>
 </div>
 
 <script>
-fetch('data.json')
-  .then(r => r.json())
-  .then(d => {
-    document.getElementById('meta').textContent =
-      'Report generato il ' + (d.generato_il ? new Date(d.generato_il).toLocaleDateString('it') : '?');
+fetch('data.json').then(r=>r.json()).then(d => {
+  document.getElementById('meta').textContent = 'Report del ' + (d.generato_il ? new Date(d.generato_il).toLocaleDateString('it') : '?');
 
-    const out = document.getElementById('dashboard');
-    out.innerHTML = '';
+  const p = d.profili || [];
+  const out = document.getElementById('app');
+  if (!p.length) { out.innerHTML = '<p>Nessun profilo disponibile.</p>'; return; }
 
-    // ── Profili intelligence ──
-    if (d.profili && d.profili.length) {
-      out.innerHTML += '<h2>Partecipate centrali — score intelligence</h2>';
-      out.innerHTML += '<table><tr><th>Società</th><th class="num">Esposizione</th><th class="num">Performance</th><th class="num">Addetti</th><th class="num">Appalti</th><th class="num">Aiuti</th></tr>';
+  // Card riepilogo
+  const conAiuti = p.filter(x => x.aiuti_stato && x.aiuti_stato.totale_esl).length;
+  const conAppalti = p.filter(x => x.appalti && x.appalti.totale_gare).length;
+  const espMedio = Math.round(p.reduce((s,x) => s + (x.score?.esposizione||0), 0) / p.length);
+  out.innerHTML = `<div class="cards">
+    <div class="card"><div class="num">${p.length}</div><div class="lbl">Partecipate</div></div>
+    <div class="card"><div class="num">${conAppalti}</div><div class="lbl">Con appalti</div></div>
+    <div class="card"><div class="num">${conAiuti}</div><div class="lbl">Con aiuti</div></div>
+    <div class="card"><div class="num">${espMedio}</div><div class="lbl">Esposizione media</div></div>
+  </div>`;
 
-      d.profili.sort((a, b) => (b.score?.esposizione||0) - (a.score?.esposizione||0));
-      for (const p of d.profili) {
-        const sc = p.score || {};
-        const occ = p.occupazione || {};
-        const app = p.appalti || {};
-        const aiu = p.aiuti_stato || {};
-
-        const badge = (v) => `<span class="badge ${v >= 70 ? 'badge-alto' : v >= 40 ? 'badge-medio' : 'badge-basso'}">${v}</span>`;
-
-        out.innerHTML += `<tr>
-          <td><a href="#${p.cf}">${p.denominazione || p.cf}</a></td>
-          <td class="num">${badge(sc.esposizione||0)}</td>
-          <td class="num">${badge(sc.performance||0)}</td>
-          <td class="num">${occ.addetti_per_anno ? Object.values(occ.addetti_per_anno).pop().toLocaleString() : '—'}</td>
-          <td class="num">${app.importo_complessivo_totale ? '€' + (app.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—'}</td>
-          <td class="num">${aiu.totale_esl ? '€' + (aiu.totale_esl/1e6).toFixed(0) + ' M' : '—'}</td>
-        </tr>`;
-      }
-      out.innerHTML += '</table>';
-
-      // ── Dettaglio per ogni partecipata ──
-      for (const p of d.profili) {
-        const att = p.assetto || {};
-        const occ = p.occupazione || {};
-        const gov = p.governance || {};
-        const app = p.appalti || {};
-        const aiu = p.aiuti_stato || {};
-        const sc = p.score || {};
-
-        out.innerHTML += `<h2 id="${p.cf}">${p.denominazione}</h2>
-          <p>CF: ${p.cf} · Score esposizione: ${sc.esposizione||'—'} · Score performance: ${sc.performance||'—'}</p>`;
-
-        if (att.denominazione) {
-          out.innerHTML += '<table><tr><th colspan="2">Assetto</th></tr>';
-          for (const [k, v] of Object.entries({Settore: att.settore, Addetti: att.addetti, 'Valore produzione': att.valore_produzione}))
-            if (v) out.innerHTML += `<tr><td>${k}</td><td class="num">${typeof v === 'number' ? v.toLocaleString() : v}</td></tr>`;
-          out.innerHTML += '</table>';
-        }
-
-        if (occ.addetti_per_anno) {
-          out.innerHTML += '<table><tr><th colspan="3">Occupazione</th></tr>';
-          out.innerHTML += Object.entries(occ.addetti_per_anno).map(([a, v]) =>
-            `<tr><td>${a}</td><td class="num">${v.toLocaleString()}</td></tr>`
-          ).join('');
-          if (occ.trend_percentuale != null)
-            out.innerHTML += `<tr><td><strong>Trend</strong></td><td class="num ${occ.trend_percentuale >= 0 ? 'trend-up' : 'trend-down'}"><strong>${occ.trend_percentuale > 0 ? '+' : ''}${occ.trend_percentuale}%</strong></td></tr>`;
-          out.innerHTML += '</table>';
-        }
-
-        if (gov.compenso_totale) {
-          out.innerHTML += '<table><tr><th colspan="2">Governance</th></tr>';
-          out.innerHTML += `<tr><td>Compensi totali</td><td class="num">€${(gov.compenso_totale/1000).toFixed(0)}k</td></tr>`;
-          if (gov.n_incarichi_remunerati) out.innerHTML += `<tr><td>Incarichi retribuiti</td><td class="num">${gov.n_incarichi_remunerati}</td></tr>`;
-          out.innerHTML += '</table>';
-        }
-
-        if (app.totale_gare) {
-          out.innerHTML += '<table><tr><th colspan="3">Appalti banditi</th></tr>';
-          out.innerHTML += `<tr><td>Gare totali</td><td class="num">${app.totale_gare.toLocaleString()}</td></tr>`;
-          out.innerHTML += `<tr><td>Importo complessivo</td><td class="num">€${(app.importo_complessivo_totale/1e9).toFixed(1)} Mld</td></tr>`;
-          if (app.gare_per_anno) {
-            out.innerHTML += '<tr><th>Anno</th><th class="num">Gare</th><th class="num">Importo</th></tr>';
-            for (const g of app.gare_per_anno.slice(-5))
-              out.innerHTML += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`;
-          }
-          out.innerHTML += '</table>';
-        }
-
-        if (aiu.totale_esl) {
-          out.innerHTML += '<table><tr><th colspan="3">Aiuti di Stato</th></tr>';
-          out.innerHTML += `<tr><td>Totale ESL</td><td class="num">€${(aiu.totale_esl/1e6).toFixed(0)} M</td></tr>`;
-          out.innerHTML += `<tr><td>Aiuti distinti</td><td class="num">${aiu.n_aiuti_distinti}</td></tr>`;
-          if (aiu.aiuti_per_anno) {
-            out.innerHTML += '<tr><th>Anno</th><th class="num">Aiuti</th><th class="num">ESL</th></tr>';
-            for (const a of aiu.aiuti_per_anno)
-              out.innerHTML += `<tr><td>${a.anno}</td><td class="num">${a.n_aiuti}</td><td class="num">€${(a.totale_esl/1e6).toFixed(1)} M</td></tr>`;
-          }
-          out.innerHTML += '</table>';
-        }
-      }
-    }
-
-    if (!d.profili || !d.profili.length) {
-      out.innerHTML = '<p>Nessun profilo disponibile. Avvia la CI per generare il primo report.</p>';
-    }
-  })
-  .catch(e => {
-    document.getElementById('dashboard').innerHTML = `<p>Errore caricamento dati: ${e.message}</p>`;
+  // Tabella classifica
+  let html = '<h2>Classifica</h2><table><tr><th class="col-soc">Società</th><th class="col-badge">Esp</th><th class="col-badge">Perf</th><th class="col-num num">Addetti</th><th class="col-num num">Appalti</th><th class="col-num num">Aiuti</th></tr>';
+  p.sort((a,b) => (b.score?.esposizione||0) - (a.score?.esposizione||0));
+  p.forEach(x => {
+    const sc = x.score||{};
+    const badge = (v) => `<span class="badge ${v>=70?'badge-h':v>=40?'badge-m':'badge-l'}">${v}</span>`;
+    const occ = x.occupazione?.addetti_per_anno ? Object.values(x.occupazione.addetti_per_anno).pop().toLocaleString() : '—';
+    const app = x.appalti?.importo_complessivo_totale ? '€' + (x.appalti.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—';
+    const aiu = x.aiuti_stato?.totale_esl ? '€' + (x.aiuti_stato.totale_esl/1e6).toFixed(0) + ' M' : '—';
+    html += `<tr><td><a href="#${x.cf}">${x.denominazione || x.cf}</a></td>
+      <td class="num">${badge(sc.esposizione||0)}</td>
+      <td class="num">${badge(sc.performance||0)}</td>
+      <td class="num">${occ}</td><td class="num">${app}</td><td class="num">${aiu}</td></tr>`;
   });
+  html += '</table>';
+  out.innerHTML += html;
+
+  // Schede dettaglio
+  let schede = '<h2>Dettaglio</h2>';
+  p.forEach(x => {
+    const a = x.assetto||{}, o = x.occupazione||{}, g = x.governance||{}, ap = x.appalti||{}, ai = x.aiuti_stato||{}, sc = x.score||{};
+    let s = `<div class="scheda" id="${x.cf}">
+      <h2>${x.denominazione}</h2>
+      <p class="sub">CF ${x.cf} · Esposizione ${sc.esposizione||'—'} · Performance ${sc.performance||'—'}</p>
+      <div class="grid">`;
+
+    if (a.addetti) s += `<div class="stat"><div class="val">${a.addetti.toLocaleString()}</div><div class="lbl">Addetti</div></div>`;
+    if (a.valore_produzione) s += `<div class="stat"><div class="val">€${(a.valore_produzione/1e6).toFixed(0)} M</div><div class="lbl">Valore produzione</div></div>`;
+    if (ap.totale_gare) s += `<div class="stat"><div class="val">${ap.totale_gare.toLocaleString()}</div><div class="lbl">Gare bandite</div></div>`;
+    if (ap.importo_complessivo_totale) s += `<div class="stat"><div class="val">€${(ap.importo_complessivo_totale/1e9).toFixed(1)} Mld</div><div class="lbl">Importo appalti</div></div>`;
+    if (ai.totale_esl) s += `<div class="stat"><div class="val">€${(ai.totale_esl/1e6).toFixed(0)} M</div><div class="lbl">Aiuti ricevuti</div></div>`;
+    if (g.compenso_totale) s += `<div class="stat"><div class="val">€${(g.compenso_totale/1e3).toFixed(0)}k</div><div class="lbl">Compensi CdA</div></div>`;
+    if (o.trend_percentuale != null) s += `<div class="stat"><div class="val ${o.trend_percentuale >= 0 ? 'trend-up' : 'trend-down'}">${o.trend_percentuale > 0 ? '+' : ''}${o.trend_percentuale}%</div><div class="lbl">Trend occupazione</div></div>`;
+
+    s += '</div>';
+
+    // Occupazione
+    if (o.addetti_per_anno) {
+      s += '<table><tr><th>Anno</th><th class="num">Addetti</th></tr>';
+      Object.entries(o.addetti_per_anno).forEach(([a,v]) => s += `<tr><td>${a}</td><td class="num">${v.toLocaleString()}</td></tr>`);
+      s += '</table>';
+    }
+
+    // Appalti (ultimi 3 anni)
+    if (ap.gare_per_anno && ap.gare_per_anno.length) {
+      const ultimi = ap.gare_per_anno.slice(-3);
+      s += '<table><tr><th>Anno</th><th class="num">Gare</th><th class="num">Importo</th></tr>';
+      ultimi.forEach(g => s += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`);
+      s += '</table>';
+    }
+
+    // Aiuti (ultimi 3 anni)
+    if (ai.aiuti_per_anno && ai.aiuti_per_anno.length) {
+      const ultimi = ai.aiuti_per_anno.slice(-3);
+      s += '<table><tr><th>Anno</th><th class="num">Aiuti</th><th class="num">ESL</th></tr>';
+      ultimi.forEach(a => s += `<tr><td>${a.anno}</td><td class="num">${a.n_aiuti}</td><td class="num">€${(a.totale_esl/1e6).toFixed(1)} M</td></tr>`);
+      s += '</table>';
+    }
+
+    s += '</div>';
+    schede += s;
+  });
+  out.innerHTML += schede;
+}).catch(e => {
+  document.getElementById('app').innerHTML = `<p>Errore caricamento dati: ${e.message}</p>`;
+});
 </script>
 </body>
 </html>
