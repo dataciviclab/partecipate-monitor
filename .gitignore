@@ -4,17 +4,12 @@ __pycache__/
 .pytest_cache/
 .env
 
-# Cache temporanei
-data/mef_partecipazioni.parquet
-data/ipa_enti.parquet
+# Cache parquet (rigenerabili dalla CI, non servono in git)
+data/*.parquet
 
-# Dati generati dalla pipeline (produzione CI)
-data/scanner_report.csv
-data/scanner_report.json
-data/catalogo.csv
-data/formati_report.json
+# Output residui di run precedenti
+data/*_centrali.*
+data/centrali_targets.json
 
-# Report generati
-reports/index.html
-reports/data.json
-reports/foia_targets.json
+# Snapshot storici (prodotti dalla CI)
+data/history/
