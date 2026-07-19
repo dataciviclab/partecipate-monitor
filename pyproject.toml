@@ -1,7 +1,7 @@
 [project]
 name = "partecipate-monitor"
 version = "0.1.0"
-description = "Monitoraggio automatico della trasparenza delle societa' partecipate pubbliche italiane"
+description = "Intelligence sulle societa' partecipate pubbliche italiane — profili multi-fonte (MEF, ANAC, RNA)"
 requires-python = ">=3.12"
 dependencies = [
     "httpx>=0.28",
@@ -10,9 +10,6 @@ dependencies = [
 ]
 
 [project.scripts]
-partecipate-scan = "src.scanner:main"
-partecipate-catalogo = "src.catalogo:main"
-partecipate-formati = "src.formati:main"
 partecipate-report = "src.report:main"
 partecipate-fetch = "src.fetch_data:main"
 partecipate-fatti = "src.build_fatti:main"

@@ -3,40 +3,31 @@
 [![Scan settimanale](https://github.com/dataciviclab/partecipate-monitor/actions/workflows/scan-weekly.yml/badge.svg)](https://github.com/dataciviclab/partecipate-monitor/actions/workflows/scan-weekly.yml)
 [![Test rapido](https://github.com/dataciviclab/partecipate-monitor/actions/workflows/test.yml/badge.svg)](https://github.com/dataciviclab/partecipate-monitor/actions/workflows/test.yml)
 
-Intelligence sulle **società partecipate pubbliche italiane** — dalla trasparenza dei siti web ai profili multi-fonte (MEF, ANAC, RNA).
+Intelligence sulle **società partecipate pubbliche italiane**.
 
-## Cosa fa
-
-Il monitoraggio unisce **due piani**:
-
-**1. Scanner trasparenza** — ogni settimana scansiona ~975 siti di partecipate in controllo pubblico per verificare:
-- Hanno la sezione "Amministrazione Trasparente" / "Società Trasparente"?
-- Quali categorie pubblicano (bilanci, personale, bandi, ecc.)?
-- In quali formati (PDF, CSV, XML...)?
-
-**2. Intelligence partecipate centrali** — per le 26 partecipate MEF (controllo pubblico diretto), incrocia 5 dataset:
-- **MEF Partecipazioni** — addetti, settore, forma giuridica, assetto proprietario
-- **MEF Rappresentanti** — compensi, incarichi dei vertici
-- **ANAC Bandi Gara** — appalti banditi (importi, PNRR, urgenza)
-- **RNA Aiuti di Stato** — contributi pubblici ricevuti
-- **IndicePA** — sito web e contatti
+Incrocisa 5 dataset (MEF Partecipazioni, MEF Rappresentanti, ANAC Bandi Gara, RNA Aiuti di Stato, IndicePA) e produce profili strutturati per le 26 partecipate a controllo MEF diretto.
 
 ## Dashboard
 
 → **[https://dataciviclab.github.io/partecipate-monitor](https://dataciviclab.github.io/partecipate-monitor)**
 
-Classifica per score di esposizione, schede dettaglio per ogni partecipata, trend occupazionali, appalti e aiuti di Stato.
+Classifica per score di esposizione e performance, schede dettaglio per ogni partecipata con:
+- Assetto proprietario, addetti e trend occupazionale
+- Compensi e incarichi dei vertici
+- Appalti banditi (importi, PNRR, urgenza)
+- Aiuti di Stato ricevuti
 
 ## Dati correnti
 
 | Indicatore | Valore |
 |---|---|
-| Partecipate centrali monitorate | **26** |
-| Di cui con appalti ANAC | 23 |
-| Di cui con aiuti di Stato | 25 |
-| Di cui con dati governance | 26 |
-| Siti trasparenza scansionati | ~975 |
-| Con sezione trasparenza | ~89% |
+| Partecipate monitorate | **26** (controllo MEF diretto) |
+| Con appalti ANAC | 23 |
+| Con aiuti di Stato | 25 |
+| Con dati governance | 26 |
+| Periodo addetti | 2020–2023 |
+| Periodo appalti | 2016–2025 |
+| Periodo aiuti | 2018–2026 |
 
 ## Architettura
 
@@ -46,16 +37,14 @@ partecipate-monitor/
 │   ├── fetch_data.py          # Download 5 dataset da GCS (MEF, IPA, ANAC, RNA, Rappr.)
 │   ├── build_fatti.py         # Tabella fatti unificata (154k righe, 8.060 enti)
 │   ├── profiler.py            # Profilo intelligence per CF (5 dimensioni + score)
-│   ├── scanner.py             # Scanner sezione trasparenza (5 stadi)
-│   ├── catalogo.py            # 13 categorie ANAC
-│   ├── formati.py             # Deep scan formati
-│   └── report.py              # Report JSON (usa data.json + profili)
+│   └── report.py              # Report JSON
 ├── reports/
-│   ├── index.html             # Dashboard statica (JS puro, zero dipendenze)
-│   └── data.json              # Tutti i profili machine-readable
-├── data/                      # Cache e output (generati dalla CI)
-├── scripts/                   # Automazione
-└── .github/workflows/         # CI settimanale
+│   ├── index.html             # Dashboard statica (JS puro)
+│   └── data.json              # Profili machine-readable
+├── data/                      # Cache parquet (generati dalla CI)
+└── .github/workflows/
+    ├── scan-weekly.yml         # CI settimanale
+    └── test.yml               # Test su PR
 ```
 
 ## Utilizzo
@@ -65,27 +54,22 @@ git clone https://github.com/dataciviclab/partecipate-monitor.git
 cd partecipate-monitor
 pip install -e .
 
-# Pipeline completa (scanner + intelligence)
-python src/fetch_data.py                # MEF + IPA (per scanner)
-python src/scanner.py --solo-controllo
-python src/catalogo.py
-python src/formati.py
-python src/fetch_data.py --centrali     # ANAC + RNA + Rappr. (per intelligence)
-python src/build_fatti.py               # Tabella fatti
-python src/report.py --profili          # JSON con profili
+# Pipeline completa
+python src/fetch_data.py --centrali   # Scarica dati per le 26 partecipate
+python src/build_fatti.py             # Costruisce tabella fatti
+python src/report.py --profili        # Genera data.json con profili
+
+# Profilo singola partecipata
+python src/profiler.py 97103880585    # Poste Italiane
 ```
 
-Singoli moduli:
+## Fonti
 
-```bash
-# Profilo di una partecipata per CF
-python -m src.profiler 97103880585       # Poste Italiane
-
-# Solo scanner trasparenza
-python src/fetch_data.py
-python src/scanner.py --solo-controllo
-python src/report.py
-```
+- **MEF Partecipazioni** — Censimento annuale partecipate pubbliche (2020–2023)
+- **MEF Rappresentanti** — Compensi rappresentanti PA nei CdA (2018–2023)
+- **ANAC Bandi Gara** — Gare pubbliche bandite (CIG, 2016–2025)
+- **RNA Aiuti di Stato** — Registro Nazionale Aiuti (MIMIT, 2018–2026)
+- **IndicePA** — Anagrafe enti e siti web (AgID)
 
 ## Licenza
 
