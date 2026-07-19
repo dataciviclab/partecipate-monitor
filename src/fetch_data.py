@@ -159,8 +159,9 @@ def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=Fa
     SELECT m.cf_norm, m.denominazione, m.addetti, m.categoria, m.quotata,
            i.sito_istituzionale, i.tipologia AS tipologia_ipa
     FROM mef m
-    LEFT JOIN read_parquet('{ipa_path}') i
+    {'LEFT' if solo_mef_centrali else ''} JOIN read_parquet('{ipa_path}') i
          ON m.cf_norm = i.codice_fiscale_ente
+    WHERE solo_mef_centrali OR i.sito_istituzionale IS NOT NULL
     ORDER BY m.addetti DESC NULLS LAST
     """
     df = con.execute(q).fetchdf()
@@ -176,7 +177,7 @@ def cf_targets_centrali():
     return [p["cf_norm"] for p in partecipate if p["cf_norm"]]
 
 
-if __name__ == "__main__":
+def main():
     import sys
     force = "--force" in sys.argv
 
@@ -190,3 +191,7 @@ if __name__ == "__main__":
         fetch_mef(force)
         fetch_ipa(force)
         print("[fetch] Fatto. Usa --all per tutti i dataset, --centrali per solo MEF 100%")
+
+
+if __name__ == "__main__":
+    main()

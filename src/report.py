@@ -75,13 +75,8 @@ def main():
     dati = carica_dati()
 
     if "--profili" in sys.argv:
-        try:
-            profili = genera_profili()
-            dati["profili"] = profili
-        except Exception as e:
-            print(f"[report] ERRORE profili: {e}")
-            import traceback
-            traceback.print_exc()
+        profili = genera_profili()
+        dati["profili"] = profili
 
     with open(REPORTS_DIR / "data.json", "w") as f:
         json.dump(dati, f, indent=2, ensure_ascii=False)

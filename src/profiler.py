@@ -234,8 +234,12 @@ def profila_lista(cf_list):
     return risultati
 
 
-if __name__ == "__main__":
+def main():
     import sys, json
     cf = sys.argv[1] if len(sys.argv) > 1 else "97103880585"
     profilo = profila_cf(cf)
     print(json.dumps(profilo, indent=2, default=str))
+
+
+if __name__ == "__main__":
+    main()
