@@ -17,10 +17,4 @@ jobs:
           cache: 'pip'
       - run: pip install -e .
       - name: Test import moduli
-        run: python -c "
-from fetch_data import fetch_mef, fetch_ipa, fetch_anac, fetch_rna, fetch_rappresentanti, fetch_all, estrai_partecipate, cf_targets_centrali;
-from build_fatti import step_mef, step_rappresentanti, step_anac, step_rna, unifica;
-from profiler import profila_cf, profila_lista;
-from report import main;
-print('Tutti i moduli importati correttamente')
-"
+        run: python -c "from fetch_data import fetch_mef,fetch_ipa,fetch_anac,fetch_rna,fetch_rappresentanti,fetch_all,estrai_partecipate,cf_targets_centrali; from build_fatti import step_mef,step_rappresentanti,step_anac,step_rna,unifica; from profiler import profila_cf,profila_lista; from report import main; print('OK')"
