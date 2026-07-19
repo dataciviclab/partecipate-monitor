@@ -5,12 +5,19 @@ Verifica che i profili delle partecipate centrali abbiano metriche
 coerenti con i valori attesi. Previene regressioni silenziose.
 """
 
-import json, sys
+import json, sys, pytest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from profiler import profila_cf
+from profiler import profila_cf, FATTI
+
+if not Path(FATTI).exists():
+    pytest.skip(
+        f"Tabella fatti non trovata: {FATTI}\n"
+        "Esegui 'make build' o 'python src/build_fatti.py' prima di lanciare i test.",
+        allow_module_level=True,
+    )
 
 # Gold set: CF → metriche minime attese
 # (basate su dati MEF 2023)

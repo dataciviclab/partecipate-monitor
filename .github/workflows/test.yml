@@ -16,9 +16,5 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
       - run: pip install -e .
-
-      - name: Fetch + Build tabella fatti
-        run: python src/fetch_data.py --centrali && python src/build_fatti.py
-
-      - name: Gold set test
-        run: python -m pytest tests/ -v
+      - name: Smoke test profiler
+        run: python -m src.profiler 00000000000

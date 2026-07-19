@@ -27,6 +27,9 @@ jobs:
       - name: Genera report con profili
         run: python src/report.py --profili
 
+      - name: Gold set test
+        run: pip install pytest && python -m pytest tests/ -v
+
       - name: Commit risultati
         run: |
           git config user.name "partecipate-monitor[bot]"
