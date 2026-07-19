@@ -1,4 +1,4 @@
-name: Scan settimanale
+name: Report intelligence
 on:
   schedule:
     - cron: '0 5 * * 1'
@@ -10,7 +10,7 @@ permissions:
   id-token: write
 
 jobs:
-  scan:
+  intelligence:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
           path: reports/
 
   deploy:
-    needs: scan
+    needs: intelligence
     runs-on: ubuntu-latest
     environment:
       name: github-pages

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Osservatorio Partecipate Pubbliche</title>
+<title>Partecipate Monitor</title>
 <style>
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 20px; color: #333; }
   h1 { color: #2c3e50; border-bottom: 2px solid #2980b9; padding-bottom: 8px; }
@@ -28,7 +28,7 @@
 </style>
 </head>
 <body>
-<h1>Osservatorio Partecipate Pubbliche</h1>
+<h1>Partecipate Monitor</h1>
 <p id="meta">Caricamento...</p>
 
 <div id="dashboard"></div>
@@ -46,25 +46,6 @@ fetch('data.json')
 
     const out = document.getElementById('dashboard');
     out.innerHTML = '';
-
-    // ── Statistiche scanner ──
-    const s = d.scanner;
-    if (s) {
-      out.innerHTML += `<div class="cards">
-        <div class="card"><div class="val">${s.sezione_trovata}</div><div class="lbl">Con trasparenza</div></div>
-        <div class="card"><div class="val">${s.totale_siti - s.sezione_trovata}</div><div class="lbl">Senza</div></div>
-        <div class="card"><div class="val">${s.totale_siti}</div><div class="lbl">Siti scansionati</div></div>
-      </div>`;
-    }
-
-    // ── Formati ──
-    const f = d.formati;
-    if (f && f.formati) {
-      out.innerHTML += '<h2>Formati di pubblicazione</h2><table><tr><th>Formato</th><th>File</th></tr>';
-      for (const [fmt, cnt] of Object.entries(f.formati))
-        out.innerHTML += `<tr><td><code>.${fmt}</code></td><td class="num">${cnt.toLocaleString()}</td></tr>`;
-      out.innerHTML += '</table>';
-    }
 
     // ── Profili intelligence ──
     if (d.profili && d.profili.length) {
@@ -153,8 +134,8 @@ fetch('data.json')
       }
     }
 
-    if (!d.profili && !d.scanner) {
-      out.innerHTML = '<p>Nessun dato disponibile. Avvia la pipeline CI per generare il primo report.</p>';
+    if (!d.profili || !d.profili.length) {
+      out.innerHTML = '<p>Nessun profilo disponibile. Avvia la CI per generare il primo report.</p>';
     }
   })
   .catch(e => {
