@@ -14,12 +14,14 @@ GCS_MEF  = "gs://dataciviclab-clean/mef-partecipazioni/*/mef_partecipazioni_*_cl
 GCS_IPA  = "gs://dataciviclab-clean/ipa-enti/*/*.parquet"
 GCS_ANAC = "gs://dataciviclab-clean/anac-bandi-gara/*/anac_bandi_gara_*_clean.parquet"
 GCS_RNA  = "gs://dataciviclab-clean/rna-aiuti-stato/*/rna_aiuti_*_clean.parquet"
+GCS_RAPP = "gs://dataciviclab-clean/mef-rappresentanti-partecipate/*/mef_rappresentanti_partecipate_*_clean.parquet"
 
 # Cache locali
 LOCAL_MEF  = DATA_DIR / "mef_partecipazioni.parquet"
 LOCAL_IPA  = DATA_DIR / "ipa_enti.parquet"
 LOCAL_ANAC = DATA_DIR / "anac_bandi_gara.parquet"
 LOCAL_RNA  = DATA_DIR / "rna_aiuti_stato.parquet"
+LOCAL_RAPP = DATA_DIR / "mef_rappresentanti_partecipate.parquet"
 
 
 def _conn():
@@ -78,9 +80,34 @@ def fetch_anac(force=False, cfs=None):
 
 def fetch_rna(force=False, cfs=None):
     """Scarica rna_aiuti_stato da GCS, opzionalmente filtrato per CF beneficiario."""
-    # RNA non ha parentesi quadre; normalizziamo il confronto
     return _fetch_parquet("rna_aiuti_stato", GCS_RNA, LOCAL_RNA, force,
                           cfs=cfs, cf_col="codice_fiscale_beneficiario")
+
+
+def fetch_rappresentanti(force=False, cfs=None):
+    """Scarica mef_rappresentanti_partecipate da GCS, filtrato per CF societa' (con parentesi)."""
+    if LOCAL_RAPP.exists() and not force:
+        n = _count_rows(LOCAL_RAPP)
+        print(f"[fetch] Usa cache locale: {LOCAL_RAPP} ({n} righe)")
+        return str(LOCAL_RAPP)
+
+    print("[fetch] Scarica mef_rappresentanti_partecipate da GCS...")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    con = _conn()
+
+    where = ""
+    if cfs:
+        # MEF rappresentanti usa formato [CF] con parentesi; normalizziamo
+        cf_conditions = " OR ".join(
+            f"REPLACE(REPLACE(societa_cf, '[', ''), ']', '') = '{c}'" for c in cfs
+        )
+        where = f"WHERE {cf_conditions}"
+
+    sql = f"SELECT * FROM read_parquet('{GCS_RAPP}') {where}"
+    con.execute(f"COPY ({sql}) TO '{LOCAL_RAPP}' (FORMAT PARQUET)")
+    n = _count_rows(LOCAL_RAPP)
+    print(f"[fetch] Salvato: {LOCAL_RAPP} ({n} righe)")
+    return str(LOCAL_RAPP)
 
 
 def fetch_all(force=False, cfs=None):
@@ -89,6 +116,7 @@ def fetch_all(force=False, cfs=None):
     fetch_ipa(force)
     fetch_anac(force, cfs)
     fetch_rna(force, cfs)
+    fetch_rappresentanti(force, cfs)
 
 
 def estrai_partecipate(only_controllo=False, max_siti=None, solo_mef_centrali=False):
