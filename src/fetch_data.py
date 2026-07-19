@@ -9,12 +9,12 @@ from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-# Path GCS dataset clean (conforme allo schema dataset-incubator)
-GCS_MEF  = "gs://dataciviclab-clean/mef-partecipazioni/*/mef_partecipazioni_*_clean.parquet"
+# Path GCS dataset clean — NOTA: i dataset su GCS usano underscore, non trattino
+GCS_MEF  = "gs://dataciviclab-clean/mef_partecipazioni/*/*.parquet"
 GCS_IPA  = "gs://dataciviclab-clean/ipa-enti/*/*.parquet"
-GCS_ANAC = "gs://dataciviclab-clean/anac-bandi-gara/*/anac_bandi_gara_*_clean.parquet"
-GCS_RNA  = "gs://dataciviclab-clean/rna-aiuti-stato/*/rna_aiuti_*_clean.parquet"
-GCS_RAPP = "gs://dataciviclab-clean/mef-rappresentanti-partecipate/*/mef_rappresentanti_partecipate_*_clean.parquet"
+GCS_ANAC = "gs://dataciviclab-clean/anac_bandi_gara/*/*.parquet"
+GCS_RNA  = "gs://dataciviclab-clean/rna_aiuti_stato/*/*.parquet"
+GCS_RAPP = "gs://dataciviclab-clean/mef_rappresentanti_partecipate/*/*.parquet"
 
 # Cache locali
 LOCAL_MEF  = DATA_DIR / "mef_partecipazioni.parquet"
@@ -47,7 +47,7 @@ def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col
         cf_list = ", ".join(f"'{c}'" for c in cfs)
         where = f"WHERE {cf_col} IN ({cf_list})"
 
-    sql = f"SELECT * FROM read_parquet('{gcs_pattern}') {where}"
+    sql = f"SELECT * FROM read_parquet('{gcs_pattern}', union_by_name=True) {where}"
     con.execute(f"COPY ({sql}) TO '{local_path}' (FORMAT PARQUET)")
     n = _count_rows(local_path)
     print(f"[fetch] Salvato: {local_path} ({n} righe)")
