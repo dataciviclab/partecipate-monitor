@@ -23,9 +23,9 @@ th { background: #f4f6f8; font-weight: 600; white-space: nowrap; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
 tr:hover td { background: #fafbfc; }
 
-.col-soc { width: 30%; }
-.col-badge { width: 9%; text-align: center; }
-.col-num { width: 13%; }
+  .col-soc { width: 28%; }
+  .col-badge { width: 8%; text-align: center; }
+  .col-num { width: 14%; }
 
 /* Badge score */
 .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.82em; font-weight: 600; color: #fff; min-width: 28px; text-align: center; }
@@ -81,28 +81,30 @@ fetch('data.json').then(r=>r.json()).then(d => {
 
   // Card riepilogo
   const conAiuti = p.filter(x => x.aiuti_stato && x.aiuti_stato.totale_esl).length;
-  const conAppalti = p.filter(x => x.appalti && x.appalti.totale_gare).length;
+  const conBanditi = p.filter(x => x.appalti && x.appalti.totale_gare).length;
+  const conVinti = p.filter(x => x.appalti_vinti && x.appalti_vinti.totale_gare).length;
   const espMedio = Math.round(p.reduce((s,x) => s + (x.score?.esposizione||0), 0) / p.length);
   out.innerHTML = `<div class="cards">
     <div class="card"><div class="num">${p.length}</div><div class="lbl">Partecipate</div></div>
-    <div class="card"><div class="num">${conAppalti}</div><div class="lbl">Con appalti</div></div>
-    <div class="card"><div class="num">${conAiuti}</div><div class="lbl">Con aiuti</div></div>
+    <div class="card"><div class="num">${conBanditi}</div><div class="lbl">Con banditi</div></div>
+    <div class="card"><div class="num">${conVinti}</div><div class="lbl">Con vinti</div></div>
     <div class="card"><div class="num">${espMedio}</div><div class="lbl">Esposizione media</div></div>
   </div>`;
 
   // Tabella classifica
-  let html = '<h2>Classifica</h2><table><tr><th class="col-soc">Società</th><th class="col-badge">Esp</th><th class="col-badge">Perf</th><th class="col-num num">Addetti</th><th class="col-num num">Appalti</th><th class="col-num num">Aiuti</th></tr>';
+  let html = '<h2>Classifica</h2><table><tr><th class="col-soc">Società</th><th class="col-badge">Esp</th><th class="col-badge">Perf</th><th class="col-num num">Addetti</th><th class="col-num num">Banditi</th><th class="col-num num">Vinti</th><th class="col-num num">Aiuti</th></tr>';
   p.sort((a,b) => (b.score?.esposizione||0) - (a.score?.esposizione||0));
   p.forEach(x => {
     const sc = x.score||{};
     const badge = (v) => `<span class="badge ${v>=70?'badge-h':v>=40?'badge-m':'badge-l'}">${v}</span>`;
     const occ = x.occupazione?.addetti_per_anno ? Object.values(x.occupazione.addetti_per_anno).pop().toLocaleString() : '—';
-    const app = x.appalti?.importo_complessivo_totale ? '€' + (x.appalti.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—';
+    const band = x.appalti?.importo_complessivo_totale ? '€' + (x.appalti.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—';
+    const vinti = x.appalti_vinti?.importo_complessivo_totale ? '€' + (x.appalti_vinti.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—';
     const aiu = x.aiuti_stato?.totale_esl ? '€' + (x.aiuti_stato.totale_esl/1e6).toFixed(0) + ' M' : '—';
     html += `<tr><td><a href="#${x.cf}">${x.denominazione || x.cf}</a></td>
       <td class="num">${badge(sc.esposizione||0)}</td>
       <td class="num">${badge(sc.performance||0)}</td>
-      <td class="num">${occ}</td><td class="num">${app}</td><td class="num">${aiu}</td></tr>`;
+      <td class="num">${occ}</td><td class="num">${band}</td><td class="num">${vinti}</td><td class="num">${aiu}</td></tr>`;
   });
   html += '</table>';
   out.innerHTML += html;
@@ -110,7 +112,7 @@ fetch('data.json').then(r=>r.json()).then(d => {
   // Schede dettaglio
   let schede = '<h2>Dettaglio</h2>';
   p.forEach(x => {
-    const a = x.assetto||{}, o = x.occupazione||{}, g = x.governance||{}, ap = x.appalti||{}, ai = x.aiuti_stato||{}, sc = x.score||{};
+    const a = x.assetto||{}, o = x.occupazione||{}, g = x.governance||{}, ap = x.appalti||{}, av = x.appalti_vinti||{}, ai = x.aiuti_stato||{}, sc = x.score||{};
     let s = `<div class="scheda" id="${x.cf}">
       <h2>${x.denominazione}</h2>
       <p class="sub">CF ${x.cf} · Esposizione ${sc.esposizione||'—'} · Performance ${sc.performance||'—'}</p>
@@ -119,7 +121,9 @@ fetch('data.json').then(r=>r.json()).then(d => {
     if (a.addetti) s += `<div class="stat"><div class="val">${a.addetti.toLocaleString()}</div><div class="lbl">Addetti</div></div>`;
     if (a.valore_produzione) s += `<div class="stat"><div class="val">€${(a.valore_produzione/1e6).toFixed(0)} M</div><div class="lbl">Valore produzione</div></div>`;
     if (ap.totale_gare) s += `<div class="stat"><div class="val">${ap.totale_gare.toLocaleString()}</div><div class="lbl">Gare bandite</div></div>`;
-    if (ap.importo_complessivo_totale) s += `<div class="stat"><div class="val">€${(ap.importo_complessivo_totale/1e9).toFixed(1)} Mld</div><div class="lbl">Importo appalti</div></div>`;
+    if (ap.importo_complessivo_totale) s += `<div class="stat"><div class="val">€${(ap.importo_complessivo_totale/1e9).toFixed(1)} Mld</div><div class="lbl">Importo banditi</div></div>`;
+    if (av.totale_gare) s += `<div class="stat"><div class="val">${av.totale_gare.toLocaleString()}</div><div class="lbl">Gare vinte</div></div>`;
+    if (av.importo_complessivo_totale) s += `<div class="stat"><div class="val">€${(av.importo_complessivo_totale/1e9).toFixed(1)} Mld</div><div class="lbl">Importo vinti</div></div>`;
     if (ai.totale_esl) s += `<div class="stat"><div class="val">€${(ai.totale_esl/1e6).toFixed(0)} M</div><div class="lbl">Aiuti ricevuti</div></div>`;
     if (g.compenso_totale) s += `<div class="stat"><div class="val">€${(g.compenso_totale/1e3).toFixed(0)}k</div><div class="lbl">Compensi CdA</div></div>`;
     if (o.trend_percentuale != null) s += `<div class="stat"><div class="val ${o.trend_percentuale >= 0 ? 'trend-up' : 'trend-down'}">${o.trend_percentuale > 0 ? '+' : ''}${o.trend_percentuale}%</div><div class="lbl">Trend occupazione</div></div>`;
@@ -137,6 +141,14 @@ fetch('data.json').then(r=>r.json()).then(d => {
     if (ap.gare_per_anno && ap.gare_per_anno.length) {
       const ultimi = ap.gare_per_anno.slice(-3);
       s += '<table><tr><th>Anno</th><th class="num">Gare</th><th class="num">Importo</th></tr>';
+      ultimi.forEach(g => s += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`);
+      s += '</table>';
+    }
+
+    // Vinti (ultimi 3 anni)
+    if (av.gare_per_anno && av.gare_per_anno.length) {
+      const ultimi = av.gare_per_anno.slice(-3);
+      s += '<table><tr><th>Anno</th><th class="num">Gare vinte</th><th class="num">Importo</th></tr>';
       ultimi.forEach(g => s += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`);
       s += '</table>';
     }
