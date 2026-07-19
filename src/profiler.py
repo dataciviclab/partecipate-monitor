@@ -20,8 +20,10 @@ def _conn():
     return duckdb.connect()
 
 
-def _df(con, sql):
+def _df(con, sql, params=None):
     """Esegue SQL e restituisce lista di dict."""
+    if params:
+        return con.execute(sql, params).fetchdf().to_dict("records")
     return con.execute(sql).fetchdf().to_dict("records")
 
 
@@ -32,16 +34,16 @@ def profilo_assetto(cf, con):
     # Prendi l'ultimo anno disponibile per questo cf
     ultimo = con.execute(f"""
         SELECT MAX(anno) AS anno FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef'
-    """).fetchone()[0]
+        WHERE cf = ? AND fonte = 'mef'
+    """, [cf]).fetchone()[0]
     if not ultimo:
         return {"errore": f"CF {cf} non trovato"}
 
     rows = _df(con, f"""
         SELECT metrica, importo, denominazione, settore
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef' AND anno = {ultimo}
-    """)
+        WHERE cf = ? AND fonte = 'mef' AND anno = {ultimo}
+    """, params=[cf])
 
     if not rows:
         return {"errore": f"Nessun dato MEF per {cf}"}
@@ -69,9 +71,9 @@ def profilo_occupazione(cf, con):
     rows = _df(con, f"""
         SELECT anno, importo AS addetti
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'mef' AND metrica = 'addetti'
+        WHERE cf = ? AND fonte = 'mef' AND metrica = 'addetti'
         ORDER BY anno
-    """)
+    """, params=[cf])
 
     if not rows:
         return {}
@@ -91,9 +93,9 @@ def profilo_governance(cf, con):
     rows = _df(con, f"""
         SELECT anno, importo AS compenso
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'rappresentanti' AND metrica = 'compenso'
+        WHERE cf = ? AND fonte = 'rappresentanti' AND metrica = 'compenso'
         ORDER BY anno
-    """)
+    """, params=[cf])
 
     if not rows:
         return {}
@@ -118,10 +120,10 @@ def profilo_appalti(cf, con):
                SUM(importo) AS importo_totale,
                AVG(importo) AS importo_medio
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'anac'
+        WHERE cf = ? AND fonte = 'anac'
         GROUP BY anno
         ORDER BY anno
-    """).fetchdf()
+    """, [cf]).fetchdf()
 
     if df.empty:
         return {}
@@ -140,10 +142,10 @@ def profilo_aiuti(cf, con):
                COUNT(*) AS n_aiuti,
                SUM(importo) AS totale_esl
         FROM read_parquet('{FATTI}')
-        WHERE cf = '{cf}' AND fonte = 'aiuto_stato'
+        WHERE cf = ? AND fonte = 'aiuto_stato'
         GROUP BY anno
         ORDER BY anno
-    """).fetchdf()
+    """, [cf]).fetchdf()
 
     if df.empty:
         return {}
