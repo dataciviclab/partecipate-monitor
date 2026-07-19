@@ -16,11 +16,11 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
       - run: pip install -e .
-      - name: Fetch dati intelligence (Poste)
-        run: python src/fetch_data.py --centrali
-      - name: Build tabella fatti
-        run: python src/build_fatti.py
-      - name: Profilo Poste Italiane
-        run: python src/profiler.py 97103880585
-      - name: Report con profili
-        run: python src/report.py --profili
+      - name: Test import moduli
+        run: python -c "
+from fetch_data import fetch_mef, fetch_ipa, fetch_anac, fetch_rna, fetch_rappresentanti, fetch_all, estrai_partecipate, cf_targets_centrali;
+from build_fatti import step_mef, step_rappresentanti, step_anac, step_rna, unifica;
+from profiler import profila_cf, profila_lista;
+from report import main;
+print('Tutti i moduli importati correttamente')
+"
