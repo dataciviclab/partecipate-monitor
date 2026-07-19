@@ -4,158 +4,246 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Partecipate Monitor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 960px; margin: 0 auto; padding: 16px; color: #1a1a1a; font-size: 15px; line-height: 1.5; }
-h1 { font-size: 1.4em; margin: 0 0 4px; color: #1a1a1a; }
-.meta { font-size: 0.8em; color: #666; margin: 0 0 20px; }
+h1 { font-size: 1.4em; margin: 0 0 4px; }
+.meta { font-size: 0.8em; color: #666; margin: 0 0 12px; }
 
-/* Cards riepilogo */
-.cards { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-.card { flex: 1; min-width: 100px; background: #f4f6f8; border-radius: 8px; padding: 12px; text-align: center; }
-.card .num { font-size: 1.5em; font-weight: 700; }
-.card .lbl { font-size: 0.75em; color: #555; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.controls input, .controls select { padding: 5px 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.85em; }
+.controls input { flex: 1; min-width: 120px; }
 
-/* Tabella */
-table { width: 100%; border-collapse: collapse; font-size: 0.85em; margin: 10px 0; }
-th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid #e0e0e0; }
-th { background: #f4f6f8; font-weight: 600; white-space: nowrap; }
+.cards { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.card { flex: 1; min-width: 80px; background: #f4f6f8; border-radius: 8px; padding: 8px; text-align: center; }
+.card .num { font-size: 1.3em; font-weight: 700; }
+.card .lbl { font-size: 0.72em; color: #555; }
+
+.chart-wrap { background: #fafbfc; border-radius: 8px; padding: 8px; margin-bottom: 12px; height: 140px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+th, td { padding: 5px 6px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+th { background: #f4f6f8; font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; }
+th:hover { background: #e8eaed; }
+th::after { content: ' ↕'; opacity: 0.3; font-size: 0.75em; }
+th.sort-asc::after { content: ' ▲'; opacity: 0.8; }
+th.sort-desc::after { content: ' ▼'; opacity: 0.8; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
-tr:hover td { background: #fafbfc; }
+tr { cursor: pointer; }
+tr:hover td { background: #f0f4ff; }
+tr.active td { background: #dde4ff; }
 
-.col-soc { width: 30%; }
-.col-badge { width: 9%; text-align: center; }
-.col-num { width: 13%; }
+.col-soc { width: 26%; }
+.col-badge { width: 7%; text-align: center; }
+.col-num { width: 11%; }
 
-/* Badge score */
-.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.82em; font-weight: 600; color: #fff; min-width: 28px; text-align: center; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.82em; font-weight: 600; color: #fff; min-width: 24px; text-align: center; }
 .badge-h { background: #1a7f37; }
 .badge-m { background: #d4870b; }
 .badge-l { background: #cf222e; }
+.badge-s { background: #656d76; }
 
-/* Schede dettaglio */
-.scheda { margin: 20px 0; padding: 16px; background: #fafbfc; border-radius: 8px; border: 1px solid #e0e0e0; }
-.scheda h2 { font-size: 1.1em; margin: 0 0 4px; }
-.scheda .sub { font-size: 0.82em; color: #555; margin-bottom: 10px; }
-.scheda .grid { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
-.scheda .stat { background: #fff; border-radius: 6px; padding: 8px 12px; flex: 1; min-width: 120px; border: 1px solid #e8e8e8; }
-.scheda .stat .val { font-size: 1.1em; font-weight: 600; }
-.scheda .stat .lbl { font-size: 0.78em; color: #555; }
-.scheda table { font-size: 0.82em; margin: 8px 0; }
-.scheda table th { background: #fff; border-bottom: 2px solid #e0e0e0; }
+.scheda { margin: 10px 0; padding: 12px; background: #fafbfc; border-radius: 8px; border: 1px solid #e0e0e0; }
+.scheda h3 { font-size: 1em; margin: 0 0 4px; }
+.scheda .sub { font-size: 0.8em; color: #555; margin-bottom: 8px; }
+.scheda .grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.scheda .stat { background: #fff; border-radius: 6px; padding: 6px 10px; flex: 1; min-width: 90px; border: 1px solid #e8e8e8; }
+.scheda .stat .val { font-size: 1em; font-weight: 600; }
+.scheda .stat .lbl { font-size: 0.72em; color: #555; }
+.scheda table { font-size: 0.8em; margin: 6px 0; width: 100%; }
+.scheda table th { background: #fff; border-bottom: 2px solid #e0e0e0; cursor: default; }
+.scheda table th::after { content: ''; }
+.scheda table td { padding: 3px 8px; }
 
 .trend-up { color: #1a7f37; }
 .trend-down { color: #cf222e; }
 
-.footer { margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 12px; font-size: 0.8em; color: #666; }
+.footer { margin-top: 24px; border-top: 1px solid #e0e0e0; padding-top: 10px; font-size: 0.78em; color: #666; }
 a { color: #0969da; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 @media (max-width: 600px) {
   body { padding: 8px; font-size: 14px; }
-  table { font-size: 0.75em; }
-  th, td { padding: 4px 4px; }
-  .col-soc { width: 26%; }
-  .col-badge { width: 8%; }
-  .col-num { width: 11%; }
-  .scheda { padding: 10px; }
+  table { font-size: 0.7em; }
+  th, td { padding: 3px 4px; }
+  .col-soc { width: 20%; }
+  .col-badge { width: 5%; }
+  .col-num { width: 9%; }
+  .scheda { padding: 8px; }
 }
 </style>
 </head>
 <body>
-
 <h1>Partecipate Monitor</h1>
 <p class="meta" id="meta">Caricamento...</p>
-<div id="app"></div>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Cerca..." oninput="filtra()">
+  <select id="filtro-settore" onchange="filtra()"><option value="">Settore</option></select>
+  <select id="filtro-anno" onchange="filtra()"></select>
+</div>
+
+<div class="cards" id="cards"></div>
+<div class="chart-wrap"><canvas id="chart"></canvas></div>
+<div id="tabella"></div>
+<div id="dettaglio"></div>
+
 <div class="footer">
   <p>Generato da <a href="https://github.com/dataciviclab/partecipate-monitor">partecipate-monitor</a> · <a href="data.json">data.json</a></p>
 </div>
 
 <script>
+let dati = [], filtDati = [], chart = null, selezionato = null, maxRighe = 15;
+
 fetch('data.json').then(r=>r.json()).then(d => {
+  dati = d.profili || [];
   document.getElementById('meta').textContent = 'Report del ' + (d.generato_il ? new Date(d.generato_il).toLocaleDateString('it') : '?');
+  if (!dati.length) return;
 
-  const p = d.profili || [];
-  const out = document.getElementById('app');
-  if (!p.length) { out.innerHTML = '<p>Nessun profilo disponibile.</p>'; return; }
+  // Popola anni
+  const anni = [...new Set(dati.flatMap(x => Object.keys(x.occupazione?.addetti_per_anno||{})))].
+    concat(dati.flatMap(x => (x.appalti?.gare_per_anno||[]).map(g=>g.anno))).
+    concat(dati.flatMap(x => (x.aiuti_stato?.aiuti_per_anno||[]).map(a=>a.anno))).
+    filter(Boolean).sort((a,b)=>b-a);
+  const selAnno = document.getElementById('filtro-anno');
+  selAnno.innerHTML = '<option value="">Tutti gli anni</option>' + [...new Set(anni)].map(a => `<option>${a}</option>`).join('');
 
-  // Card riepilogo
-  const conAiuti = p.filter(x => x.aiuti_stato && x.aiuti_stato.totale_esl).length;
-  const conAppalti = p.filter(x => x.appalti && x.appalti.totale_gare).length;
-  const espMedio = Math.round(p.reduce((s,x) => s + (x.score?.esposizione||0), 0) / p.length);
-  out.innerHTML = `<div class="cards">
-    <div class="card"><div class="num">${p.length}</div><div class="lbl">Partecipate</div></div>
-    <div class="card"><div class="num">${conAppalti}</div><div class="lbl">Con appalti</div></div>
-    <div class="card"><div class="num">${conAiuti}</div><div class="lbl">Con aiuti</div></div>
-    <div class="card"><div class="num">${espMedio}</div><div class="lbl">Esposizione media</div></div>
-  </div>`;
-
-  // Tabella classifica
-  let html = '<h2>Classifica</h2><table><tr><th class="col-soc">Società</th><th class="col-badge">Esp</th><th class="col-badge">Perf</th><th class="col-num num">Addetti</th><th class="col-num num">Appalti</th><th class="col-num num">Aiuti</th></tr>';
-  p.sort((a,b) => (b.score?.esposizione||0) - (a.score?.esposizione||0));
-  p.forEach(x => {
-    const sc = x.score||{};
-    const badge = (v) => `<span class="badge ${v>=70?'badge-h':v>=40?'badge-m':'badge-l'}">${v}</span>`;
-    const occ = x.occupazione?.addetti_per_anno ? Object.values(x.occupazione.addetti_per_anno).pop().toLocaleString() : '—';
-    const app = x.appalti?.importo_complessivo_totale ? '€' + (x.appalti.importo_complessivo_totale/1e9).toFixed(1) + ' Mld' : '—';
-    const aiu = x.aiuti_stato?.totale_esl ? '€' + (x.aiuti_stato.totale_esl/1e6).toFixed(0) + ' M' : '—';
-    html += `<tr><td><a href="#${x.cf}">${x.denominazione || x.cf}</a></td>
-      <td class="num">${badge(sc.esposizione||0)}</td>
-      <td class="num">${badge(sc.performance||0)}</td>
-      <td class="num">${occ}</td><td class="num">${app}</td><td class="num">${aiu}</td></tr>`;
+  // Popola settori
+  [...new Set(dati.map(x=>x.assetto?.settore).filter(Boolean))].sort().forEach(s => {
+    document.getElementById('filtro-settore').innerHTML += `<option>${s}</option>`;
   });
-  html += '</table>';
-  out.innerHTML += html;
 
-  // Schede dettaglio
-  let schede = '<h2>Dettaglio</h2>';
-  p.forEach(x => {
-    const a = x.assetto||{}, o = x.occupazione||{}, g = x.governance||{}, ap = x.appalti||{}, ai = x.aiuti_stato||{}, sc = x.score||{};
-    let s = `<div class="scheda" id="${x.cf}">
-      <h2>${x.denominazione}</h2>
-      <p class="sub">CF ${x.cf} · Esposizione ${sc.esposizione||'—'} · Performance ${sc.performance||'—'}</p>
-      <div class="grid">`;
-
-    if (a.addetti) s += `<div class="stat"><div class="val">${a.addetti.toLocaleString()}</div><div class="lbl">Addetti</div></div>`;
-    if (a.valore_produzione) s += `<div class="stat"><div class="val">€${(a.valore_produzione/1e6).toFixed(0)} M</div><div class="lbl">Valore produzione</div></div>`;
-    if (ap.totale_gare) s += `<div class="stat"><div class="val">${ap.totale_gare.toLocaleString()}</div><div class="lbl">Gare bandite</div></div>`;
-    if (ap.importo_complessivo_totale) s += `<div class="stat"><div class="val">€${(ap.importo_complessivo_totale/1e9).toFixed(1)} Mld</div><div class="lbl">Importo appalti</div></div>`;
-    if (ai.totale_esl) s += `<div class="stat"><div class="val">€${(ai.totale_esl/1e6).toFixed(0)} M</div><div class="lbl">Aiuti ricevuti</div></div>`;
-    if (g.compenso_totale) s += `<div class="stat"><div class="val">€${(g.compenso_totale/1e3).toFixed(0)}k</div><div class="lbl">Compensi CdA</div></div>`;
-    if (o.trend_percentuale != null) s += `<div class="stat"><div class="val ${o.trend_percentuale >= 0 ? 'trend-up' : 'trend-down'}">${o.trend_percentuale > 0 ? '+' : ''}${o.trend_percentuale}%</div><div class="lbl">Trend occupazione</div></div>`;
-
-    s += '</div>';
-
-    // Occupazione
-    if (o.addetti_per_anno) {
-      s += '<table><tr><th>Anno</th><th class="num">Addetti</th></tr>';
-      Object.entries(o.addetti_per_anno).forEach(([a,v]) => s += `<tr><td>${a}</td><td class="num">${v.toLocaleString()}</td></tr>`);
-      s += '</table>';
-    }
-
-    // Appalti (ultimi 3 anni)
-    if (ap.gare_per_anno && ap.gare_per_anno.length) {
-      const ultimi = ap.gare_per_anno.slice(-3);
-      s += '<table><tr><th>Anno</th><th class="num">Gare</th><th class="num">Importo</th></tr>';
-      ultimi.forEach(g => s += `<tr><td>${g.anno}</td><td class="num">${g.n_gare.toLocaleString()}</td><td class="num">€${(g.importo_totale/1e6).toFixed(0)} M</td></tr>`);
-      s += '</table>';
-    }
-
-    // Aiuti (ultimi 3 anni)
-    if (ai.aiuti_per_anno && ai.aiuti_per_anno.length) {
-      const ultimi = ai.aiuti_per_anno.slice(-3);
-      s += '<table><tr><th>Anno</th><th class="num">Aiuti</th><th class="num">ESL</th></tr>';
-      ultimi.forEach(a => s += `<tr><td>${a.anno}</td><td class="num">${a.n_aiuti}</td><td class="num">€${(a.totale_esl/1e6).toFixed(1)} M</td></tr>`);
-      s += '</table>';
-    }
-
-    s += '</div>';
-    schede += s;
-  });
-  out.innerHTML += schede;
-}).catch(e => {
-  document.getElementById('app').innerHTML = `<p>Errore caricamento dati: ${e.message}</p>`;
+  filtra();
 });
+
+function filtra() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const s = document.getElementById('filtro-settore').value;
+  const a = document.getElementById('filtro-anno').value;
+  filtDati = dati.filter(x => {
+    if (s && x.assetto?.settore !== s) return false;
+    if (q && !(x.denominazione||'').toLowerCase().includes(q)) return false;
+    // se anno selezionato, mostra solo chi ha dati per quell'anno
+    if (a) {
+      const add = x.occupazione?.addetti_per_anno||{};
+      const band = (x.appalti?.gare_per_anno||[]).some(g => String(g.anno) === a);
+      const vinti = (x.appalti_vinti?.gare_per_anno||[]).some(g => String(g.anno) === a);
+      const aiuti = (x.aiuti_stato?.aiuti_per_anno||[]).some(g => String(g.anno) === a);
+      if (!add[a] && !band && !vinti && !aiuti) return false;
+    }
+    return true;
+  });
+  selezionato = null;
+  document.getElementById('dettaglio').innerHTML = '';
+  render();
+}
+
+function fmt(v, div=1e9) { return v ? '€' + (v/div).toFixed(1) + (div>=1e9?' Mld':' M') : '—'; }
+function badge(v) { return `<span class="badge ${v>=70?'badge-h':v>=40?'badge-m':'badge-l'}">${v}</span>`; }
+
+let sortCol = null, sortDir = 1;
+function ordina(col) {
+  if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+  const get = (x) => {
+    if (col===0) return (x.denominazione||'').toLowerCase();
+    if (col===1) return x.score?.esposizione||0;
+    if (col===2) return x.score?.performance||0;
+    if (col===3) return Math.max(...Object.values(x.occupazione?.addetti_per_anno||{}), 0);
+    if (col===4) return x.appalti?.importo_complessivo_totale||0;
+    if (col===5) return x.appalti_vinti?.importo_complessivo_totale||0;
+    return x.aiuti_stato?.totale_esl||0;
+  };
+  filtDati.sort((a,b) => sortDir * (get(a) > get(b) ? 1 : -1));
+  renderTabella();
+}
+
+function seleziona(cf) {
+  selezionato = selezionato === cf ? null : cf;
+  renderTabella();
+  if (selezionato) renderDettaglio(selezionato);
+  else document.getElementById('dettaglio').innerHTML = '';
+}
+
+function render() {
+  document.getElementById('cards').innerHTML = `<div class="card"><div class="num">${filtDati.length}</div><div class="lbl">Filtrate</div></div>
+    <div class="card"><div class="num">${filtDati.filter(x=>x.appalti?.totale_gare).length}</div><div class="lbl">Con banditi</div></div>
+    <div class="card"><div class="num">${filtDati.filter(x=>x.appalti_vinti?.totale_gare).length}</div><div class="lbl">Con vinti</div></div>
+    <div class="card"><div class="num">${Math.round(filtDati.reduce((s,x)=>s+(x.score?.esposizione||0),0)/filtDati.length)}</div><div class="lbl">Esp. media</div></div>`;
+
+  const bins = [0,0,0,0,0];
+  filtDati.forEach(x => { const e = x.score?.esposizione||0; if (e<20) bins[0]++; else if (e<40) bins[1]++; else if (e<60) bins[2]++; else if (e<80) bins[3]++; else bins[4]++; });
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById('chart'), { type: 'bar', data: {
+    labels: ['0-19','20-39','40-59','60-79','80-100'],
+    datasets: [{ data: bins, backgroundColor: ['#cf222e','#d4870b','#bf8700','#1a7f37','#095b26'] }]
+  }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } } });
+
+  renderTabella();
+}
+
+function mostraTutte() { maxRighe = filtDati.length; renderTabella(); }
+
+function renderTabella() {
+  const ths = ['Società','Esp','Perf','Addetti','Banditi','Vinti','Aiuti'];
+  const mostra = filtDati.slice(0, maxRighe);
+  let h = '<table><tr>';
+  ths.forEach((t,i) => h += `<th class="${['col-soc','col-badge','col-badge','col-num','col-num','col-num','col-num'][i]}${sortCol===i?' sort-'+['asc','desc'][(sortDir+1)/2]:''}" onclick="ordina(${i})">${t}</th>`);
+  h += '</tr>';
+  mostra.forEach(x => {
+    const add = Math.max(...Object.values(x.occupazione?.addetti_per_anno||{}), 0);
+    h += `<tr class="${selezionato===x.cf?'active':''}" onclick="seleziona('${x.cf}')">
+      <td>${x.denominazione||'?'}</td>
+      <td class="num">${badge(x.score?.esposizione||0)}</td>
+      <td class="num">${badge(x.score?.performance||0)}</td>
+      <td class="num">${add?add.toLocaleString():'—'}</td>
+      <td class="num">${fmt(x.appalti?.importo_complessivo_totale)}</td>
+      <td class="num">${fmt(x.appalti_vinti?.importo_complessivo_totale)}</td>
+      <td class="num">${x.aiuti_stato?.totale_esl?'€'+(x.aiuti_stato.totale_esl/1e6).toFixed(0)+' M':'—'}</td></tr>`;
+  });
+  let tab = h + '</table>';
+  if (filtDati.length > maxRighe) tab += `<p style="text-align:center;font-size:0.85em"><a href="#" onclick="mostraTutte();return false">Mostra tutte (${filtDati.length})</a></p>`;
+  document.getElementById('tabella').innerHTML = tab;
+}
+
+function renderDettaglio(cf) {
+  const x = dati.find(p => p.cf === cf);
+  if (!x) return;
+  const a=x.assetto||{}, o=x.occupazione||{}, g=x.governance||{}, ap=x.appalti||{}, av=x.appalti_vinti||{}, ai=x.aiuti_stato||{}, sc=x.score||{};
+  let s = `<div class="scheda">
+    <h3>${x.denominazione}</h3>
+    <p class="sub">CF ${x.cf} · Esposizione ${sc.esposizione||'—'} · Performance ${sc.performance||'—'}</p>
+    <div class="grid">`;
+  if (a.addetti) s += `<div class="stat"><div class="val">${a.addetti.toLocaleString()}</div><div class="lbl">Addetti</div></div>`;
+  if (a.valore_produzione) s += `<div class="stat"><div class="val">€${(a.valore_produzione/1e6).toFixed(0)} M</div><div class="lbl">Valore prod.</div></div>`;
+  if (ap.totale_gare) s += `<div class="stat"><div class="val">${ap.totale_gare.toLocaleString()}</div><div class="lbl">Gare bandite</div></div>`;
+  if (av.totale_gare) s += `<div class="stat"><div class="val">${av.totale_gare.toLocaleString()}</div><div class="lbl">Gare vinte</div></div>`;
+  if (ai.totale_esl) s += `<div class="stat"><div class="val">€${(ai.totale_esl/1e6).toFixed(0)} M</div><div class="lbl">Aiuti</div></div>`;
+  if (g.compenso_totale) s += `<div class="stat"><div class="val">€${(g.compenso_totale/1e3).toFixed(0)}k</div><div class="lbl">Compensi CdA</div></div>`;
+  if (o.trend_percentuale != null) s += `<div class="stat"><div class="val ${o.trend_percentuale>=0?'trend-up':'trend-down'}">${o.trend_percentuale>0?'+':''}${o.trend_percentuale}%</div><div class="lbl">Trend occ.</div></div>`;
+  s += '</div>';
+
+  if (o.addetti_per_anno) {
+    s += '<table><tr><th>Anno</th><th class="num">Addetti</th></tr>';
+    Object.entries(o.addetti_per_anno).forEach(([a,v]) => s += `<tr><td>${a}</td><td class="num">${v.toLocaleString()}</td></tr>`);
+    s += '</table>';
+  }
+  if (ap.gare_per_anno && ap.gare_per_anno.length) {
+    s += '<table><tr><th>Anno</th><th class="num">Bandite</th><th class="num">Importo band.</th><th class="num">Vinte</th><th class="num">Importo vinti</th></tr>';
+    const m = new Map();
+    (ap.gare_per_anno||[]).forEach(g => m.set(g.anno, {...m.get(g.anno), bn:g.n_gare, bi:g.importo_totale}));
+    (av.gare_per_anno||[]).forEach(g => m.set(g.anno, {...(m.get(g.anno)||{}), vn:g.n_gare, vi:g.importo_totale}));
+    [...m.entries()].sort((a,b)=>b[0]-a[0]).forEach(([a,v]) => s += `<tr><td>${a}</td><td class="num">${(v.bn||0).toLocaleString()}</td><td class="num">€${((v.bi||0)/1e6).toFixed(0)} M</td><td class="num">${(v.vn||0).toLocaleString()}</td><td class="num">€${((v.vi||0)/1e6).toFixed(0)} M</td></tr>`);
+    s += '</table>';
+  }
+  if (ai.aiuti_per_anno && ai.aiuti_per_anno.length) {
+    s += '<table><tr><th>Anno</th><th class="num">Aiuti</th><th class="num">ESL</th></tr>';
+    ai.aiuti_per_anno.slice(-5).forEach(a => s += `<tr><td>${a.anno}</td><td class="num">${a.n_aiuti}</td><td class="num">€${(a.totale_esl/1e6).toFixed(1)} M</td></tr>`);
+    s += '</table>';
+  }
+  s += '</div>';
+  document.getElementById('dettaglio').innerHTML = s;
+}
 </script>
 </body>
 </html>

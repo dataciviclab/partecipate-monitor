@@ -17,6 +17,8 @@ LOCAL_MEF  = DATA_DIR / "mef_partecipazioni.parquet"
 LOCAL_ANAC = DATA_DIR / "anac_bandi_gara.parquet"
 LOCAL_RNA  = DATA_DIR / "rna_aiuti_stato.parquet"
 LOCAL_RAPP = DATA_DIR / "mef_rappresentanti_partecipate.parquet"
+LOCAL_AGGI = DATA_DIR / "anac_aggiudicatari.parquet"
+LOCAL_AGGC = DATA_DIR / "anac_aggiudicazioni.parquet"
 
 
 def _conn():
@@ -26,7 +28,7 @@ def _conn():
 def _fetch_forza_centrali():
     """Forza refresh dei dati per le partecipate MEF centrali."""
     from fetch_data import cf_targets_centrali, fetch_mef, fetch_ipa
-    from fetch_data import fetch_anac, fetch_rna, fetch_rappresentanti
+    from fetch_data import fetch_anac, fetch_rna, fetch_rappresentanti, fetch_aggiudicatari
 
     print("[fatti] Forza refresh dati centrali...")
     fetch_mef(force=True)
@@ -38,6 +40,12 @@ def _fetch_forza_centrali():
     fetch_anac(force=True, cfs=cfs)
     fetch_rna(force=True, cfs=cfs)
     fetch_rappresentanti(force=True, cfs=cfs)
+    fetch_aggiudicatari(force=True, cfs=cfs)
+    # ANAC Aggiudicazioni: serve per importi gare vinte (JOIN via CIG)
+    from fetch_data import _fetch_parquet
+    LOCAL_AGGC = DATA_DIR / "anac_aggiudicazioni.parquet"
+    GCS_AGGC = "gs://dataciviclab-clean/anac_aggiudicazioni/*/*.parquet"
+    _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC, force=True)
     return cfs
 
 
@@ -85,6 +93,30 @@ def step_rappresentanti(con, path):
     print(f"  → {n} righe")
 
 
+def step_aggiudicatari(con, aggi_path, agg_path):
+    """Gare vinte: JOIN ANAC Aggiudicatari (CF) + Aggiudicazioni (importo)."""
+    print("[fatti] ANAC: gare vinte...")
+    con.execute(f"""
+        CREATE OR REPLACE TABLE _aggi AS
+        SELECT 'aggiudicatario' AS fonte,
+               a.codice_fiscale AS cf,
+               EXTRACT(YEAR FROM ag.data_aggiudicazione_definitiva) AS anno,
+               ag.importo_aggiudicazione AS importo,
+               'gara_vinta' AS metrica,
+               MAX(a.denominazione) AS denominazione,
+               '' AS settore
+        FROM read_parquet('{aggi_path}') a
+        JOIN read_parquet('{agg_path}') ag ON a.id_aggiudicazione = ag.id_aggiudicazione
+        WHERE a.codice_fiscale IS NOT NULL
+          AND ag.importo_aggiudicazione IS NOT NULL
+          AND ag.importo_aggiudicazione > 0
+        GROUP BY a.codice_fiscale, ag.data_aggiudicazione_definitiva, ag.importo_aggiudicazione
+    """)
+    n = con.execute("SELECT count(*) FROM _aggi").fetchone()[0]
+    n_cf = con.execute("SELECT count(DISTINCT cf) FROM _aggi").fetchone()[0]
+    print(f"  → {n} righe, {n_cf} enti")
+
+
 def step_anac(con, path):
     """Gare bandite (ANAC)."""
     print("[fatti] ANAC: gare bandite...")
@@ -128,6 +160,7 @@ def unifica(con):
         CREATE OR REPLACE TABLE _fatti AS
         SELECT * FROM _mef UNION ALL BY NAME SELECT * FROM _rapp
         UNION ALL BY NAME SELECT * FROM _anac UNION ALL BY NAME SELECT * FROM _rna
+        UNION ALL BY NAME SELECT * FROM _aggi
     """)
     con.execute(f"COPY _fatti TO '{OUTPUT}' (FORMAT PARQUET)")
     n = con.execute(f"SELECT count(*) FROM read_parquet('{OUTPUT}')").fetchone()[0]
@@ -143,6 +176,7 @@ def main():
     step_mef(con, str(LOCAL_MEF))
     step_rappresentanti(con, str(LOCAL_RAPP))
     step_anac(con, str(LOCAL_ANAC))
+    step_aggiudicatari(con, str(LOCAL_AGGI), str(LOCAL_AGGC))
     step_rna(con, str(LOCAL_RNA))
     unifica(con)
 
