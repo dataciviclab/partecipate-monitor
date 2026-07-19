@@ -10,7 +10,4 @@ dependencies = [
 ]
 
 [project.scripts]
-partecipate-report = "src.report:main"
-partecipate-fetch = "src.fetch_data:main"
-partecipate-fatti = "src.build_fatti:main"
-partecipate-profiler = "src.profiler:main"
+# CLI disponibile via `python -m src.<modulo>`

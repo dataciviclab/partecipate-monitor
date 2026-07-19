@@ -7,6 +7,10 @@ Intelligence sulle **società partecipate pubbliche italiane**.
 
 Incrocisa 5 dataset (MEF Partecipazioni, MEF Rappresentanti, ANAC Bandi Gara, RNA Aiuti di Stato, IndicePA) e produce profili strutturati per le 26 partecipate a controllo MEF diretto.
 
+> **Nota**: il monitoraggio della trasparenza dei siti web (ex scanner) è stato dismesso.
+> I dati storici (89% siti con sezione AT, 84,9% file in PDF, 7,5% formato aperto)
+> sono ancora disponibili nei commit precedenti del repository.
+
 ## Dashboard
 
 → **[https://dataciviclab.github.io/partecipate-monitor](https://dataciviclab.github.io/partecipate-monitor)**
