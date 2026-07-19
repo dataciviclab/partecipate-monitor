@@ -9,5 +9,8 @@ dependencies = [
     "pandas>=2.0",
 ]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [project.scripts]
 # CLI disponibile via `python -m src.<modulo>`

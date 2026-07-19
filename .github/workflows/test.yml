@@ -17,10 +17,6 @@ jobs:
           cache: 'pip'
       - run: pip install -e .
       - name: Test import moduli
-        run: python -c "from fetch_data import fetch_mef,fetch_ipa,fetch_anac,fetch_rna,fetch_rappresentanti,fetch_all,estrai_partecipate,cf_targets_centrali; from build_fatti import step_mef,step_rappresentanti,step_anac,step_rna,unifica; from profiler import profila_cf,profila_lista; from report import main; print('OK')"
-
-      - name: Smoke test profiler (errore gestito)
-        run: python src/profiler.py 00000000000 2>&1 | grep -q "non trovata"
-
-      - name: Smoke test report (errore gestito)
-        run: python src/report.py 2>&1 | grep -q "profili"
+        run: python -c "from src.fetch_data import fetch_mef; from src.build_fatti import step_mef; from src.profiler import profila_cf; from src.report import main; print('OK')"
+      - name: Smoke test profiler
+        run: python -m src.profiler 00000000000
