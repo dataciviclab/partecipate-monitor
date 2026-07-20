@@ -139,7 +139,7 @@ def profilo_appalti_vinti(cf, con):
     """Gare vinte (ANAC Aggiudicatari)."""
     df = con.execute(f"""
         SELECT anno,
-               COUNT(*) AS n_gare,
+               COUNT(DISTINCT id_aggiudicazione) AS n_gare,
                SUM(importo) AS importo_totale,
                AVG(importo) AS importo_medio
         FROM read_parquet('{FATTI}')
