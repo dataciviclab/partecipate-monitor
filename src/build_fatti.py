@@ -119,13 +119,14 @@ def step_aggiudicatari(con, aggi_path, agg_path):
                r.importo / n.n_partecipanti AS importo,
                'gara_vinta' AS metrica,
                MAX(r.denominazione) AS denominazione,
-               '' AS settore
+               '' AS settore,
+               r.id_aggiudicazione
         FROM _aggi_raw r
         JOIN (
             SELECT id_aggiudicazione, COUNT(DISTINCT cf) AS n_partecipanti
             FROM _aggi_raw GROUP BY id_aggiudicazione
         ) n ON r.id_aggiudicazione = n.id_aggiudicazione
-        GROUP BY r.cf, r.anno, r.importo, n.n_partecipanti
+        GROUP BY r.cf, r.anno, r.importo, n.n_partecipanti, r.id_aggiudicazione
     """)
     n = con.execute("SELECT count(*) FROM _aggi").fetchone()[0]
     n_cf = con.execute("SELECT count(DISTINCT cf) FROM _aggi").fetchone()[0]
