@@ -94,27 +94,43 @@ def step_rappresentanti(con, path):
 
 
 def step_aggiudicatari(con, aggi_path, agg_path):
-    """Gare vinte: JOIN ANAC Aggiudicatari (CF) + Aggiudicazioni (importo)."""
+    """Gare vinte: pro-rata RTI. Divide importo per numero CF per id_aggiudicazione."""
     print("[fatti] ANAC: gare vinte...")
+    # Passaggio 1: JOIN + conta partecipanti per aggiudicazione
     con.execute(f"""
-        CREATE OR REPLACE TABLE _aggi AS
-        SELECT 'aggiudicatario' AS fonte,
-               a.codice_fiscale AS cf,
+        CREATE OR REPLACE TABLE _aggi_raw AS
+        SELECT a.codice_fiscale AS cf,
+               ag.id_aggiudicazione,
                EXTRACT(YEAR FROM ag.data_aggiudicazione_definitiva) AS anno,
                ag.importo_aggiudicazione AS importo,
-               'gara_vinta' AS metrica,
-               MAX(a.denominazione) AS denominazione,
-               '' AS settore
+               a.denominazione
         FROM read_parquet('{aggi_path}') a
         JOIN read_parquet('{agg_path}') ag ON a.id_aggiudicazione = ag.id_aggiudicazione
         WHERE a.codice_fiscale IS NOT NULL
           AND ag.importo_aggiudicazione IS NOT NULL
           AND ag.importo_aggiudicazione > 0
-        GROUP BY a.codice_fiscale, ag.data_aggiudicazione_definitiva, ag.importo_aggiudicazione
+    """)
+    # Passaggio 2: conta quanti CF per id_aggiudicazione (RTI)
+    con.execute(f"""
+        CREATE OR REPLACE TABLE _aggi AS
+        SELECT 'aggiudicatario' AS fonte,
+               r.cf,
+               r.anno,
+               r.importo / n.n_partecipanti AS importo,
+               'gara_vinta' AS metrica,
+               MAX(r.denominazione) AS denominazione,
+               '' AS settore
+        FROM _aggi_raw r
+        JOIN (
+            SELECT id_aggiudicazione, COUNT(DISTINCT cf) AS n_partecipanti
+            FROM _aggi_raw GROUP BY id_aggiudicazione
+        ) n ON r.id_aggiudicazione = n.id_aggiudicazione
+        GROUP BY r.cf, r.anno, r.importo, n.n_partecipanti
     """)
     n = con.execute("SELECT count(*) FROM _aggi").fetchone()[0]
     n_cf = con.execute("SELECT count(DISTINCT cf) FROM _aggi").fetchone()[0]
     print(f"  → {n} righe, {n_cf} enti")
+    con.execute("DROP TABLE IF EXISTS _aggi_raw")
 
 
 def step_anac(con, path):
