@@ -25,27 +25,27 @@ def _conn():
     return duckdb.connect()
 
 
-def _fetch_forza_centrali():
-    """Forza refresh dei dati per le partecipate MEF centrali."""
+def _fetch_dati_centrali():
+    """Scarica i dataset per le partecipate centrali (usa cache se disponibile)."""
     from fetch_data import cf_targets_centrali, fetch_mef, fetch_ipa
     from fetch_data import fetch_anac, fetch_rna, fetch_rappresentanti, fetch_aggiudicatari
 
-    print("[fatti] Forza refresh dati centrali...")
-    fetch_mef(force=True)
-    fetch_ipa(force=True)
+    print("[fatti] Scarica dati centrali...")
+    fetch_mef()
+    fetch_ipa()
 
     cfs = cf_targets_centrali()
     print(f"[fatti] Partecipate target: {len(cfs)}")
 
-    fetch_anac(force=True, cfs=cfs)
-    fetch_rna(force=True, cfs=cfs)
-    fetch_rappresentanti(force=True, cfs=cfs)
-    fetch_aggiudicatari(force=True, cfs=cfs)
+    fetch_anac(cfs=cfs)
+    fetch_rna(cfs=cfs)
+    fetch_rappresentanti(cfs=cfs)
+    fetch_aggiudicatari(cfs=cfs)
     # ANAC Aggiudicazioni: serve per importi gare vinte (JOIN via CIG)
     from fetch_data import _fetch_parquet
     LOCAL_AGGC = DATA_DIR / "anac_aggiudicazioni.parquet"
     GCS_AGGC = "gs://dataciviclab-clean/anac_aggiudicazioni/*/*.parquet"
-    _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC, force=True)
+    _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC)
     return cfs
 
 
@@ -187,7 +187,7 @@ def unifica(con):
 
 def main():
     print("[fatti] Costruzione tabella fatti partecipate...")
-    _fetch_forza_centrali()
+    _fetch_dati_centrali()
 
     con = _conn()
     step_mef(con, str(LOCAL_MEF))
