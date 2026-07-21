@@ -1,7 +1,5 @@
 name: Report intelligence
 on:
-  schedule:
-    - cron: '0 5 * * 1'
   workflow_dispatch:
 
 permissions:
