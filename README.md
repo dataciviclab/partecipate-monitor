@@ -68,7 +68,7 @@ Il profiler calcola tre score (0-100): **Esposizione**, **Performance**, **Coper
 ## Partecipa
 
 - **Hai una domanda su questi dati?** Apri una [Discussion](https://github.com/orgs/dataciviclab/discussions/new?category=Domanda)
-- **Vuoi contribuire?** Vedi [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Vuoi contribuire?** Vedi [come contribuire al Lab](https://github.com/dataciviclab/dataciviclab/blob/main/docs/come-contribuire.md)
 
 ## Architettura
 
