@@ -41,11 +41,16 @@ def _fetch_dati_centrali():
     fetch_rna(cfs=cfs)
     fetch_rappresentanti(cfs=cfs)
     fetch_aggiudicatari(cfs=cfs)
-    # ANAC Aggiudicazioni: serve per importi gare vinte (JOIN via CIG)
+    # ANAC Aggiudicazioni: serve per importi gare vinte (JOIN via CIG).
+    # Filtra per i CIG delle gare vinte dalle partecipate (già in cache in
+    # anac_aggiudicatari) — evita di scaricare 4.86M righe (149MB) da GCS.
     from fetch_data import _fetch_parquet
     LOCAL_AGGC = DATA_DIR / "anac_aggiudicazioni.parquet"
     GCS_AGGC = "gs://dataciviclab-clean/anac_aggiudicazioni/*/*.parquet"
-    _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC)
+    if not LOCAL_AGGC.exists():
+        _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC,
+                       cfs_source="data/anac_aggiudicatari.parquet",
+                       cf_col="cig", in_subquery="SELECT DISTINCT cig FROM ")
     return cfs
 
 

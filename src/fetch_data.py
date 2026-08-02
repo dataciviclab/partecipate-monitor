@@ -33,8 +33,16 @@ def _conn():
     return con
 
 
-def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col=None):
-    """Scarica un dataset da GCS (con filtro CF opzionale) o usa cache."""
+def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col=None,
+                   cfs_source=None, in_subquery=""):
+    """Scarica un dataset da GCS (con filtro CF opzionale) o usa cache.
+
+    Filtri supportati:
+      - cfs/cf_col: lista CF esplicita (WHERE cf_col IN (...))
+      - cfs_source/in_subquery: filtro da subquery su un file parquet locale
+        (es. CIG da anac_aggiudicatari) — evita liste IN giganti e sfrutta
+        il semi-join pushdown di DuckDB da GCS.
+    """
     if local_path.exists() and not force:
         n = _count_rows(local_path)
         print(f"[fetch] Usa cache locale: {local_path} ({n} righe)")
@@ -48,6 +56,8 @@ def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col
     if cfs and cf_col:
         cf_list = ", ".join(f"'{c}'" for c in cfs)
         where = f"WHERE {cf_col} IN ({cf_list})"
+    elif cfs_source and cf_col:
+        where = f"WHERE {cf_col} IN ({in_subquery}'{cfs_source}')"
 
     sql = f"SELECT * FROM read_parquet('{gcs_pattern}', union_by_name=True) {where}"
     con.execute(f"COPY ({sql}) TO '{local_path}' (FORMAT PARQUET)")
