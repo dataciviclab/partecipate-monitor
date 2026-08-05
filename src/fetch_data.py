@@ -7,15 +7,19 @@ Supporta fetch filtrato per CF target per ridurre volume dati.
 import duckdb, json, os, sys
 from pathlib import Path
 
+from lab_connectors.duckdb import gcs_connect
+from lab_connectors.gcs.paths import gs_url
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
-# Path GCS dataset clean — TUTTI con underscore (verificati su GCS)
-GCS_MEF  = "gs://dataciviclab-clean/mef_partecipazioni/*/*.parquet"
-GCS_IPA  = "gs://dataciviclab-clean/ipa_enti/*/*.parquet"
-GCS_ANAC = "gs://dataciviclab-clean/anac_bandi_gara/*/*.parquet"
-GCS_RNA  = "gs://dataciviclab-clean/rna_aiuti_stato/*/*.parquet"
-GCS_RAPP = "gs://dataciviclab-clean/mef_rappresentanti_partecipate/*/*.parquet"
-GCS_AGGI = "gs://dataciviclab-clean/anac_aggiudicatari/*/*.parquet"
+# Path GCS dataset clean — path contract canonico lab-connectors
+# (pattern clean_parquet, year="*" = tutti gli anni: {slug}/*/{slug}_*_clean.parquet)
+GCS_MEF  = gs_url("clean", "clean_parquet", slug="mef_partecipazioni", year="*")
+GCS_IPA  = gs_url("clean", "clean_parquet", slug="ipa_enti", year="*")
+GCS_ANAC = gs_url("clean", "clean_parquet", slug="anac_bandi_gara", year="*")
+GCS_RNA  = gs_url("clean", "clean_parquet", slug="rna_aiuti_stato", year="*")
+GCS_RAPP = gs_url("clean", "clean_parquet", slug="mef_rappresentanti_partecipate", year="*")
+GCS_AGGI = gs_url("clean", "clean_parquet", slug="anac_aggiudicatari", year="*")
 
 # Cache locali
 LOCAL_MEF  = DATA_DIR / "mef_partecipazioni.parquet"
@@ -24,13 +28,6 @@ LOCAL_ANAC = DATA_DIR / "anac_bandi_gara.parquet"
 LOCAL_RNA  = DATA_DIR / "rna_aiuti_stato.parquet"
 LOCAL_RAPP = DATA_DIR / "mef_rappresentanti_partecipate.parquet"
 LOCAL_AGGI = DATA_DIR / "anac_aggiudicatari.parquet"
-
-
-def _conn():
-    con = duckdb.connect()
-    con.execute("INSTALL httpfs; LOAD httpfs;")
-    con.execute("SET s3_region='us-east-1';")
-    return con
 
 
 def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col=None,
@@ -50,17 +47,18 @@ def _fetch_parquet(label, gcs_pattern, local_path, force=False, cfs=None, cf_col
 
     print(f"[fetch] Scarica {label} da GCS...")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    con = _conn()
 
-    where = ""
-    if cfs and cf_col:
-        cf_list = ", ".join(f"'{c}'" for c in cfs)
-        where = f"WHERE {cf_col} IN ({cf_list})"
-    elif cfs_source and cf_col:
-        where = f"WHERE {cf_col} IN ({in_subquery}'{cfs_source}')"
+    # gcs_connect (lab-connectors): gestisce glob gs:// caricando httpfs
+    with gcs_connect(gcs_pattern) as con:
+        where = ""
+        if cfs and cf_col:
+            cf_list = ", ".join(f"'{c}'" for c in cfs)
+            where = f"WHERE {cf_col} IN ({cf_list})"
+        elif cfs_source and cf_col:
+            where = f"WHERE {cf_col} IN ({in_subquery}'{cfs_source}')"
 
-    sql = f"SELECT * FROM read_parquet('{gcs_pattern}', union_by_name=True) {where}"
-    con.execute(f"COPY ({sql}) TO '{local_path}' (FORMAT PARQUET)")
+        sql = f"SELECT * FROM read_parquet('{gcs_pattern}', union_by_name=True) {where}"
+        con.execute(f"COPY ({sql}) TO '{local_path}' (FORMAT PARQUET)")
     n = _count_rows(local_path)
     print(f"[fetch] Salvato: {local_path} ({n} righe)")
     return str(local_path)
@@ -105,18 +103,19 @@ def fetch_rappresentanti(force=False, cfs=None):
 
     print("[fetch] Scarica mef_rappresentanti_partecipate da GCS...")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    con = _conn()
 
-    where = ""
-    if cfs:
-        # MEF rappresentanti usa formato [CF] con parentesi; normalizziamo
-        cf_conditions = " OR ".join(
-            f"REPLACE(REPLACE(societa_cf, '[', ''), ']', '') = '{c}'" for c in cfs
-        )
-        where = f"WHERE {cf_conditions}"
+    # gcs_connect (lab-connectors): gestisce glob gs:// caricando httpfs
+    with gcs_connect(GCS_RAPP) as con:
+        where = ""
+        if cfs:
+            # MEF rappresentanti usa formato [CF] con parentesi; normalizziamo
+            cf_conditions = " OR ".join(
+                f"REPLACE(REPLACE(societa_cf, '[', ''), ']', '') = '{c}'" for c in cfs
+            )
+            where = f"WHERE {cf_conditions}"
 
-    sql = f"SELECT * FROM read_parquet('{GCS_RAPP}') {where}"
-    con.execute(f"COPY ({sql}) TO '{LOCAL_RAPP}' (FORMAT PARQUET)")
+        sql = f"SELECT * FROM read_parquet('{GCS_RAPP}') {where}"
+        con.execute(f"COPY ({sql}) TO '{LOCAL_RAPP}' (FORMAT PARQUET)")
     n = _count_rows(LOCAL_RAPP)
     print(f"[fetch] Salvato: {LOCAL_RAPP} ({n} righe)")
     return str(LOCAL_RAPP)

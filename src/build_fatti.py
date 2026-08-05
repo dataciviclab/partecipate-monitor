@@ -9,6 +9,8 @@ build_fatti.py — Costruisce la tabella dei fatti unificata per le partecipate.
 import duckdb
 from pathlib import Path
 
+from lab_connectors.gcs.paths import gs_url
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 OUTPUT = DATA_DIR / "fatti_partecipate.parquet"
 
@@ -46,7 +48,7 @@ def _fetch_dati_centrali():
     # anac_aggiudicatari) — evita di scaricare 4.86M righe (149MB) da GCS.
     from fetch_data import _fetch_parquet
     LOCAL_AGGC = DATA_DIR / "anac_aggiudicazioni.parquet"
-    GCS_AGGC = "gs://dataciviclab-clean/anac_aggiudicazioni/*/*.parquet"
+    GCS_AGGC = gs_url("clean", "clean_parquet", slug="anac_aggiudicazioni", year="*")
     if not LOCAL_AGGC.exists():
         _fetch_parquet("anac_aggiudicazioni", GCS_AGGC, LOCAL_AGGC,
                        cfs_source="data/anac_aggiudicatari.parquet",
