@@ -7,7 +7,7 @@ dependencies = [
     "duckdb>=1.0",
     "pandas>=2.0",
     # Infrastruttura condivisa Lab: path contract GCS, gcs_connect per glob multi-year
-    "lab-connectors[duckdb]>=0.15.1",
+    "lab-connectors[duckdb] @ git+https://github.com/dataciviclab/lab-connectors.git",
 ]
 
 [tool.setuptools.packages.find]
