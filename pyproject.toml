@@ -20,7 +20,6 @@ dashboard = [
     "lab-connectors[duckdb] @ git+https://github.com/dataciviclab/lab-connectors.git",
 ]
 dev = [
-    "pytest>=8.0",
     "ruff>=0.10",
 ]
 
