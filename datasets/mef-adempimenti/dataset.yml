@@ -1,0 +1,70 @@
+root: "../../out"
+schema_version: 1
+
+dataset:
+  name: "mef_adempimenti"
+  source_id: "mef_tesoro"
+  tags: [finanza-pubblica, mef, adempimenti, compliance, tusp]
+  category: finanza-pubblica
+  years: [2020, 2021, 2022, 2023]
+  time_coverage: {start_year: 2020, end_year: 2023}
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: "mef_adempimenti_2020"
+      type: "http_file"
+      year: 2020
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2020/dati_adempimento_anno_2020.csv"
+        filename: "mef_adempimenti_2020.csv"
+    - name: "mef_adempimenti_2021"
+      type: "http_file"
+      year: 2021
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2021/dati_adempimento_anno_2021.csv"
+        filename: "mef_adempimenti_2021.csv"
+    - name: "mef_adempimenti_2022"
+      type: "http_file"
+      year: 2022
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/2022/dati_adempimento_anno_2022.CSV"
+        filename: "mef_adempimenti_2022.csv"
+    - name: "mef_adempimenti_2023"
+      type: "http_file"
+      year: 2023
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2023/dati_adempimento_anno_2023.csv"
+        filename: "mef_adempimenti_2023.csv"
+
+clean:
+  sql: "sql/clean.sql"
+  required_columns: [anno, settore_istituzionale, macrocategoria, categoria, denominazione, cf, regione_sede, provincia_sede, comune_sede, partecipazioni_dichiarate, incarichi_dichiarati, negativa_partecipazioni_societarie, negativa_partecipazioni_nonsocietarie, negativa_incarichi, adempiente]
+  validate:
+    not_null: [anno, cf]
+    min_rows: 5000
+    primary_key: [anno, cf]
+  read:
+    source: auto
+    mode: latest
+    header: true
+    skip: 0
+    delim: ";"
+    encoding: "latin-1"
+    trim_whitespace: true
+
+mart:
+  tables:
+    - name: "mart_adempimenti"
+      sql: "sql/mart_adempimenti.sql"
+  required_tables:
+    - "mart_adempimenti"
+  validate:
+    table_rules:
+      mart_adempimenti:
+        required_columns: [cf, anno, denominazione, adempiente]
+        primary_key: [cf, anno]
+        min_rows: 100
+
+validation:
+  fail_on_error: true

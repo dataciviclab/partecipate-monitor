@@ -1,19 +1,34 @@
-.PHONY: fetch build report profile all clean
+# DataCivicLab — Partecipate Monitor
+TOOLKIT = toolkit
+PREFIX = partecipate-pubbliche
 
-fetch:
-	python src/fetch_data.py --centrali
+DATASETS := $(shell find datasets -name dataset.yml 2>/dev/null | sort)
 
-build:
-	python src/build_fatti.py
+.PHONY: run check registry registry-write dashboard clean help
 
-report:
-	python src/report.py --profili
+run:
+	@for f in $(DATASETS); do \
+		echo "=== $$f ==="; \
+		$(TOOLKIT) run --config "$$f" || exit 1; \
+	done
 
-profile:
-	python src/profiler.py 97103880585
+check:
+	@for f in $(DATASETS); do \
+		$(TOOLKIT) run preflight --config "$$f" > /dev/null 2>&1 || exit 1; \
+	done
+	@echo "All configs valid"
 
-all: fetch build report
+registry:
+	$(TOOLKIT) registry build --prefix $(PREFIX)
+
+registry-write:
+	$(TOOLKIT) registry build --prefix $(PREFIX) --write
+
+dashboard:
+	cd dashboard && streamlit run app.py
 
 clean:
-	rm -f data/*.parquet
-	rm -f reports/data.json
+	rm -rf out/
+
+help:
+	@grep -E '^[a-zA-Z_-]+:' Makefile | sort

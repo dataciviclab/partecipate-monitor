@@ -1,17 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "partecipate-monitor"
-version = "0.1.0"
-description = "Intelligence sulle societa' partecipate pubbliche italiane — profili multi-fonte (MEF, ANAC, RNA)"
+version = "0.2.0"
+description = "Intelligence sulle societa' partecipate pubbliche italiane — pipeline dati + dashboard Streamlit"
 requires-python = ">=3.12"
 dependencies = [
     "duckdb>=1.0",
     "pandas>=2.0",
-    # Infrastruttura condivisa Lab: path contract GCS, gcs_connect per glob multi-year
+]
+
+[project.optional-dependencies]
+pipeline = [
+    "dataciviclab-toolkit @ git+https://github.com/dataciviclab/toolkit.git",
     "lab-connectors[duckdb] @ git+https://github.com/dataciviclab/lab-connectors.git",
+]
+dashboard = [
+    "streamlit>=1.61",
+    "plotly>=5.18",
+    "altair>=6.2",
+    "lab-connectors[duckdb] @ git+https://github.com/dataciviclab/lab-connectors.git",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.10",
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[project.scripts]
-# CLI disponibile via `python -m src.<modulo>`
