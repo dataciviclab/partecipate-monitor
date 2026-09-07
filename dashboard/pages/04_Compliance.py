@@ -29,7 +29,7 @@ fig = px.bar(x=score_dist.index, y=score_dist.values,
              labels={"x": "Score", "y": "N. enti"},
              color=score_dist.index,
              color_continuous_scale=["#ef4444", "#f59e0b", "#22c55e", "#16a34a", "#15803d"])
-fig.update_layout(height=300, margin=dict(t=20, b=20), showlegend=False)
+fig.update_layout(height=300, margin={"t": 20, "b": 20}, showlegend=False)
 st.plotly_chart(fig, use_container_width=True)
 
 # ── Categoria compliance ────────────────────────────────────────────────────
@@ -44,7 +44,7 @@ fig = go.Figure(go.Pie(
     textinfo="percent+value",
     hole=0.4,
 ))
-fig.update_layout(height=300, margin=dict(t=20, b=20))
+fig.update_layout(height=300, margin={"t": 20, "b": 20})
 st.plotly_chart(fig, use_container_width=True)
 
 # ── Top inadempienti ────────────────────────────────────────────────────────

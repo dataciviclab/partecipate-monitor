@@ -25,23 +25,25 @@ from lab_connectors.registry import load_registry
 
 def _safe(val):
     """Convert pandas NAType to None (lab_connectors formatters don't handle it)."""
+    import math
+
     import pandas as pd
-    if val is None or (isinstance(val, float) and val != val):
+    if val is None or (isinstance(val, float) and math.isnan(val)):
         return None
     if isinstance(val, type(pd.NA)):
         return None
     return val
 
 
-def fmt_eur(val):  # noqa: F401 — re-exported for pages
+def fmt_eur(val):
     return _fmt_eur(_safe(val))
 
 
-def fmt_num(val):  # noqa: F401 — re-exported for pages
+def fmt_num(val):
     return _fmt_num(_safe(val))
 
 
-def fmt_pct(val, **kw):  # noqa: F401 — re-exported for pages
+def fmt_pct(val, **kw):
     return _fmt_pct(_safe(val), **kw)
 
 # ── Costanti dominio ────────────────────────────────────────────────────────

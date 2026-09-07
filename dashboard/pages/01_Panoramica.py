@@ -26,7 +26,8 @@ if df is None:
 
 def _delta(curr, prev):
     """Calcola delta assoluto e percentuale."""
-    if prev is None or prev == 0 or curr != curr:
+    import math
+    if prev is None or prev == 0 or (isinstance(curr, float) and math.isnan(curr)):
         return None, None
     d = curr - prev
     return d, d / abs(prev)
@@ -96,18 +97,18 @@ if len(trend_data) > 1:
         fig.add_trace(go.Scatter(
             x=trend["anno"], y=trend["partecipate"],
             name="Partecipate", mode="lines+markers",
-            line=dict(color="#6366f1", width=3),
+            line={"color": "#6366f1", "width": 3},
         ))
         fig.add_trace(go.Scatter(
             x=trend["anno"], y=trend["addetti"] / 1000,
             name="Addetti (k)", mode="lines+markers",
-            line=dict(color="#22c55e", width=3), yaxis="y2",
+            line={"color": "#22c55e", "width": 3}, yaxis="y2",
         ))
         fig.update_layout(
-            height=300, margin=dict(t=20, b=20),
-            yaxis=dict(title="Partecipate"),
-            yaxis2=dict(title="Addetti (k)", overlaying="y", side="right"),
-            legend=dict(x=0, y=1.15, orientation="h"),
+            height=300, margin={"t": 20, "b": 20},
+            yaxis={"title": "Partecipate"},
+            yaxis2={"title": "Addetti (k)", "overlaying": "y", "side": "right"},
+            legend={"x": 0, "y": 1.15, "orientation": "h"},
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -116,20 +117,20 @@ if len(trend_data) > 1:
         fig.add_trace(go.Scatter(
             x=trend["anno"], y=trend["inadempienti"],
             name="Inadempienti", mode="lines+markers",
-            line=dict(color="#ef4444", width=3), fill="tozeroy",
+            line={"color": "#ef4444", "width": 3}, fill="tozeroy",
             fillcolor="rgba(239,68,68,0.1)",
         ))
         pct_inad = trend["inadempienti"] / trend["enti_totali"] * 100
         fig.add_trace(go.Scatter(
             x=trend["anno"], y=pct_inad,
             name="% inadempimento", mode="lines+markers",
-            line=dict(color="#f59e0b", width=2, dash="dash"), yaxis="y2",
+            line={"color": "#f59e0b", "width": 2, "dash": "dash"}, yaxis="y2",
         ))
         fig.update_layout(
-            height=300, margin=dict(t=20, b=20),
-            yaxis=dict(title="Inadempienti"),
-            yaxis2=dict(title="% inadempimento", overlaying="y", side="right"),
-            legend=dict(x=0, y=1.15, orientation="h"),
+            height=300, margin={"t": 20, "b": 20},
+            yaxis={"title": "Inadempienti"},
+            yaxis2={"title": "% inadempimento", "overlaying": "y", "side": "right"},
+            legend={"x": 0, "y": 1.15, "orientation": "h"},
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -147,8 +148,8 @@ with c1:
         name="Addetti", marker_color="#6366f1",
     ))
     fig.update_layout(
-        height=350, margin=dict(t=20, b=20),
-        xaxis=dict(title=""), yaxis=dict(title="Addetti"),
+        height=350, margin={"t": 20, "b": 20},
+        xaxis={"title": ""}, yaxis={"title": "Addetti"},
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -160,8 +161,8 @@ with c2:
         name="% inadempimento", marker_color="#ef4444",
     ))
     fig.update_layout(
-        height=350, margin=dict(t=20, b=20),
-        xaxis=dict(title=""), yaxis=dict(title="% inadempimento"),
+        height=350, margin={"t": 20, "b": 20},
+        xaxis={"title": ""}, yaxis={"title": "% inadempimento"},
     )
     st.plotly_chart(fig, use_container_width=True)
 

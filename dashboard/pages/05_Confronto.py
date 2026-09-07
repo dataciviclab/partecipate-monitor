@@ -59,9 +59,9 @@ for col in ["Valore produzione", "Risultato esercizio", "Patrimonio netto", "Cos
     if col in table.columns:
         table[col] = table[col].apply(fmt_eur)
 if "ROE" in table.columns:
-    table["ROE"] = table["ROE"].apply(lambda x: f"{x:.1%}" if x is not None and x == x else "-")
+    table["ROE"] = table["ROE"].apply(lambda x: f"{x:.1%}" if pd.notna(x) else "-")
 if "Cost ratio" in table.columns:
-    table["Cost ratio"] = table["Cost ratio"].apply(lambda x: f"{x:.1%}" if x is not None and x == x else "-")
+    table["Cost ratio"] = table["Cost ratio"].apply(lambda x: f"{x:.1%}" if pd.notna(x) else "-")
 
 st.dataframe(table.set_index("CF"), use_container_width=True)
 

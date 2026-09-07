@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 import streamlit as st
 from sources import fmt_eur, fmt_pct, load_partecipate, load_rappresentanti
@@ -68,7 +69,8 @@ top = df_ult.nlargest(20, "spesa_totale_eur")[
 top["spesa_totale_eur"] = top["spesa_totale_eur"].apply(fmt_eur)
 top["spesa_media_eur"] = top["spesa_media_eur"].apply(fmt_eur)
 top["pct_gratuiti"] = top["pct_gratuiti"].apply(fmt_pct)
-top["ratio_f_m"] = top["ratio_f_m"].apply(lambda x: f"{x:.2f}" if x == x else "-")
+
+top["ratio_f_m"] = top["ratio_f_m"].apply(lambda x: f"{x:.2f}" if pd.notna(x) else "-")
 st.dataframe(top, use_container_width=True, hide_index=True)
 
 # ── Enti con spesa più concentrata ──────────────────────────────────────────

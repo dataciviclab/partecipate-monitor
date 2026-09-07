@@ -27,7 +27,7 @@ fig = go.Figure(go.Bar(
     text=[fmt_num(taglia_dist[t]) for t in order if t in taglia_dist.index],
     textposition="outside",
 ))
-fig.update_layout(height=300, margin=dict(t=20, b=20), xaxis_title="", yaxis_title="N. enti")
+fig.update_layout(height=300, margin={"t": 20, "b": 20}, xaxis_title="", yaxis_title="N. enti")
 st.plotly_chart(fig, use_container_width=True)
 
 # ── Metriche per taglia ─────────────────────────────────────────────────────
