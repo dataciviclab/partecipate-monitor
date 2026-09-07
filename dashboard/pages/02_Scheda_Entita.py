@@ -99,7 +99,7 @@ with c1:
             st.dataframe(gare[cols].head(10), use_container_width=True, hide_index=True)
         else:
             st.info("Nessuna gara.")
-    except Exception as e:
+    except (RuntimeError, OSError) as e:
         st.warning(f"Errore ANAC: {e}")
 
 with c2:
@@ -113,7 +113,7 @@ with c2:
             st.dataframe(aiuti[cols].head(10), use_container_width=True, hide_index=True)
         else:
             st.info("Nessun aiuto.")
-    except Exception as e:
+    except (RuntimeError, OSError) as e:
         st.warning(f"Errore RNA: {e}")
 
 # ── IPA ─────────────────────────────────────────────────────────────────────
@@ -123,5 +123,5 @@ try:
     if not ipa.empty:
         r_ipa = ipa.iloc[0]
         st.caption(f"IPA: {r_ipa.get('tipologia', '-')} | {r_ipa.get('sito_istituzionale', '-')} | {r_ipa.get('mail1', '-')}")
-except Exception:
+except (RuntimeError, OSError):
     pass
