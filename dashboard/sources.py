@@ -1,56 +1,22 @@
 """Data sources per la dashboard Partecipate Monitor.
 
-Layer sottile che wrappa ``lab_connectors.duckdb.queries`` con
-``@st.cache_data`` per Streamlit. Tutta la logica di risoluzione
-path e auto-detect locale/GCS sta in lab-connectors.
-
-I cross-dataset marts (by_regione, by_settore, profilo_ente) sono
-calcolati al volo con DuckDB leggendo i mart dei singoli dataset.
+Uses lab_connectors to read from GCS in production, local files in dev.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
-from lab_connectors.duckdb.queries import (
-    load_mart_all_years,
-    load_mart_table,
-)
-from lab_connectors.formatters import fmt_eur as _fmt_eur
-from lab_connectors.formatters import fmt_num as _fmt_num
-from lab_connectors.formatters import fmt_pct as _fmt_pct
+from lab_connectors.duckdb.queries import load_mart_all_years, load_mart_table
 from lab_connectors.registry import load_registry
 
-
-def _safe(val):
-    """Convert pandas NAType to None (lab_connectors formatters don't handle it)."""
-    import math
-
-    import pandas as pd
-    if val is None or (isinstance(val, float) and math.isnan(val)):
-        return None
-    if isinstance(val, type(pd.NA)):
-        return None
-    return val
-
-
-def fmt_eur(val):
-    return _fmt_eur(_safe(val))
-
-
-def fmt_num(val):
-    return _fmt_num(_safe(val))
-
-
-def fmt_pct(val, **kw):
-    return _fmt_pct(_safe(val), **kw)
-
-# ── Costanti dominio ────────────────────────────────────────────────────────
+PREFIX = "partecipate-pubbliche/"
 
 _REPO = Path(__file__).parent.parent
-
 _registry = load_registry(_REPO / "registry" / "registry.json")
+
 
 def _years_for(slug: str) -> list[int]:
     ds = next((d for d in _registry.datasets if d.slug == slug), None)
@@ -62,6 +28,7 @@ def _years_for(slug: str) -> list[int]:
     if start and end:
         return list(range(int(start), int(end) + 1))
     return []
+
 
 SLUG_PARTECIPAZIONI = "mef_partecipazioni"
 SLUG_RAPPRESENTANTI = "mef_rappresentanti_partecipate"
@@ -75,27 +42,32 @@ YEARS = sorted(set(YEARS_PARTECIPAZIONI + YEARS_RAPPRESENTANTI + YEARS_ADEMPIMEN
 YEARS_COMBINED = sorted(set(YEARS_PARTECIPAZIONI) & set(YEARS_RAPPRESENTANTI) & set(YEARS_ADEMPIMENTI))
 
 
-# ── Mart loaders (toolkit pipeline, auto-detect locale/GCS) ─────────────────
+def _mart(slug: str, table: str, year: int | None = None):
+    if year is None:
+        return load_mart_all_years(slug, table, _years_for(slug), prefix=PREFIX)
+    return load_mart_table(slug, table, year, prefix=PREFIX)
+
+
+def _mart_url(slug: str, table: str, year: int) -> str:
+    from lab_connectors.duckdb.queries import _resolve_url
+    return _resolve_url("mart", "mart_parquet", slug=slug, year=str(year), table=table, prefix=PREFIX)
+
+
+# ── Mart loaders ────────────────────────────────────────────────────────────
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_partecipate(year: int | None = None):
-    if year is not None:
-        return load_mart_table(SLUG_PARTECIPAZIONI, "mart_partecipate", year)
-    return load_mart_all_years(SLUG_PARTECIPAZIONI, "mart_partecipate", YEARS_PARTECIPAZIONI)
+    return _mart(SLUG_PARTECIPAZIONI, "mart_partecipate", year)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_rappresentanti(year: int | None = None):
-    if year is not None:
-        return load_mart_table(SLUG_RAPPRESENTANTI, "mart_rappresentanti", year)
-    return load_mart_all_years(SLUG_RAPPRESENTANTI, "mart_rappresentanti", YEARS_RAPPRESENTANTI)
+    return _mart(SLUG_RAPPRESENTANTI, "mart_rappresentanti", year)
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_adempimenti(year: int | None = None):
-    if year is not None:
-        return load_mart_table(SLUG_ADEMPIMENTI, "mart_adempimenti", year)
-    return load_mart_all_years(SLUG_ADEMPIMENTI, "mart_adempimenti", YEARS_ADEMPIMENTI)
+    return _mart(SLUG_ADEMPIMENTI, "mart_adempimenti", year)
 
 
 # ── Cross-dataset: calcolo al volo con DuckDB ───────────────────────────────
@@ -106,15 +78,8 @@ def _duckdb_df(sql: str):
         return con.sql(sql).df()
 
 
-def _mart_url(slug: str, table: str, year: int) -> str:
-    """Risolvi URL parquet: locale se esiste, GCS altrimenti."""
-    from lab_connectors.duckdb.queries import _resolve_url
-    return _resolve_url("mart", "mart_parquet", slug=slug, year=str(year), table=table)
-
-
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_by_regione(year: int):
-    """Aggregati per regione — calcolato al volo."""
     p = _mart_url(SLUG_PARTECIPAZIONI, "mart_partecipate", year)
     a = _mart_url(SLUG_ADEMPIMENTI, "mart_adempimenti", year)
     r = _mart_url(SLUG_RAPPRESENTANTI, "mart_rappresentanti", year)
@@ -173,7 +138,6 @@ def load_by_regione(year: int):
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_by_settore(year: int):
-    """Aggregati per settore — calcolato al volo."""
     p = _mart_url(SLUG_PARTECIPAZIONI, "mart_partecipate", year)
 
     sql = f"""
@@ -204,7 +168,6 @@ def load_by_settore(year: int):
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def load_profilo_ente(year: int):
-    """Profilo unificato per amministrazione — join di tutti i 3 dataset."""
     p = _mart_url(SLUG_PARTECIPAZIONI, "mart_partecipate", year)
     a = _mart_url(SLUG_ADEMPIMENTI, "mart_adempimenti", year)
 
@@ -243,7 +206,6 @@ def load_profilo_ente(year: int):
 def gare_per_cf(cf: str, year: int):
     from lab_connectors.duckdb.core import safe_connect
     from lab_connectors.gcs.paths import https_url
-
     url = https_url("clean", "clean_parquet", slug="anac_bandi_gara", year=year)
     with safe_connect() as con:
         return con.sql(
@@ -257,7 +219,6 @@ def gare_per_cf(cf: str, year: int):
 def aiuti_per_cf(cf: str, year: int):
     from lab_connectors.duckdb.core import safe_connect
     from lab_connectors.gcs.paths import https_url
-
     url = https_url("clean", "clean_parquet", slug="rna_aiuti_stato", year=year)
     with safe_connect() as con:
         return con.sql(
@@ -271,13 +232,38 @@ def aiuti_per_cf(cf: str, year: int):
 def ipa_per_cf(cf: str):
     from lab_connectors.duckdb.core import safe_connect
     from lab_connectors.gcs.paths import https_url
-
     url = https_url("clean", "clean_parquet", slug="ipa_enti", year=2026)
     with safe_connect() as con:
         return con.sql(
             f"SELECT * FROM read_parquet('{url}') "
             f"WHERE codice_fiscale_ente = '{cf}' LIMIT 1"
         ).df()
+
+
+# ── Formatting (safe per NAType) ────────────────────────────────────────────
+
+def _safe(val):
+    import math
+    if val is None or (isinstance(val, float) and math.isnan(val)):
+        return None
+    if isinstance(val, type(pd.NA)):
+        return None
+    return val
+
+
+def fmt_eur(val):
+    from lab_connectors.formatters import fmt_eur as _fmt_eur
+    return _fmt_eur(_safe(val))
+
+
+def fmt_num(val):
+    from lab_connectors.formatters import fmt_num as _fmt_num
+    return _fmt_num(_safe(val))
+
+
+def fmt_pct(val, **kw):
+    from lab_connectors.formatters import fmt_pct as _fmt_pct
+    return _fmt_pct(_safe(val), **kw)
 
 
 # ── Entity selector ──────────────────────────────────────────────────────────

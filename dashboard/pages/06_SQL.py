@@ -9,7 +9,7 @@ registry = load_registry(Path(__file__).parent.parent.parent / "registry" / "reg
 
 render_sql_query(
     registry=registry,
-    prefix="partecipate-pubbliche",
+    prefix="partecipate-pubbliche/",
     default_slug="mef_partecipazioni",
     title="Query SQL",
     description=(

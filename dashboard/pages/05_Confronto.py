@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 import streamlit as st
 from sources import YEARS_COMBINED, fmt_eur, fmt_num, load_partecipate
