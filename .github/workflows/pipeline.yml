@@ -21,6 +21,7 @@ jobs:
     with:
       repo-slug: "partecipate-pubbliche"
       run-command: "make run"
+      python-extra-packages: '-e ".[pipeline]"'
     permissions:
       contents: write
       pull-requests: write
