@@ -1,15 +1,18 @@
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
 .venv/
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environment
 .env
 
-# Cache parquet (rigenerabili dalla CI, non servono in git)
-data/*.parquet
+# Pipeline output (rigenerabile — mai committare)
+out/
+data/
 
-# Output residui di run precedenti
-data/*_centrali.*
-data/centrali_targets.json
-
-# Snapshot storici (prodotti dalla CI)
-data/history/
+# Dashboard
+dashboard/__pycache__/

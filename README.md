@@ -1,87 +1,62 @@
-# partecipate-monitor — Le società partecipate pubbliche italiane
+# partecipate-monitor — Le societa' partecipate pubbliche italiane
 
-**Chi possiede cosa? 121 grandi partecipate pubbliche monitorate, 6 fonti incrociate, 3 dimensioni di analisi.**
+**Pipeline dati + dashboard Streamlit per monitorare le societa' partecipate pubbliche.**
 
-Le società partecipate pubbliche italiane muovono miliardi di euro. Questo progetto
-le monitora incrociando 6 dataset pubblici: MEF Partecipazioni, MEF Rappresentanti,
-ANAC Bandi Gara, ANAC Aggiudicatari, RNA Aiuti di Stato e IndicePA.
+## Fonti dati
 
-## Cosa contiene
+| Fonte | Proprieta' | Anni | Uso |
+|---|---|---|---|
+| MEF Partecipazioni | pipeline toolkit | 2020–2023 | anagrafica + metriche |
+| MEF Rappresentanti | pipeline toolkit | 2018–2023 | compensi governance |
+| MEF Adempimenti | pipeline toolkit | 2020–2023 | compliance TUSP |
+| ANAC Bandi Gara | GCS live | 2016–2025 | appalti banditi |
+| RNA Aiuti Stato | GCS live | 2017–2026 | aiuti ricevuti |
+| IPA Enti | GCS live | 2026 | anagrafica PA |
 
-| Indicatore | Valore |
-|---|---|
-| Partecipate monitorate | **121** (controllo pubblico, >500 addetti) |
-| Con appalti banditi | 117 |
-| Con appalti vinti | 117 |
-| Con aiuti di Stato | 120 |
-| Periodo addetti | 2020–2023 |
-| Periodo appalti | 2016–2025 |
+## Quickstart
 
-### Dashboard interattiva
+```bash
+# Pipeline dati (richiede [pipeline] extras)
+pip install -e ".[pipeline]"
+make run
 
-→ **[https://dataciviclab.github.io/partecipate-monitor](https://dataciviclab.github.io/partecipate-monitor)**
-
-## Esempi di domande
-
-- **Quali partecipate ricevono più aiuti di Stato?** E quali bandiscono più appalti?
-- **Come cambiano i compensi dei CdA tra società?**
-- **Quali settori hanno la maggiore esposizione economica?**
-- **C'è relazione tra appalti vinti e aiuti ricevuti?**
-- **Quali partecipate hanno la governance più trasparente?**
-
-## Tre modi per accedere ai dati
-
-### 1. Via dashboard live
-
-La [dashboard interattiva](https://dataciviclab.github.io/partecipate-monitor) permette
-di esplorare i profili con filtri, grafici e ordinamenti.
-
-### 2. Via DuckDB diretto
-
-```python
-import duckdb
-duckdb.sql("""
-    SELECT denominazione, settore, addetti, score_esposizione
-    FROM read_parquet('data/fatti.parquet')
-    ORDER BY score_esposizione DESC
-    LIMIT 20
-""").show()
+# Dashboard (richiede [dashboard] extras)
+pip install -e ".[dashboard]"
+make dashboard
 ```
 
-### 3. Via report JSON
-
-I profili machine-readable sono in `reports/data.json`.
-
-## Profilo (6 dimensioni)
-
-| Dimensione | Fonte | Cosa contiene |
-|---|---|---|
-| **Assetto** | MEF Partecipazioni | denominazione, settore, addetti, valore produzione |
-| **Occupazione** | MEF Partecipazioni | 4 anni di trend addetti |
-| **Governance** | MEF Rappresentanti | compensi CdA, numero incarichi |
-| **Appalti banditi** | ANAC Bandi Gara | gare per anno, importi, PNRR |
-| **Appalti vinti** | ANAC Aggiudicatari | gare vinte per anno, importi |
-| **Aiuti di Stato** | RNA Aiuti | aiuti ricevuti, ESL, concedente |
-
-Il profiler calcola tre score (0-100): **Esposizione**, **Performance**, **Copertura**.
-
-## Partecipa
-
-- **Hai una domanda su questi dati?** Apri una [Discussion](https://github.com/orgs/dataciviclab/discussions/new?category=Domanda)
-- **Vuoi contribuire?** Vedi [come contribuire al Lab](https://github.com/dataciviclab/dataciviclab/blob/main/docs/come-contribuire.md)
-
-## Architettura
+## Struttura
 
 ```
 partecipate-monitor/
-├── src/           ← fetch, build, profiler, report
-├── reports/       ← dashboard HTML + JSON profili
-├── tests/         ← gold set (7 CF, 10 verifiche)
+├── datasets/
+│   ├── mef-partecipazioni/       ← MEF partecipazioni (anagrafica + metriche)
+│   ├── mef-rappresentanti/       ← MEF rappresentanti (compensi governance)
+│   └── mef-adempimenti/          ← MEF adempimenti TUSP (compliance)
+├── dashboard/                    ← Streamlit (7 pagine)
+│   ├── 01_Panoramica.py          ← KPI, trend, regioni, settori
+│   ├── 02_Scheda_Entita.py       ← profilo unificato + ANAC/RNA live
+│   ├── 03_Governance.py          ← gender gap, concentrazione spesa
+│   ├── 04_Compliance.py          ← score, inadempienti, distribuzione
+│   ├── 05_Confronto.py           ← side-by-side 2+ entita
+│   ├── 06_Distribuzioni.py       ← histogram, scatter, box plot
+│   └── 06_SQL.py                 ← query SQL diretta (lab-connectors)
+├── registry/                     ← registry.json (toolkit)
 ├── Makefile
-└── .github/workflows/  ← CI settimanale
+└── pyproject.toml
 ```
 
-**CI settimanale**: fetch dati → build fatti → report → gold set test → deploy dashboard.
+## Dashboard
+
+| Pagina | Fonte | Cosa mostra |
+|---|---|---|
+| Panoramica | by_regione, by_settore | KPI con delta, trend 4 anni, regioni, settori |
+| Scheda Entita | partecipate + GCS live | profilo unificato, trend, ANAC/RNA |
+| Governance | rappresentanti | gender gap, concentrazione spesa, top entita |
+| Compliance TUSP | adempimenti | score, categorie, lista inadempienti |
+| Confronto | partecipate | tabella + chart confronto 2-8 entita |
+| Distribuzioni | partecipate + rappresentanti | histogram, scatter, box plot |
+| Query SQL | lab-connectors | SQL diretto sui clean layer |
 
 ## Licenza
 

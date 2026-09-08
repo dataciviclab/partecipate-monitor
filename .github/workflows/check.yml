@@ -1,0 +1,27 @@
+name: check
+on:
+  pull_request:
+    paths:
+      - "datasets/**"
+      - "scripts/**"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - "**/*.sql"
+      - "**/Makefile"
+  push:
+    branches: [main]
+    paths:
+      - "datasets/**"
+      - "scripts/**"
+      - "**/*.yml"
+      - "**/*.yaml"
+      - "**/*.sql"
+      - "**/Makefile"
+
+jobs:
+  validate-config:
+    uses: dataciviclab/.github/.github/workflows/dataset-config-check-reusable.yml@main
+    with:
+      install: "pip install -e .[pipeline]"
+      globs: "datasets"
+      years: "from-config"

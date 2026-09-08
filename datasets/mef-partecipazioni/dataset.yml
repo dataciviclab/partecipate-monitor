@@ -1,0 +1,70 @@
+root: "../../out"
+schema_version: 1
+
+dataset:
+  name: "mef_partecipazioni"
+  source_id: "mef_tesoro"
+  tags: [finanza-pubblica, mef, partecipazioni, partecipate]
+  category: finanza-pubblica
+  years: [2020, 2021, 2022, 2023]
+  time_coverage: {start_year: 2020, end_year: 2023}
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: "mef_partecipazioni_2020"
+      type: "http_file"
+      year: 2020
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2020/dati_partecipazioni_anno_2020.csv"
+        filename: "mef_partecipazioni_2020.csv"
+    - name: "mef_partecipazioni_2021"
+      type: "http_file"
+      year: 2021
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2021/dati_partecipazioni_anno_2021.csv"
+        filename: "mef_partecipazioni_2021.csv"
+    - name: "mef_partecipazioni_2022"
+      type: "http_file"
+      year: 2022
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/2022/dati_partecipazioni_anno_2022.CSV"
+        filename: "mef_partecipazioni_2022.csv"
+    - name: "mef_partecipazioni_2023"
+      type: "http_file"
+      year: 2023
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio/partecipazioni_2023/dati_partecipazioni_anno_2023.csv"
+        filename: "mef_partecipazioni_2023.csv"
+
+clean:
+  sql: "sql/clean.sql"
+  required_columns: [anno, amministrazione_settore_istituzionale, amministrazione_macrocategoria, amministrazione_categoria, amministrazione_denominazione, amministrazione_codice_fiscale, appartenenza_perimetro_tusp, appartenenza_perimetro_revisione_periodica, amministrazione_regione_sede, amministrazione_provincia_sede, amministrazione_comune_sede, partecipata_denominazione, partecipata_codice_fiscale, partecipata_anno_di_costituzione, partecipata_forma_giuridica, partecipata_stato_giuridico, partecipata_anno_inizio_procedura, partecipata_nazione, partecipata_regione_sede, partecipata_provincia_sede, partecipata_comune_sede, emittente_azioni_quotate, emittente_strumenti_quotati, societa_controllata_da_una_quotata, gal, partecipata_settore_attivita, partecipata_divisione_ateco, servizi_affidati, servizio_affidato_1, modalita_affidamento_servizio_1, ente_affidante_servizio_1, importo_impegnato_servizio_1, servizio_affidato_2, modalita_affidamento_servizio_2, ente_affidante_servizio_2, importo_impegnato_servizio_2, servizio_affidato_3, modalita_affidamento_servizio_3, ente_affidante_servizio_3, importo_impegnato_servizio_3, servizio_affidato_4, modalita_affidamento_servizio_4, ente_affidante_servizio_4, importo_impegnato_servizio_4, servizio_affidato_5, modalita_affidamento_servizio_5, ente_affidante_servizio_5, importo_impegnato_servizio_5, quota_partecipazione_diretta, partecipazione_indiretta, tipo_controllo, totale_oneri_importo_impegnato, totale_oneri_importo_pagato_c_residui, totale_oneri_importo_pagato_c_competenza, partecipata_tipo_contabilita, partecipata_tipo_bilancio, partecipata_bilancio_di_esercizio_approvato, partecipata_numero_di_addetti, partecipata_patrimonio_netto_co_e_p, partecipata_risultato_d_esercizio_co_e_p, partecipata_valore_della_produzione_co_e_p, partecipata_costo_della_produzione_co_e_p, partecipata_costo_del_personale_co_e_p, partecipata_patrimonio_netto_co_f, partecipata_totale_entrate_co_f, partecipata_totale_uscite_co_f, partecipata_spese_per_personale_co_f, nr_amministratori, nr_componenti_organo_di_controllo, partecipata_bilancio_di_esercizio_2020_approvato, risultato_d_esercizio_2020, partecipata_bilancio_di_esercizio_2019_approvato, risultato_d_esercizio_2019, partecipazione_ancora_detenuta_alla_data_di_adozione_del_provvedimento, societa_controllata_da_una_quotata_dichiarata, attivita_a_favore_amm, societa_all_a, attivita_svolta, quota_soggetto_privato, attivita_analoghe_art_20_c_2_lett_c, contenimento_dei_costi_art_20_c_2_lett_f, aggregazione_di_societa_art_20_c_2_lett_g, esito_della_ricognizione, modalita_razionalizzazione, termine_razionalizzazione]
+  validate:
+    not_null: [anno, amministrazione_codice_fiscale, partecipata_codice_fiscale]
+    min_rows: 40000
+    primary_key: [anno, amministrazione_codice_fiscale, partecipata_codice_fiscale]
+  read:
+    source: auto
+    mode: latest
+    header: true
+    skip: 0
+    delim: ";"
+    encoding: "latin-1"
+    trim_whitespace: true
+
+mart:
+  tables:
+    - name: "mart_partecipate"
+      sql: "sql/mart_partecipate.sql"
+  required_tables:
+    - "mart_partecipate"
+  validate:
+    table_rules:
+      mart_partecipate:
+        required_columns: [cf, anno, denominazione, settore_attivita]
+        primary_key: [cf, anno]
+        min_rows: 100
+
+validation:
+  fail_on_error: true

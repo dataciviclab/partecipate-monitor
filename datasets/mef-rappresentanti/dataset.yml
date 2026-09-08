@@ -1,0 +1,63 @@
+root: "../../out"
+schema_version: 1
+
+dataset:
+  name: "mef_rappresentanti_partecipate"
+  source_id: "mef_tesoro"
+  tags: [finanza-pubblica, mef, rappresentanti, partecipate]
+  category: finanza-pubblica
+  years: [2018, 2019, 2020, 2021, 2022, 2023]
+  time_coverage: {start_year: 2018, end_year: 2023}
+
+raw:
+  output_policy: overwrite
+  sources:
+    - name: "mef_rappresentanti_csv"
+      type: "http_file"
+      args:
+        url: "https://www.de.mef.gov.it/modules/documenti_it/attivo_patrimonio"
+        filename: "dati_rappresentanti_{year}.csv"
+        url_suffix_by_year:
+          2018: "/partecipazioni_2018/dati_rappresentanti_anno_2018.csv"
+          2019: "/partecipazioni_2019/dati_rappresentanti_anno_2019.csv"
+          2020: "/partecipazioni_2020/dati_rappresentanti_anno_2020.csv"
+          2021: "/partecipazioni_2021/dati_rappresentanti_anno_2021.csv"
+          2022: "/2022/dati_rappresentanti_anno_2022.CSV"
+          2023: "/partecipazioni_2023/dati_rappresentanti_anno_2023.csv"
+      primary: true
+
+clean:
+  sql: "sql/clean.sql"
+  required_columns: [anno, amministrazione, amm_settore, amm_macrocategoria, amm_categoria, amm_cf, amm_regione, amm_provincia, amm_comune, societa, societa_cf, societa_anno_costituzione, societa_forma_giuridica, societa_stato, societa_settore, societa_ateco, societa_regione, societa_provincia, societa_comune, rapp_id, rapp_cognome, rapp_nome, rapp_genere, incarico_tipo, incarico_data_inizio, incarico_data_fine, incarico_gratuito, incarico_importo_eur, incarico_riversato_eur]
+  read:
+    source: auto
+    mode: latest
+    delim: ";"
+    encoding: "iso-8859-1"
+    header: true
+    strict_mode: false
+    ignore_errors: true
+    trim_whitespace: true
+  validate:
+    not_null: [anno, rapp_id]
+    min_rows: 5000
+    primary_key: [anno, rapp_id, societa_cf, amm_cf, incarico_tipo, incarico_data_inizio]
+    promotion:
+      max_row_drop_pct: 50
+      fail_on_row_drop_exceeded: false
+
+mart:
+  tables:
+    - name: "mart_rappresentanti"
+      sql: "sql/mart_rappresentanti.sql"
+  required_tables:
+    - "mart_rappresentanti"
+  validate:
+    table_rules:
+      mart_rappresentanti:
+        required_columns: [cf, anno, n_incarichi, spesa_totale_eur]
+        primary_key: [cf, anno]
+        min_rows: 100
+
+validation:
+  fail_on_error: true

@@ -1,0 +1,1072 @@
+{
+  "schema_version": 1,
+  "repo": "partecipate-monitor",
+  "source_repo": "dataciviclab/partecipate-monitor",
+  "updated_at": "2026-09-05",
+  "datasets": [
+    {
+      "slug": "mef_adempimenti",
+      "name": "Mef Adempimenti",
+      "description": "",
+      "source": "",
+      "source_id": "mef_tesoro",
+      "period": {
+        "start": 2020,
+        "end": 2023
+      },
+      "tags": [
+        "finanza-pubblica",
+        "mef",
+        "adempimenti",
+        "compliance",
+        "tusp"
+      ],
+      "category": "finanza-pubblica",
+      "columns": [
+        {
+          "name": "anno",
+          "type": "INTEGER",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "year"
+        },
+        {
+          "name": "settore_istituzionale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "macrocategoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "categoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "denominazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "cf",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "fiscal_code"
+        },
+        {
+          "name": "regione_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "provincia_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "comune_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipazioni_dichiarate",
+          "type": "INTEGER",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "incarichi_dichiarati",
+          "type": "INTEGER",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "negativa_partecipazioni_societarie",
+          "type": "BOOLEAN",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "negativa_partecipazioni_nonsocietarie",
+          "type": "BOOLEAN",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "negativa_incarichi",
+          "type": "BOOLEAN",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "adempiente",
+          "type": "BOOLEAN",
+          "role": "dimension",
+          "description": ""
+        }
+      ],
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-clean/partecipate-pubbliche/mef_adempimenti/*/mef_adempimenti_*_clean.parquet",
+        "multi_file": true
+      },
+      "stage": "incubating",
+      "mart_refs": [
+        "mef_adempimenti__mart_adempimenti"
+      ]
+    },
+    {
+      "slug": "mef_partecipazioni",
+      "name": "Mef Partecipazioni",
+      "description": "",
+      "source": "",
+      "source_id": "mef_tesoro",
+      "period": {
+        "start": 2020,
+        "end": 2023
+      },
+      "tags": [
+        "finanza-pubblica",
+        "mef",
+        "partecipazioni",
+        "partecipate"
+      ],
+      "category": "finanza-pubblica",
+      "columns": [
+        {
+          "name": "anno",
+          "type": "INTEGER",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "year"
+        },
+        {
+          "name": "amministrazione_settore_istituzionale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_macrocategoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_categoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_denominazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_codice_fiscale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "fiscal_code"
+        },
+        {
+          "name": "appartenenza_perimetro_tusp",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "appartenenza_perimetro_revisione_periodica",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_regione_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "region_code"
+        },
+        {
+          "name": "amministrazione_provincia_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amministrazione_comune_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_denominazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_codice_fiscale",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_anno_di_costituzione",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_forma_giuridica",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_stato_giuridico",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_anno_inizio_procedura",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_nazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_regione_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_provincia_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_comune_sede",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "emittente_azioni_quotate",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "emittente_strumenti_quotati",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_controllata_da_una_quotata",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "gal",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_settore_attivita",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_divisione_ateco",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "servizi_affidati",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "servizio_affidato_1",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_affidamento_servizio_1",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "ente_affidante_servizio_1",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "importo_impegnato_servizio_1",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "servizio_affidato_2",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_affidamento_servizio_2",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "ente_affidante_servizio_2",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "importo_impegnato_servizio_2",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "servizio_affidato_3",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_affidamento_servizio_3",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "ente_affidante_servizio_3",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "importo_impegnato_servizio_3",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "servizio_affidato_4",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_affidamento_servizio_4",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "ente_affidante_servizio_4",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "importo_impegnato_servizio_4",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "servizio_affidato_5",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_affidamento_servizio_5",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "ente_affidante_servizio_5",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "importo_impegnato_servizio_5",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "quota_partecipazione_diretta",
+          "type": "DOUBLE",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipazione_indiretta",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "tipo_controllo",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "totale_oneri_importo_impegnato",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "totale_oneri_importo_pagato_c_residui",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "totale_oneri_importo_pagato_c_competenza",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_tipo_contabilita",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_tipo_bilancio",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_bilancio_di_esercizio_approvato",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "partecipata_numero_di_addetti",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_patrimonio_netto_co_e_p",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_risultato_d_esercizio_co_e_p",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_valore_della_produzione_co_e_p",
+          "type": "DOUBLE",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_costo_della_produzione_co_e_p",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_costo_del_personale_co_e_p",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_patrimonio_netto_co_f",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_totale_entrate_co_f",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_totale_uscite_co_f",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_spese_per_personale_co_f",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "nr_amministratori",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "nr_componenti_organo_di_controllo",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_bilancio_di_esercizio_2020_approvato",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "risultato_d_esercizio_2020",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipata_bilancio_di_esercizio_2019_approvato",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "risultato_d_esercizio_2019",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "partecipazione_ancora_detenuta_alla_data_di_adozione_del_provvedimento",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_controllata_da_una_quotata_dichiarata",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "attivita_a_favore_amm",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_all_a",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "attivita_svolta",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "quota_soggetto_privato",
+          "type": "DOUBLE",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "attivita_analoghe_art_20_c_2_lett_c",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "contenimento_dei_costi_art_20_c_2_lett_f",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "aggregazione_di_societa_art_20_c_2_lett_g",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "esito_della_ricognizione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "modalita_razionalizzazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "termine_razionalizzazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        }
+      ],
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-clean/partecipate-pubbliche/mef_partecipazioni/*/mef_partecipazioni_*_clean.parquet",
+        "multi_file": true
+      },
+      "stage": "incubating",
+      "mart_refs": [
+        "mef_partecipazioni__mart_partecipate"
+      ]
+    },
+    {
+      "slug": "mef_rappresentanti_partecipate",
+      "name": "Mef Rappresentanti Partecipate",
+      "description": "",
+      "source": "",
+      "source_id": "mef_tesoro",
+      "period": {
+        "start": 2018,
+        "end": 2023
+      },
+      "tags": [
+        "finanza-pubblica",
+        "mef",
+        "rappresentanti",
+        "partecipate"
+      ],
+      "category": "finanza-pubblica",
+      "columns": [
+        {
+          "name": "anno",
+          "type": "INTEGER",
+          "role": "dimension",
+          "description": "",
+          "semantic_type": "year"
+        },
+        {
+          "name": "amministrazione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_settore",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_macrocategoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_categoria",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_cf",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_regione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_provincia",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "amm_comune",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_cf",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_anno_costituzione",
+          "type": "INTEGER",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "societa_forma_giuridica",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_stato",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_settore",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_ateco",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_regione",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_provincia",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "societa_comune",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "rapp_id",
+          "type": "BIGINT",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "rapp_cognome",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "rapp_nome",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "rapp_genere",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "incarico_tipo",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "incarico_data_inizio",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "incarico_data_fine",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "incarico_gratuito",
+          "type": "VARCHAR",
+          "role": "dimension",
+          "description": ""
+        },
+        {
+          "name": "incarico_importo_eur",
+          "type": "DOUBLE",
+          "role": "metric",
+          "description": ""
+        },
+        {
+          "name": "incarico_riversato_eur",
+          "type": "DOUBLE",
+          "role": "metric",
+          "description": ""
+        }
+      ],
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-clean/partecipate-pubbliche/mef_rappresentanti_partecipate/*/mef_rappresentanti_partecipate_*_clean.parquet",
+        "multi_file": true
+      },
+      "stage": "incubating",
+      "mart_refs": [
+        "mef_rappresentanti_partecipate__mart_rappresentanti"
+      ]
+    }
+  ],
+  "marts": [
+    {
+      "slug": "mef_adempimenti__mart_adempimenti",
+      "dataset": "mef_adempimenti",
+      "table": "mart_adempimenti",
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_adempimenti/2023/mart_adempimenti.parquet",
+        "multi_file": false
+      }
+    },
+    {
+      "slug": "mef_partecipazioni__mart_partecipate",
+      "dataset": "mef_partecipazioni",
+      "table": "mart_partecipate",
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_partecipazioni/2023/mart_partecipate.parquet",
+        "multi_file": false
+      }
+    },
+    {
+      "slug": "mef_rappresentanti_partecipate__mart_rappresentanti",
+      "dataset": "mef_rappresentanti_partecipate",
+      "table": "mart_rappresentanti",
+      "location": {
+        "type": "gcs",
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_rappresentanti_partecipate/2023/mart_rappresentanti.parquet",
+        "multi_file": false
+      }
+    }
+  ],
+  "signals": [
+    {
+      "id": "mef_adempimenti",
+      "source_id": "mef_tesoro",
+      "status": "ok",
+      "label": "mef_adempimenti",
+      "detail": "anni 2020-2023 — mart: si",
+      "action": "",
+      "run": {
+        "run_id": "20260905T223450Z_e66df23b",
+        "year": 2023,
+        "status": "SUCCESS",
+        "quality_score": {
+          "raw": 100,
+          "clean": 100,
+          "mart": 100
+        },
+        "output_rows": {
+          "raw": 11365,
+          "clean": 11365,
+          "mart": 11365
+        },
+        "output_bytes": {
+          "raw": 1799546,
+          "clean": 295667,
+          "mart": 289402
+        },
+        "started_at": "2026-09-05T22:34:50.183182+00:00",
+        "finished_at": "2026-09-05T22:34:56.282082+00:00",
+        "duration_seconds": 6.099
+      }
+    },
+    {
+      "id": "mef_partecipazioni",
+      "source_id": "mef_tesoro",
+      "status": "ok",
+      "label": "mef_partecipazioni",
+      "detail": "anni 2020-2023 — mart: si",
+      "action": "",
+      "run": {
+        "run_id": "20260905T223648Z_cd505ae8",
+        "year": 2023,
+        "status": "SUCCESS",
+        "quality_score": {
+          "raw": 100,
+          "clean": 95,
+          "mart": 100
+        },
+        "output_rows": {
+          "raw": 53656,
+          "clean": 53656,
+          "mart": 7979
+        },
+        "output_bytes": {
+          "raw": 35046757,
+          "clean": 2629582,
+          "mart": 424885
+        },
+        "started_at": "2026-09-05T22:36:48.928386+00:00",
+        "finished_at": "2026-09-05T22:37:36.695875+00:00",
+        "duration_seconds": 47.767
+      }
+    },
+    {
+      "id": "mef_rappresentanti_partecipate",
+      "source_id": "mef_tesoro",
+      "status": "ok",
+      "label": "mef_rappresentanti_partecipate",
+      "detail": "anni 2018-2023 — mart: si",
+      "action": "",
+      "run": {
+        "run_id": "20260905T223550Z_d503369e",
+        "year": 2023,
+        "status": "SUCCESS",
+        "quality_score": {
+          "raw": 100,
+          "clean": 95,
+          "mart": 100
+        },
+        "output_rows": {
+          "raw": 16785,
+          "clean": 16785,
+          "mart": 2306
+        },
+        "output_bytes": {
+          "raw": 8188766,
+          "clean": 543610,
+          "mart": 64612
+        },
+        "started_at": "2026-09-05T22:35:50.263287+00:00",
+        "finished_at": "2026-09-05T22:36:07.086776+00:00",
+        "duration_seconds": 16.823
+      }
+    }
+  ],
+  "codelists": [],
+  "entities": {
+    "entities": {
+      "Ente (o Impresa)": {
+        "entity": "Ente (o Impresa)",
+        "label": "Ente (o Impresa)",
+        "datasets": [
+          {
+            "slug": "mef_adempimenti",
+            "name": "Mef Adempimenti",
+            "column": "cf",
+            "semantic_type": "fiscal_code"
+          },
+          {
+            "slug": "mef_partecipazioni",
+            "name": "Mef Partecipazioni",
+            "column": "amministrazione_codice_fiscale",
+            "semantic_type": "fiscal_code"
+          }
+        ],
+        "types": {
+          "fiscal_code": 2
+        }
+      },
+      "Regione": {
+        "entity": "Regione",
+        "label": "Regione",
+        "datasets": [
+          {
+            "slug": "mef_partecipazioni",
+            "name": "Mef Partecipazioni",
+            "column": "amministrazione_regione_sede",
+            "semantic_type": "region_code"
+          }
+        ],
+        "types": {
+          "region_code": 1
+        }
+      },
+      "Tempo": {
+        "entity": "Tempo",
+        "label": "Tempo / data",
+        "datasets": [
+          {
+            "slug": "mef_adempimenti",
+            "name": "Mef Adempimenti",
+            "column": "anno",
+            "semantic_type": "year"
+          },
+          {
+            "slug": "mef_partecipazioni",
+            "name": "Mef Partecipazioni",
+            "column": "anno",
+            "semantic_type": "year"
+          },
+          {
+            "slug": "mef_rappresentanti_partecipate",
+            "name": "Mef Rappresentanti Partecipate",
+            "column": "anno",
+            "semantic_type": "year"
+          }
+        ],
+        "types": {
+          "year": 3
+        }
+      }
+    },
+    "bridges": []
+  }
+}
