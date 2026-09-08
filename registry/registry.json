@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repo": "partecipate-monitor",
   "source_repo": "dataciviclab/partecipate-monitor",
-  "updated_at": "2026-09-05",
+  "updated_at": "2026-09-08",
   "datasets": [
     {
       "slug": "mef_adempimenti",
@@ -914,7 +914,7 @@
       "detail": "anni 2020-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260905T223450Z_e66df23b",
+        "run_id": "20260908T092223Z_59005a93",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -932,9 +932,9 @@
           "clean": 295667,
           "mart": 289402
         },
-        "started_at": "2026-09-05T22:34:50.183182+00:00",
-        "finished_at": "2026-09-05T22:34:56.282082+00:00",
-        "duration_seconds": 6.099
+        "started_at": "2026-09-08T09:22:23.895935+00:00",
+        "finished_at": "2026-09-08T09:22:27.885835+00:00",
+        "duration_seconds": 3.99
       }
     },
     {
@@ -945,7 +945,7 @@
       "detail": "anni 2020-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260905T223648Z_cd505ae8",
+        "run_id": "20260908T092347Z_e363ccca",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -963,9 +963,9 @@
           "clean": 2629582,
           "mart": 424885
         },
-        "started_at": "2026-09-05T22:36:48.928386+00:00",
-        "finished_at": "2026-09-05T22:37:36.695875+00:00",
-        "duration_seconds": 47.767
+        "started_at": "2026-09-08T09:23:47.698447+00:00",
+        "finished_at": "2026-09-08T09:24:10.223902+00:00",
+        "duration_seconds": 22.525
       }
     },
     {
@@ -976,7 +976,7 @@
       "detail": "anni 2018-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20260905T223550Z_d503369e",
+        "run_id": "20260908T092507Z_818949c6",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -987,16 +987,16 @@
         "output_rows": {
           "raw": 16785,
           "clean": 16785,
-          "mart": 2306
+          "mart": 4818
         },
         "output_bytes": {
           "raw": 8188766,
           "clean": 543610,
-          "mart": 64612
+          "mart": 98682
         },
-        "started_at": "2026-09-05T22:35:50.263287+00:00",
-        "finished_at": "2026-09-05T22:36:07.086776+00:00",
-        "duration_seconds": 16.823
+        "started_at": "2026-09-08T09:25:07.366743+00:00",
+        "finished_at": "2026-09-08T09:25:17.703101+00:00",
+        "duration_seconds": 10.336
       }
     }
   ],
