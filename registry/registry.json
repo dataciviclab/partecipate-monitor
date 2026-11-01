@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repo": "partecipate-monitor",
   "source_repo": "dataciviclab/partecipate-monitor",
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-11-01",
   "datasets": [
     {
       "slug": "mef_adempimenti",
@@ -223,7 +223,8 @@
           "name": "partecipata_codice_fiscale",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": ""
+          "description": "",
+          "semantic_type": "fiscal_code"
         },
         {
           "name": "partecipata_anno_di_costituzione",
@@ -721,7 +722,8 @@
           "name": "amm_cf",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": ""
+          "description": "",
+          "semantic_type": "fiscal_code"
         },
         {
           "name": "amm_regione",
@@ -751,7 +753,8 @@
           "name": "societa_cf",
           "type": "VARCHAR",
           "role": "dimension",
-          "description": ""
+          "description": "",
+          "semantic_type": "fiscal_code"
         },
         {
           "name": "societa_anno_costituzione",
@@ -880,8 +883,8 @@
       "table": "mart_adempimenti",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_adempimenti/2023/mart_adempimenti.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_adempimenti/*/mart_adempimenti.parquet",
+        "multi_file": true
       }
     },
     {
@@ -890,8 +893,8 @@
       "table": "mart_partecipate",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_partecipazioni/2023/mart_partecipate.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_partecipazioni/*/mart_partecipate.parquet",
+        "multi_file": true
       }
     },
     {
@@ -900,8 +903,8 @@
       "table": "mart_rappresentanti",
       "location": {
         "type": "gcs",
-        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_rappresentanti_partecipate/2023/mart_rappresentanti.parquet",
-        "multi_file": false
+        "path": "gs://dataciviclab-mart/partecipate-pubbliche/mef_rappresentanti_partecipate/*/mart_rappresentanti.parquet",
+        "multi_file": true
       }
     }
   ],
@@ -914,7 +917,7 @@
       "detail": "anni 2020-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261001T120029Z_a24637d1",
+        "run_id": "20261101T121536Z_a79244dc",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -929,12 +932,12 @@
         },
         "output_bytes": {
           "raw": 1799546,
-          "clean": 295667,
-          "mart": 289402
+          "clean": 295499,
+          "mart": 288093
         },
-        "started_at": "2026-10-01T12:00:29.976049+00:00",
-        "finished_at": "2026-10-01T12:00:33.335721+00:00",
-        "duration_seconds": 3.36
+        "started_at": "2026-11-01T12:15:36.576359+00:00",
+        "finished_at": "2026-11-01T12:15:39.732185+00:00",
+        "duration_seconds": 3.156
       }
     },
     {
@@ -945,7 +948,7 @@
       "detail": "anni 2020-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261001T120152Z_9e4af5dc",
+        "run_id": "20261101T121630Z_63d880c0",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -960,12 +963,12 @@
         },
         "output_bytes": {
           "raw": 35046757,
-          "clean": 2629582,
-          "mart": 424885
+          "clean": 2623697,
+          "mart": 424939
         },
-        "started_at": "2026-10-01T12:01:52.007073+00:00",
-        "finished_at": "2026-10-01T12:02:10.803861+00:00",
-        "duration_seconds": 18.797
+        "started_at": "2026-11-01T12:16:30.599110+00:00",
+        "finished_at": "2026-11-01T12:16:37.999131+00:00",
+        "duration_seconds": 7.4
       }
     },
     {
@@ -976,7 +979,7 @@
       "detail": "anni 2018-2023 — mart: si",
       "action": "",
       "run": {
-        "run_id": "20261001T120249Z_dda32302",
+        "run_id": "20261101T121709Z_36744d29",
         "year": 2023,
         "status": "SUCCESS",
         "quality_score": {
@@ -991,12 +994,12 @@
         },
         "output_bytes": {
           "raw": 8188766,
-          "clean": 543610,
-          "mart": 98682
+          "clean": 543356,
+          "mart": 98900
         },
-        "started_at": "2026-10-01T12:02:49.656419+00:00",
-        "finished_at": "2026-10-01T12:02:56.347892+00:00",
-        "duration_seconds": 6.691
+        "started_at": "2026-11-01T12:17:09.901555+00:00",
+        "finished_at": "2026-11-01T12:17:16.274728+00:00",
+        "duration_seconds": 6.373
       }
     }
   ],
@@ -1018,10 +1021,28 @@
             "name": "Mef Partecipazioni",
             "column": "amministrazione_codice_fiscale",
             "semantic_type": "fiscal_code"
+          },
+          {
+            "slug": "mef_partecipazioni",
+            "name": "Mef Partecipazioni",
+            "column": "partecipata_codice_fiscale",
+            "semantic_type": "fiscal_code"
+          },
+          {
+            "slug": "mef_rappresentanti_partecipate",
+            "name": "Mef Rappresentanti Partecipate",
+            "column": "amm_cf",
+            "semantic_type": "fiscal_code"
+          },
+          {
+            "slug": "mef_rappresentanti_partecipate",
+            "name": "Mef Rappresentanti Partecipate",
+            "column": "societa_cf",
+            "semantic_type": "fiscal_code"
           }
         ],
         "types": {
-          "fiscal_code": 2
+          "fiscal_code": 5
         }
       },
       "Regione": {
